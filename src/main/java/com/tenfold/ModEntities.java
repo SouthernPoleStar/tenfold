@@ -3,6 +3,7 @@ package com.tenfold;
 import com.tenfold.entity.MatthiasEntity;
 import com.tenfold.entity.MinionEntity;
 import com.tenfold.entity.LeiHengEntity;
+import com.tenfold.entity.LienEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -38,6 +39,13 @@ public final class ModEntities {
                     .clientTrackingRange(8)
                     .build("leiheng_minion"));
 
+    /** 里恩: zombie boss wearing the mask, wields the 双蛇杖. */
+    public static final RegistryObject<EntityType<LienEntity>> LIEN =
+            ENTITIES.register("lien", () -> EntityType.Builder.of(LienEntity::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.95F)
+                    .clientTrackingRange(12)
+                    .build("lien"));
+
     @Mod.EventBusSubscriber(modid = Tenfold.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     private static class AttributeHandler {
         @SubscribeEvent
@@ -45,6 +53,7 @@ public final class ModEntities {
             event.put(MATTHIAS.get(), MatthiasEntity.createAttributes().build());
             event.put(LEIHENG.get(), LeiHengEntity.createAttributes().build());
             event.put(MINION.get(), MinionEntity.createAttributes().build());
+            event.put(LIEN.get(), LienEntity.createAttributes().build());
         }
     }
 

@@ -51,6 +51,10 @@ public final class ModItems {
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.LEIHENG,
                     0x2F4F6F, 0x4A6FA5, new Item.Properties()));
 
+    /** 遮盖伤口的假面: 头盔，佩戴常驻力量II+抗性I，且无法获得指令成瘾。 */
+    public static final RegistryObject<Item> MASK = ITEMS.register("mask",
+            () -> new com.tenfold.item.MaskItem());
+
     /** 魔弹枪: 远程，伤害递增，第7发强制击杀持有者。 */
     public static final RegistryObject<Item> MAGIC_GUN = ITEMS.register("magic_gun",
             () -> new com.tenfold.item.MagicGunItem());

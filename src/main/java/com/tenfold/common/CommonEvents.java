@@ -47,6 +47,41 @@ public class CommonEvents {
 
         // IRA Full Release: settle the damage ledger once the effect is gone.
         settleIraDebt(player);
+
+        // 遮盖伤口的假面: keep Strength II and Resistance I topped up while worn.
+        syncMask(player);
+    }
+
+    private void syncMask(Player player) {
+        if (!player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD)
+                .is(com.tenfold.ModItems.MASK.get())) {
+            return;
+        }
+        boolean topUp = player.tickCount % 40 == 0;
+        if (topUp) {
+            player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                    net.minecraft.world.effect.MobEffects.DAMAGE_BOOST, 60, 1, false, false, false));
+            player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                    net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE, 60, 0, false, false, false));
+        }
+    }
+
+    /**
+     * 遮盖伤口的假面 blocks 指令成瘾: any attempt to apply it to a masked
+     * player is silently rejected.
+     */
+    @SubscribeEvent
+    public void onEffectApplicable(net.minecraftforge.event.entity.living.MobEffectEvent.Applicable event) {
+        if (event.getEntity().level().isClientSide()
+                || !(event.getEntity() instanceof Player player)
+                || event.getEffectInstance() == null
+                || event.getEffectInstance().getEffect() != ModEffects.ADDICTION.get()) {
+            return;
+        }
+        if (player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD)
+                .is(com.tenfold.ModItems.MASK.get())) {
+            event.setCanceled(true);
+        }
     }
 
     /**

@@ -28,6 +28,8 @@ public final class ClientSetup {
                     net.minecraft.client.renderer.entity.ZombieRenderer::new);
             event.registerEntityRenderer(com.tenfold.ModEntities.MINION.get(),
                     net.minecraft.client.renderer.entity.ZombieRenderer::new);
+            event.registerEntityRenderer(com.tenfold.ModEntities.LIEN.get(),
+                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
         }
     }
 

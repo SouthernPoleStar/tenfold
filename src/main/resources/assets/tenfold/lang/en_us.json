@@ -151,5 +151,12 @@
   "tenfold.magicgun.warn": "The seventh shell belongs to the demon — after the bang, it's your turn",
   "tenfold.magicgun.shot": "Demon bullet: %s damage (shot %s/%s)",
   "tenfold.advancement.magicgun.title": "The Demon's Contract",
-  "tenfold.advancement.magicgun.desc": "Do not step into my firing line. Unless you wish to be the target of these demon-possessed bullets."
+  "tenfold.advancement.magicgun.desc": "Do not step into my firing line. Unless you wish to be the target of these demon-possessed bullets.",
+  "item.tenfold.mask": "Mask of Hidden Wounds",
+  "tenfold.mask.buffs": "While worn: permanent Strength II and Resistance I",
+  "tenfold.mask.block": "Contract Addiction cannot be applied while worn",
+  "entity.tenfold.lien": "Lien",
+  "tenfold.lien.swap": "%s swaps forms — the Caduceus becomes 「%s」!",
+  "tenfold.lien.unmask": "%s tears off the mask, exposing the wounds... he gains Contract Addiction!",
+  "tenfold.lien.contract": "%s issues a contract: %s is marked (the mask dulls the curse — no slowness)"
 }

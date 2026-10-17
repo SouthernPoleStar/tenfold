@@ -151,5 +151,12 @@
   "tenfold.magicgun.warn": "第七发子弹属于恶魔——枪响之后，轮到你死",
   "tenfold.magicgun.shot": "魔弹伤害：%s（第 %s/%s 枪）",
   "tenfold.advancement.magicgun.title": "恶魔的契约",
-  "tenfold.advancement.magicgun.desc": "不要踏入我的火线。除非你想成为这寄宿着恶魔的子弹的靶子。"
+  "tenfold.advancement.magicgun.desc": "不要踏入我的火线。除非你想成为这寄宿着恶魔的子弹的靶子。",
+  "item.tenfold.mask": "遮盖伤口的假面",
+  "tenfold.mask.buffs": "佩戴时：常驻力量 II 与抗性提升 I",
+  "tenfold.mask.block": "佩戴时无法获得指令成瘾",
+  "entity.tenfold.lien": "里恩",
+  "tenfold.lien.swap": "%s 收起了旧形态，双蛇杖变为了「%s」！",
+  "tenfold.lien.unmask": "%s 摘下了假面，伤口暴露在空气中……他获得了指令成瘾！",
+  "tenfold.lien.contract": "%s 发出了指令：%s 已被标记（假面削弱了诅咒，未附加缓慢）"
 }
