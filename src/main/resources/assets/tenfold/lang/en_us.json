@@ -97,5 +97,18 @@
   "tenfold.ammobox.help": "Wear it for armor · Hold and right-click to resupply teammates",
   "tenfold.ammobox.no_target": "No other player nearby holds an empty sniper.",
   "tenfold.ammobox.refilled": "%s refilled your sniper: 9 normal · 5 hyper-shredder",
-  "tenfold.ammobox.gave": "Refilled %s's sniper."
+  "tenfold.ammobox.gave": "Refilled %s's sniper.",
+  "item.tenfold.levandin": "Levandin",
+  "form.tenfold.levandin0": "Levandin · Iron & Chains",
+  "form.tenfold.levandin1": "Levandin · Iron Wrapping",
+  "form.tenfold.levandin2": "Levandin · Glowing Edge Revealed",
+  "form.tenfold.levandin3": "Levandin · Full Bloom",
+  "tenfold.levandin.fire": "Hits set enemies on fire for 5s",
+  "tenfold.levandin.self_burn_hint": "15% chance to set yourself on fire",
+  "tenfold.levandin.next": "%s more hits to unwrap (needs %s)",
+  "tenfold.levandin.help": "Shift+right-click: unwrap",
+  "tenfold.levandin.not_enough": "The wrapping holds — %s more hits needed.",
+  "tenfold.levandin.unwrapped": "The wrapping falls away — %s! Damage now %s.",
+  "tenfold.levandin.final": "Levandin is fully awake.",
+  "tenfold.levandin.self_burn": "The glow bites back — you are on fire!"
 }

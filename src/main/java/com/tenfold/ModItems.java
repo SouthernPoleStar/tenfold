@@ -37,6 +37,10 @@ public final class ModItems {
     public static final RegistryObject<Item> AMMO_BOX = ITEMS.register("ammo_box",
             () -> new com.tenfold.item.AmmoBoxItem());
 
+    /** 莱万丁: a wrapped long sword that unwraps itself in four stages. */
+    public static final RegistryObject<Item> LEVANDIN = ITEMS.register("levandin",
+            () -> new com.tenfold.item.LevandinItem());
+
     private ModItems() {
     }
 }

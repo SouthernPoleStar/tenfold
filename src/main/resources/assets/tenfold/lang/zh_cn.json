@@ -97,5 +97,18 @@
   "tenfold.ammobox.help": "穿在身上获得护甲 · 手持右键为队友补给",
   "tenfold.ammobox.no_target": "五格内没有手持空狙击枪的其他玩家。",
   "tenfold.ammobox.refilled": "%s 为你的狙击枪装满了子弹：普通 9 · 高速粉碎 5",
-  "tenfold.ammobox.gave": "已为 %s 的狙击枪装满弹药。"
+  "tenfold.ammobox.gave": "已为 %s 的狙击枪装满弹药。",
+  "item.tenfold.levandin": "莱万丁",
+  "form.tenfold.levandin0": "莱万丁 · 缠铁皮与铁链",
+  "form.tenfold.levandin1": "莱万丁 · 缠铁皮",
+  "form.tenfold.levandin2": "莱万丁 · 铁皮微裂，橙刃隐现",
+  "form.tenfold.levandin3": "莱万丁 · 橙芒尽绽",
+  "tenfold.levandin.fire": "命中使敌人灼烧 5 秒",
+  "tenfold.levandin.self_burn_hint": "15% 几率灼烧自身",
+  "tenfold.levandin.next": "再攻击 %s 次可拆开包装纸（需攻击 %s 次）",
+  "tenfold.levandin.help": "Shift+右键：拆开包装纸",
+  "tenfold.levandin.not_enough": "包装纸纹丝不动 —— 还需攻击 %s 次。",
+  "tenfold.levandin.unwrapped": "包装纸散落 —— %s！伤害提升至 %s。",
+  "tenfold.levandin.final": "莱万丁已完全苏醒。",
+  "tenfold.levandin.self_burn": "橙芒反噬 —— 你被灼伤了！"
 }
