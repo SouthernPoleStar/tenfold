@@ -234,7 +234,7 @@ public class LevandinItem extends SwordItem {
                     .withStyle(ChatFormatting.AQUA), true);
             return;
         }
-        // 重新包装过的剑：无视条件直接拆开
+        // 重新包装过的剑：之后所有阶段撕开时均无视攻击次数条件
         boolean free = rewrapped(stack);
         int hits = hits(stack);
         if (!free && hits < stage.hitsToUnlock) {
@@ -246,7 +246,7 @@ public class LevandinItem extends SwordItem {
         Stage next = stage.next();
         root(stack).putInt("stage", next.index);
         setHits(stack, 0);
-        setRewrapped(stack, false);
+        // 注意：rewrapped 标记保持 true，重包装后的剑后续阶段撕开仍无视条件
         syncModel(stack);
         level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON,
                 SoundSource.PLAYERS, 1.0F, 0.7F);
