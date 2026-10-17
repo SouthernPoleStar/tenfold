@@ -44,6 +44,29 @@ public class CommonEvents {
 
         // Contract Addiction: flat +10 damage while the effect lasts.
         syncAddiction(player);
+
+        // IRA Full Release: settle the damage ledger once the effect is gone.
+        settleIraDebt(player);
+    }
+
+    /**
+     * IRA ledger settlement runs from the tick loop instead of the
+     * MobEffectEvent.Expired hook: that event only fires when the potion times
+     * out naturally, but the debt can also outlive the effect being cleared by
+     * milk, death, commands or a shorter re-applied potion. Checking the ledger
+     * itself covers every way the effect can end, exactly once.
+     */
+    private void settleIraDebt(Player player) {
+        var data = player.getPersistentData();
+        float debt = data.getFloat("tenfoldIraDebt");
+        if (debt <= 0.0F) {
+            return;
+        }
+        if (player.hasEffect(ModEffects.IRA_RELEASE.get()) || !player.isAlive()) {
+            return;
+        }
+        data.putFloat("tenfoldIraDebt", 0.0F);
+        player.hurt(player.damageSources().magic(), debt / 10.0F);
     }
 
     /**
@@ -165,25 +188,6 @@ public class CommonEvents {
         data.putFloat("tenfoldIraDebt", data.getFloat("tenfoldIraDebt") + applied);
         if (applied >= player.getHealth()) {
             event.setAmount(Math.max(0.0F, player.getHealth() - 1.0F));
-        }
-    }
-
-    /**
-     * When IRA Full Release runs out, the stored damage settles at one tenth.
-     */
-    @SubscribeEvent
-    public void onIraExpire(net.minecraftforge.event.entity.living.MobEffectEvent.Expired event) {
-        if (event.getEntity().level().isClientSide()
-                || !(event.getEntity() instanceof Player player)
-                || event.getEffectInstance() == null
-                || event.getEffectInstance().getEffect() != ModEffects.IRA_RELEASE.get()) {
-            return;
-        }
-        var data = player.getPersistentData();
-        float debt = data.getFloat("tenfoldIraDebt");
-        data.putFloat("tenfoldIraDebt", 0.0F);
-        if (debt > 0.0F && player.isAlive()) {
-            player.hurt(player.damageSources().magic(), debt / 10.0F);
         }
     }
 
