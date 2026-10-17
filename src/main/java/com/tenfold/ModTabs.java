@@ -28,6 +28,8 @@ public final class ModTabs {
                         output.accept(ModItems.LIEN_SPAWN_EGG.get());
                         output.accept(ModItems.MAGIC_GUN.get());
                         output.accept(ModItems.MASK.get());
+                        output.accept(ModItems.DEMON_CONTRACT.get());
+                        output.accept(ModItems.BULLET.get());
                         output.accept(ModItems.SKY_BLADE.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));

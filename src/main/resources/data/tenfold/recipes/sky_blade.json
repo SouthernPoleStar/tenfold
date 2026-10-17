@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": { "item": "tenfold:bullet" },
+  "base": { "item": "minecraft:iron_sword" },
+  "addition": { "item": "minecraft:bow" },
+  "result": { "item": "tenfold:sky_blade" }
+}

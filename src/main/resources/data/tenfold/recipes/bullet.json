@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "CGC",
+    " C "
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "C": { "item": "minecraft:copper_ingot" },
+    "G": { "item": "minecraft:gunpowder" }
+  },
+  "result": { "item": "tenfold:bullet" }
+}

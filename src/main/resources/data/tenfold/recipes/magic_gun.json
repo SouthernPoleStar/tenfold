@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": { "item": "tenfold:demon_contract" },
+  "base": { "item": "minecraft:bow" },
+  "addition": { "item": "minecraft:iron_ingot" },
+  "result": { "item": "tenfold:magic_gun" }
+}

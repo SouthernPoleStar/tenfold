@@ -60,6 +60,14 @@ public final class ModItems {
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.LIEN,
                     0x4A3F5F, 0xC9A648, new Item.Properties()));
 
+    /** 恶魔契约: 僵尸30%掉落，锻造魔弹枪的材料。 */
+    public static final RegistryObject<Item> DEMON_CONTRACT = ITEMS.register("demon_contract",
+            () -> new Item(new Item.Properties()));
+
+    /** 子弹: 合成天退星刀的材料。 */
+    public static final RegistryObject<Item> BULLET = ITEMS.register("bullet",
+            () -> new Item(new Item.Properties()));
+
     /** 魔弹枪: 远程，伤害递增，第7发强制击杀持有者。 */
     public static final RegistryObject<Item> MAGIC_GUN = ITEMS.register("magic_gun",
             () -> new com.tenfold.item.MagicGunItem());

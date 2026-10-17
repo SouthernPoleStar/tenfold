@@ -294,6 +294,11 @@ public class CommonEvents {
         if (victim.level().isClientSide) {
             return;
         }
+        // 恶魔契约: plain zombies drop it 30% of the time.
+        if (victim.getType() == net.minecraft.world.entity.EntityType.ZOMBIE
+                && victim.getRandom().nextFloat() < 0.30F) {
+            victim.spawnAtLocation(new net.minecraft.world.item.ItemStack(com.tenfold.ModItems.DEMON_CONTRACT.get()));
+        }
         // Only direct melee kills with the blade count; a burning target or an
         // arrow that finishes the job must not complete a contract.
         if (!(event.getSource().getDirectEntity() instanceof Player player)
