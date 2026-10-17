@@ -136,5 +136,13 @@
   "tenfold.skyblade.reach": "Attack reach: %s blocks",
   "tenfold.skyblade.help": "Sneak + right-click: dump all tiger rounds, force-switch to tiger mark rounds",
   "tenfold.skyblade.reload_ready": "Auto-reloads once when out of ammo",
-  "tenfold.skyblade.dumped": "Dumped all tiger rounds — switched to tiger mark rounds"
+  "tenfold.skyblade.dumped": "Dumped all tiger rounds — switched to tiger mark rounds",
+  "entity.tenfold.leiheng": "Lei Heng",
+  "entity.tenfold.leiheng_minion": "Lei Heng's Minion",
+  "item.tenfold.leiheng_spawn_egg": "Lei Heng Spawn Egg",
+  "effect.tenfold.steel_qi": "Steel Qi",
+  "tenfold.leiheng.rage": "Lei Heng is enraged: +30% attack!",
+  "tenfold.leiheng.minions": "Lei Heng summons two minions! Kill them within 3 seconds!",
+  "tenfold.leiheng.minion_timeout": "The minions survived — Lei Heng gains two levels of Strength!",
+  "tenfold.leiheng.minion_slain": "Minion slain quickly — Lei Heng is weakened!"
 }

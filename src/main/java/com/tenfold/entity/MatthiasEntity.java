@@ -35,6 +35,32 @@ public class MatthiasEntity extends Zombie {
 
     private boolean gritApplied = false;
 
+    private final net.minecraft.server.level.ServerBossEvent bossEvent =
+            new net.minecraft.server.level.ServerBossEvent(this.getDisplayName(),
+                    net.minecraft.world.BossEvent.BossBarColor.RED,
+                    net.minecraft.world.BossEvent.BossBarOverlay.PROGRESS);
+
+    @Override
+    public void startSeenByPlayer(net.minecraft.server.level.ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        this.bossEvent.addPlayer(player);
+        this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+
+    @Override
+    public void stopSeenByPlayer(net.minecraft.server.level.ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        this.bossEvent.removePlayer(player);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level().isClientSide) {
+            this.bossEvent.setProgress(Math.max(0.0F, this.getHealth() / this.getMaxHealth()));
+        }
+    }
+
     public static net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder createAttributes() {
         return Zombie.createAttributes()
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 2000.0D)
@@ -162,6 +188,12 @@ public class MatthiasEntity extends Zombie {
 
     @Override
     public boolean isBaby() {
+        return false;
+    }
+
+    /** Bosses never catch fire in sunlight. */
+    @Override
+    protected boolean isSunBurnTick() {
         return false;
     }
 

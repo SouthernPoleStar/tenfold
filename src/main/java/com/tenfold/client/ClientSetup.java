@@ -24,6 +24,10 @@ public final class ClientSetup {
         public static void onRenderers(net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(com.tenfold.ModEntities.MATTHIAS.get(),
                     net.minecraft.client.renderer.entity.ZombieRenderer::new);
+            event.registerEntityRenderer(com.tenfold.ModEntities.LEIHENG.get(),
+                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
+            event.registerEntityRenderer(com.tenfold.ModEntities.MINION.get(),
+                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
         }
     }
 

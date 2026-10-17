@@ -156,6 +156,14 @@ public class CommonEvents {
             amount *= 2.0F;
         }
 
+        // 钢气: +10% damage per stack (amplifier 0 = level 1), up to 255 levels.
+        if (event.getSource().getEntity() instanceof LivingEntity striker) {
+            var steel = striker.getEffect(ModEffects.STEEL_QI.get());
+            if (steel != null) {
+                amount *= 1.0F + 0.1F * (steel.getAmplifier() + 1);
+            }
+        }
+
         // 过人的毅力: any single hit against the bearer is forced to 3 or less.
         if (event.getEntity().hasEffect(ModEffects.PERSEVERANCE.get())) {
             amount = Math.min(amount, 3.0F);

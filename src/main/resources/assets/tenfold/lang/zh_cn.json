@@ -136,5 +136,13 @@
   "tenfold.skyblade.reach": "攻击距离：%s 格",
   "tenfold.skyblade.help": "Shift+右键：丢弃所有猛虎弹，强制切换猛虎标弹",
   "tenfold.skyblade.reload_ready": "弹药耗尽时可自动重装一次",
-  "tenfold.skyblade.dumped": "已丢弃全部猛虎弹，切换至猛虎标弹"
+  "tenfold.skyblade.dumped": "已丢弃全部猛虎弹，切换至猛虎标弹",
+  "entity.tenfold.leiheng": "雷横",
+  "entity.tenfold.leiheng_minion": "雷横的小弟",
+  "item.tenfold.leiheng_spawn_egg": "雷横刷怪蛋",
+  "effect.tenfold.steel_qi": "钢气",
+  "tenfold.leiheng.rage": "雷横怒了：攻击提升30%！",
+  "tenfold.leiheng.minions": "雷横召唤了两名小弟！3秒内击杀可削弱他！",
+  "tenfold.leiheng.minion_timeout": "小弟撑过了3秒，雷横获得两层力量！",
+  "tenfold.leiheng.minion_slain": "小弟被速杀，雷横陷入两级虚弱！"
 }

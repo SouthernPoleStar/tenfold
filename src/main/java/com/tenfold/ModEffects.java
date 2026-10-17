@@ -58,6 +58,18 @@ public final class ModEffects {
                 }
             });
 
+    /**
+     * 钢气 (Steel Qi): Lei Heng stacks this on every successful strike, +10%
+     * damage per level, up to 255 levels. Damage rule lives in CommonEvents.
+     */
+    public static final RegistryObject<MobEffect> STEEL_QI = EFFECTS.register("steel_qi",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0x4A6FA5) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
     private ModEffects() {
     }
 }

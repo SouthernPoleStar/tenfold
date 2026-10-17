@@ -1,6 +1,8 @@
 package com.tenfold;
 
 import com.tenfold.entity.MatthiasEntity;
+import com.tenfold.entity.MinionEntity;
+import com.tenfold.entity.LeiHengEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -22,11 +24,27 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .build("matthias"));
 
+    /** 雷横: zombie model & texture, 8000 HP, wields the 天退星刀. */
+    public static final RegistryObject<EntityType<LeiHengEntity>> LEIHENG =
+            ENTITIES.register("leiheng", () -> EntityType.Builder.of(LeiHengEntity::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.95F)
+                    .clientTrackingRange(12)
+                    .build("leiheng"));
+
+    /** 雷横的小弟: baby zombie wearing an ammo box, 3-second timer. */
+    public static final RegistryObject<EntityType<MinionEntity>> MINION =
+            ENTITIES.register("leiheng_minion", () -> EntityType.Builder.of(MinionEntity::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.95F)
+                    .clientTrackingRange(8)
+                    .build("leiheng_minion"));
+
     @Mod.EventBusSubscriber(modid = Tenfold.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     private static class AttributeHandler {
         @SubscribeEvent
         public static void onAttributes(EntityAttributeCreationEvent event) {
             event.put(MATTHIAS.get(), MatthiasEntity.createAttributes().build());
+            event.put(LEIHENG.get(), LeiHengEntity.createAttributes().build());
+            event.put(MINION.get(), MinionEntity.createAttributes().build());
         }
     }
 
