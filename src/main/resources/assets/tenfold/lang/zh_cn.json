@@ -170,5 +170,7 @@
   "tenfold.welcome.8": "反馈渠道：QQ3618576581",
   "tenfold.welcome.9": "感谢游玩本模组！",
   "item.tenfold.demon_contract": "恶魔契约",
-  "item.tenfold.bullet": "子弹"
+  "item.tenfold.bullet": "子弹",
+  "levandin.rewrap": "包装纸重新缠上了 —— 再次 Shift+右键 无视条件直接拆开！",
+  "levandin.tooltip.rewrapped": "已重新包装：下一次拆封无视条件"
 }

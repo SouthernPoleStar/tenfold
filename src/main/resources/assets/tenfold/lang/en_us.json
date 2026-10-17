@@ -170,5 +170,7 @@
   "tenfold.welcome.8": "Feedback: QQ 3618576581",
   "tenfold.welcome.9": "Thanks for playing!",
   "item.tenfold.demon_contract": "Demon Contract",
-  "item.tenfold.bullet": "Bullet"
+  "item.tenfold.bullet": "Bullet",
+  "levandin.rewrap": "The wrapping paper is back on — Shift+Right-click again to unwrap it unconditionally!",
+  "levandin.tooltip.rewrapped": "Re-wrapped: next unwrap ignores requirements"
 }

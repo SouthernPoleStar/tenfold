@@ -122,6 +122,15 @@ public class LevandinItem extends SwordItem {
         return root(stack).getInt("hits");
     }
 
+    /** 重新包装过的剑，下一次拆包无视攻击次数条件。 */
+    public static boolean rewrapped(ItemStack stack) {
+        return root(stack).getBoolean("rewrapped");
+    }
+
+    private static void setRewrapped(ItemStack stack, boolean value) {
+        root(stack).putBoolean("rewrapped", value);
+    }
+
     /** 一把预先设到指定阶段的莱万丁（供 Boss 马蒂亚斯使用）。 */
     public static ItemStack stagedStack(int stageIndex) {
         ItemStack stack = new ItemStack(ModItems.LEVANDIN.get());
@@ -214,12 +223,21 @@ public class LevandinItem extends SwordItem {
     private void tryUnwrap(Level level, Player player, ItemStack stack) {
         Stage stage = stage(stack);
         if (stage.isFinal()) {
-            player.displayClientMessage(Component.translatable("levandin.unwrap.final")
-                    .withStyle(ChatFormatting.GRAY), true);
+            // 终阶段：Shift+右键 = 重新装上包装纸（回到阶段1）
+            root(stack).putInt("stage", Stage.WRAPPED.index);
+            setHits(stack, 0);
+            setRewrapped(stack, true);
+            syncModel(stack);
+            level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON,
+                    SoundSource.PLAYERS, 1.0F, 1.3F);
+            player.displayClientMessage(Component.translatable("levandin.rewrap")
+                    .withStyle(ChatFormatting.AQUA), true);
             return;
         }
+        // 重新包装过的剑：无视条件直接拆开
+        boolean free = rewrapped(stack);
         int hits = hits(stack);
-        if (hits < stage.hitsToUnlock) {
+        if (!free && hits < stage.hitsToUnlock) {
             player.displayClientMessage(Component.translatable(
                             "levandin.unwrap.need", stage.hitsToUnlock - hits)
                     .withStyle(ChatFormatting.RED), true);
@@ -228,6 +246,7 @@ public class LevandinItem extends SwordItem {
         Stage next = stage.next();
         root(stack).putInt("stage", next.index);
         setHits(stack, 0);
+        setRewrapped(stack, false);
         syncModel(stack);
         level.playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON,
                 SoundSource.PLAYERS, 1.0F, 0.7F);
@@ -296,6 +315,13 @@ public class LevandinItem extends SwordItem {
             tooltip.add(Component.translatable("levandin.tooltip.progress",
                             hits, stage.hitsToUnlock)
                     .withStyle(hits >= stage.hitsToUnlock ? ChatFormatting.GREEN : ChatFormatting.GRAY));
+        }
+        if (stage.isFinal()) {
+            tooltip.add(Component.translatable("levandin.unwrap.final")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        } else if (rewrapped(stack)) {
+            tooltip.add(Component.translatable("levandin.tooltip.rewrapped")
+                    .withStyle(ChatFormatting.AQUA));
         }
         tooltip.add(Component.translatable("levandin.tooltip.help")
                 .withStyle(ChatFormatting.DARK_GRAY));
