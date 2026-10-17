@@ -23,6 +23,7 @@ public class Tenfold {
         ModPotions.POTIONS.register(bus);
         ModTabs.TABS.register(bus);
         ModSounds.SOUNDS.register(bus);
+        ModEntities.ENTITIES.register(bus);
 
         bus.addListener(this::commonSetup);
 

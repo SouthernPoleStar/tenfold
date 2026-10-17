@@ -45,6 +45,19 @@ public final class ModEffects {
                 }
             });
 
+    /**
+     * 过人的毅力 (Unyielding Grit): Matthias's last-stand buff. Any single hit
+     * against the bearer is forced down to at most 3 damage, while the bearer
+     * deals double damage. Damage rules live in CommonEvents.
+     */
+    public static final RegistryObject<MobEffect> PERSEVERANCE = EFFECTS.register("perseverance",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xC03018) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
     private ModEffects() {
     }
 }

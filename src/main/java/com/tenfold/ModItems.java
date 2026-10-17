@@ -41,6 +41,11 @@ public final class ModItems {
     public static final RegistryObject<Item> LEVANDIN = ITEMS.register("levandin",
             () -> new com.tenfold.item.LevandinItem());
 
+    /** 马蒂亚斯刷怪蛋。 */
+    public static final RegistryObject<Item> MATTHIAS_SPAWN_EGG = ITEMS.register("matthias_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.MATTHIAS,
+                    0x3A5F3A, 0xC03018, new Item.Properties()));
+
     private ModItems() {
     }
 }

@@ -122,5 +122,12 @@
   "tenfold.advancement.levandin2.title": "Open the Second Layer Too?",
   "tenfold.advancement.levandin2.desc": "Haha, interesting — so this is the feel of it.",
   "tenfold.advancement.levandin3.title": "Levandin, Full Unleash",
-  "tenfold.advancement.levandin3.desc": "This will be hot. Very hot!"
+  "tenfold.advancement.levandin3.desc": "This will be hot. Very hot!",
+  "entity.tenfold.matthias": "Matthias",
+  "item.tenfold.matthias_spawn_egg": "Matthias Spawn Egg",
+  "effect.tenfold.perseverance": "Perseverance",
+  "tenfold.boss.unwrap1": "Matthias unwrapped the first layer!",
+  "tenfold.boss.unwrap2": "Matthias unwrapped the second layer!",
+  "tenfold.boss.unwrap3": "Matthias unwrapped the third layer!",
+  "tenfold.boss.grit": "Matthias gained Perseverance!"
 }

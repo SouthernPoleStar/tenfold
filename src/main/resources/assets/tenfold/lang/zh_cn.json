@@ -122,5 +122,12 @@
   "tenfold.advancement.levandin2.title": "连第二层包装纸都要打开吗？",
   "tenfold.advancement.levandin2.desc": "哈哈，有意思，原来特色是这种手感。",
   "tenfold.advancement.levandin3.title": "莱万丁，完全解放",
-  "tenfold.advancement.levandin3.desc": "这会很烫的，非常烫！"
+  "tenfold.advancement.levandin3.desc": "这会很烫的，非常烫！",
+  "entity.tenfold.matthias": "马蒂亚斯",
+  "item.tenfold.matthias_spawn_egg": "马蒂亚斯刷怪蛋",
+  "effect.tenfold.perseverance": "过人的毅力",
+  "tenfold.boss.unwrap1": "马蒂亚斯拆开了第一层包装纸！",
+  "tenfold.boss.unwrap2": "马蒂亚斯拆开了第二层包装纸！",
+  "tenfold.boss.unwrap3": "马蒂亚斯拆开了第三层包装纸！",
+  "tenfold.boss.grit": "马蒂亚斯获得了「过人的毅力」！"
 }

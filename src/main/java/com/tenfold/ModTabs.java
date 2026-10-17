@@ -23,6 +23,7 @@ public final class ModTabs {
                         output.accept(ModItems.AMMO_BOX.get());
                         output.accept(ModItems.OATH_SHARD.get());
                         output.accept(ModItems.LEVANDIN.get());
+                        output.accept(ModItems.MATTHIAS_SPAWN_EGG.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));

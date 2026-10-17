@@ -127,6 +127,17 @@ public class CommonEvents {
             }
         }
 
+        // 过人的毅力: the bearer deals double damage.
+        if (event.getSource().getEntity() instanceof LivingEntity attacker
+                && attacker.hasEffect(ModEffects.PERSEVERANCE.get())) {
+            amount *= 2.0F;
+        }
+
+        // 过人的毅力: any single hit against the bearer is forced to 3 or less.
+        if (event.getEntity().hasEffect(ModEffects.PERSEVERANCE.get())) {
+            amount = Math.min(amount, 3.0F);
+        }
+
         event.setAmount(amount);
     }
 

@@ -122,6 +122,14 @@ public class LevandinItem extends SwordItem {
         return root(stack).getInt("hits");
     }
 
+    /** 一把预先设到指定阶段的莱万丁（供 Boss 马蒂亚斯使用）。 */
+    public static ItemStack stagedStack(int stageIndex) {
+        ItemStack stack = new ItemStack(ModItems.LEVANDIN.get());
+        root(stack).putInt("stage", Math.max(0, Math.min(Stage.VALUES.length - 1, stageIndex)));
+        syncModel(stack);
+        return stack;
+    }
+
     private static void setHits(ItemStack stack, int value) {
         root(stack).putInt("hits", Math.max(0, value));
     }

@@ -17,6 +17,16 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = "tenfold", value = Dist.CLIENT)
 public final class ClientSetup {
 
+    /** Registers the Matthias boss renderer: reuses the vanilla zombie renderer. */
+    @Mod.EventBusSubscriber(modid = "tenfold", value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    private static class ModBus {
+        @SubscribeEvent
+        public static void onRenderers(net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(com.tenfold.ModEntities.MATTHIAS.get(),
+                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
+        }
+    }
+
     public static void onClientSetup(FMLClientSetupEvent event) {
         // Intentionally empty: item models are chosen by the item properties,
         // see TenfoldBladeItem#getModelKey. Kept as the FML hook target.
