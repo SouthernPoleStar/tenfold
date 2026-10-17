@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "tenfold:tenfold_blade"
+    },
+    "title": {
+      "translate": "tenfold.advancement.root.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.root.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/nether.png"
+  },
+  "criteria": {
+    "got_blade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tenfold:tenfold_blade"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

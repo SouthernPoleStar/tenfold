@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": { "item": "minecraft:netherite_scrap" },
+  "base": { "item": "minecraft:netherite_sword" },
+  "addition": { "item": "minecraft:echo_shard" },
+  "result": { "item": "tenfold:tenfold_blade" }
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "tenfold.advancement.rebel.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.rebel.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "met": {
+      "trigger": "tenfold:contract_broken",
+      "conditions": {
+        "count": 3
+      }
+    }
+  }
+}

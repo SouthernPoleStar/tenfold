@@ -1,0 +1,37 @@
+{
+  "form_shift": {
+    "category": "player",
+    "subtitle": "tenfold.subtitle.form_shift",
+    "sounds": [
+      { "name": "minecraft:item.trident.return", "pitch": 1.6, "volume": 0.5 }
+    ]
+  },
+  "contract_made": {
+    "category": "player",
+    "subtitle": "tenfold.subtitle.contract_made",
+    "sounds": [
+      { "name": "minecraft:block.amethyst_block.chime", "pitch": 1.2 }
+    ]
+  },
+  "contract_done": {
+    "category": "player",
+    "subtitle": "tenfold.subtitle.contract_done",
+    "sounds": [
+      { "name": "minecraft:entity.player.levelup", "pitch": 1.8, "volume": 0.6 }
+    ]
+  },
+  "contract_failed": {
+    "category": "player",
+    "subtitle": "tenfold.subtitle.contract_failed",
+    "sounds": [
+      { "name": "minecraft:entity.villager.no", "pitch": 0.7 }
+    ]
+  },
+  "degrade": {
+    "category": "player",
+    "subtitle": "tenfold.subtitle.degrade",
+    "sounds": [
+      { "name": "minecraft:entity.item.break", "pitch": 0.5 }
+    ]
+  }
+}

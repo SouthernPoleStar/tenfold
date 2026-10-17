@@ -1,0 +1,29 @@
+{
+  "parent": "tenfold:contract_obeyed",
+  "display": {
+    "icon": {
+      "item": "tenfold:adv_addict"
+    },
+    "title": {
+      "translate": "tenfold.advancement.addict.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.addict.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "met": {
+      "trigger": "tenfold:contract_done",
+      "conditions": {
+        "count": 4
+      }
+    }
+  },
+  "rewards": {
+    "function": "tenfold:grant_addiction"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": {
+      "item": "tenfold:oath_shard"
+    },
+    "title": {
+      "translate": "tenfold.advancement.oath.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.oath.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "drunk": {
+      "trigger": "tenfold:oath_drunk",
+      "conditions": {
+        "count": 1
+      }
+    }
+  }
+}

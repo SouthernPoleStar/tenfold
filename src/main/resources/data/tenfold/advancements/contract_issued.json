@@ -1,0 +1,26 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": {
+      "item": "tenfold:adv_issued"
+    },
+    "title": {
+      "translate": "tenfold.advancement.issued.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.issued.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "met": {
+      "trigger": "tenfold:contract_issued",
+      "conditions": {
+        "count": 1
+      }
+    }
+  }
+}

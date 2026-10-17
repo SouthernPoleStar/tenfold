@@ -1,0 +1,26 @@
+{
+  "parent": "tenfold:contract_issued",
+  "display": {
+    "icon": {
+      "item": "tenfold:adv_obeyed"
+    },
+    "title": {
+      "translate": "tenfold.advancement.obeyed.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.obeyed.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "met": {
+      "trigger": "tenfold:contract_done",
+      "conditions": {
+        "count": 1
+      }
+    }
+  }
+}
