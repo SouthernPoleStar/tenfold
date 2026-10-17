@@ -55,6 +55,11 @@ public final class ModItems {
     public static final RegistryObject<Item> MASK = ITEMS.register("mask",
             () -> new com.tenfold.item.MaskItem());
 
+    /** 里恩刷怪蛋。 */
+    public static final RegistryObject<Item> LIEN_SPAWN_EGG = ITEMS.register("lien_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.LIEN,
+                    0x4A3F5F, 0xC9A648, new Item.Properties()));
+
     /** 魔弹枪: 远程，伤害递增，第7发强制击杀持有者。 */
     public static final RegistryObject<Item> MAGIC_GUN = ITEMS.register("magic_gun",
             () -> new com.tenfold.item.MagicGunItem());

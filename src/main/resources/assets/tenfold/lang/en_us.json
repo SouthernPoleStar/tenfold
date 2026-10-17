@@ -146,7 +146,6 @@
   "tenfold.leiheng.minion_timeout": "The minions survived — Lei Heng gains two levels of Strength!",
   "tenfold.leiheng.minion_slain": "Minion slain quickly — Lei Heng is weakened!",
   "item.tenfold.magic_gun": "Demon Gun",
-  "death.tenfold.magic_bullet": "%1$s was pierced by their own Demon Gun",
   "tenfold.magicgun.desc": "Ranged: first shot %s damage, + %s per shot, up to %s shots",
   "tenfold.magicgun.warn": "The seventh shell belongs to the demon — after the bang, it's your turn",
   "tenfold.magicgun.shot": "Demon bullet: %s damage (shot %s/%s)",
@@ -158,5 +157,7 @@
   "entity.tenfold.lien": "Lien",
   "tenfold.lien.swap": "%s swaps forms — the Caduceus becomes 「%s」!",
   "tenfold.lien.unmask": "%s tears off the mask, exposing the wounds... he gains Contract Addiction!",
-  "tenfold.lien.contract": "%s issues a contract: %s is marked (the mask dulls the curse — no slowness)"
+  "tenfold.lien.contract": "%s issues a contract: %s is marked (the mask dulls the curse — no slowness)",
+  "item.tenfold.lien_spawn_egg": "Lien Spawn Egg",
+  "death.attack.tenfold.magic_bullet": "%1$s was pierced by their own Demon Gun"
 }

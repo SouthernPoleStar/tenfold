@@ -146,7 +146,6 @@
   "tenfold.leiheng.minion_timeout": "小弟撑过了3秒，雷横获得两层力量！",
   "tenfold.leiheng.minion_slain": "小弟被速杀，雷横陷入两级虚弱！",
   "item.tenfold.magic_gun": "魔弹枪",
-  "death.tenfold.magic_bullet": "%1$s 使用魔弹枪贯穿了自己",
   "tenfold.magicgun.desc": "远程武器：首枪%s点伤害，之后每枪 +%s，最多 %s 枪",
   "tenfold.magicgun.warn": "第七发子弹属于恶魔——枪响之后，轮到你死",
   "tenfold.magicgun.shot": "魔弹伤害：%s（第 %s/%s 枪）",
@@ -158,5 +157,7 @@
   "entity.tenfold.lien": "里恩",
   "tenfold.lien.swap": "%s 收起了旧形态，双蛇杖变为了「%s」！",
   "tenfold.lien.unmask": "%s 摘下了假面，伤口暴露在空气中……他获得了指令成瘾！",
-  "tenfold.lien.contract": "%s 发出了指令：%s 已被标记（假面削弱了诅咒，未附加缓慢）"
+  "tenfold.lien.contract": "%s 发出了指令：%s 已被标记（假面削弱了诅咒，未附加缓慢）",
+  "item.tenfold.lien_spawn_egg": "里恩刷怪蛋",
+  "death.attack.tenfold.magic_bullet": "%1$s 使用魔弹枪贯穿了自己"
 }

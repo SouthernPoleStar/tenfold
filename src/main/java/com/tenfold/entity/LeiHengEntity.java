@@ -42,6 +42,7 @@ public class LeiHengEntity extends Zombie {
     private static final UUID RAGE_UUID = UUID.fromString("b7e2f4a1-3c8d-4e52-9a10-6d3f55c0b7a3");
 
     private boolean rageApplied = false;
+    private boolean firstSummon = false;
     private int minionCooldown = 0;
     private UUID activeMinionA = null;
     private UUID activeMinionB = null;
@@ -149,10 +150,14 @@ public class LeiHengEntity extends Zombie {
 
     /** Below 5000 HP: +30% attack once, and from then on he may call minions. */
     private void checkRage() {
-        if (this.rageApplied || this.getHealth() >= RAGE_THRESHOLD) {
+        // Guard: health reads 0 during spawn ticks, which used to trip the
+        // rage check instantly on the first frame.
+        if (this.rageApplied || this.tickCount < 10
+                || this.getHealth() <= 0.0F || this.getHealth() >= RAGE_THRESHOLD) {
             return;
         }
         this.rageApplied = true;
+        this.firstSummon = true;
         var attr = this.getAttribute(Attributes.ATTACK_DAMAGE);
         if (attr != null && attr.getModifier(RAGE_UUID) == null) {
             attr.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(
@@ -186,17 +191,21 @@ public class LeiHengEntity extends Zombie {
     }
 
     private void maybeSummonMinions() {
-        if (this.level() instanceof ServerLevel server
-                && this.rageApplied
-                && this.minionCooldown <= 0
-                && this.random.nextFloat() < 0.25F) {
-            boolean alive = (this.activeMinionA != null && findMinion(server, this.activeMinionA) != null)
-                    || (this.activeMinionB != null && findMinion(server, this.activeMinionB) != null);
-            if (!alive) {
-                spawnMinionPair(server);
-                this.minionCooldown = 20 * 10;
-            }
+        if (!(this.level() instanceof ServerLevel server)
+                || !this.rageApplied
+                || this.minionCooldown > 0) {
+            return;
         }
+        boolean alive = (this.activeMinionA != null && findMinion(server, this.activeMinionA) != null)
+                || (this.activeMinionB != null && findMinion(server, this.activeMinionB) != null);
+        // The first strike after enraging always calls for help; afterwards
+        // it's a 40% chance per landed hit while the 8-second cooldown is free.
+        if (alive || (!this.firstSummon && this.random.nextFloat() >= 0.40F)) {
+            return;
+        }
+        this.firstSummon = false;
+        spawnMinionPair(server);
+        this.minionCooldown = 20 * 8;
     }
 
     private void spawnMinionPair(ServerLevel server) {

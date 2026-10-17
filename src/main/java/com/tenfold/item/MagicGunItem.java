@@ -81,7 +81,9 @@ public class MagicGunItem extends Item {
 
         LivingEntity hit = raycast(server);
         if (hit != null) {
-            hit.hurt(com.tenfold.ModDamageTypes.of(level, com.tenfold.ModDamageTypes.MAGIC_BULLET), damage);
+            // Enemies die to a normal player kill; only the wielder's 7th
+            // shell uses the demon's own death message.
+            hit.hurt(server.damageSources().playerAttack(server), damage);
         }
         if (level instanceof ServerLevel serverLevel) {
             Vec3 from = server.getEyePosition();
