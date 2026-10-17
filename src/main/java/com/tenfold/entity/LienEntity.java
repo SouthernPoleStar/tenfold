@@ -119,8 +119,8 @@ public class LienEntity extends Zombie {
         if (this.level().isClientSide) {
             return;
         }
-        // First spawn: wear the mask, draw the blade in its first form.
-        if (!this.hasItemInSlot(EquipmentSlot.HEAD)) {
+        // First spawn: wear the mask (unless it was torn off for good).
+        if (!this.unmasked && !this.hasItemInSlot(EquipmentSlot.HEAD)) {
             this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.MASK.get()));
         }
         ItemStack held = this.getItemBySlot(EquipmentSlot.MAINHAND);
@@ -152,7 +152,12 @@ public class LienEntity extends Zombie {
 
     /** At 5000 HP: tear the mask off, gain one round of Contract Addiction. */
     private void checkUnmask() {
-        if (this.unmasked || this.getHealth() >= UNMASK_THRESHOLD) {
+        // Same spawn-window guard as Lei Heng: never judge during the first
+        // seconds, and only when the health readout is meaningful.
+        if (this.unmasked || this.tickCount < 100
+                || this.getHealth() <= 0.0F
+                || this.getHealth() >= UNMASK_THRESHOLD
+                || this.getHealth() > this.getMaxHealth() * 0.995F) {
             return;
         }
         this.unmasked = true;

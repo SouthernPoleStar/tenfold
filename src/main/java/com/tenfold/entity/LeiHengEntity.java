@@ -150,10 +150,12 @@ public class LeiHengEntity extends Zombie {
 
     /** Below 5000 HP: +30% attack once, and from then on he may call minions. */
     private void checkRage() {
-        // Guard: health reads 0 during spawn ticks, which used to trip the
-        // rage check instantly on the first frame.
-        if (this.rageApplied || this.tickCount < 10
-                || this.getHealth() <= 0.0F || this.getHealth() >= RAGE_THRESHOLD) {
+        // Guard: during the first seconds after spawning the health readout
+        // can be inconsistent; never judge rage in that window.
+        if (this.rageApplied || this.tickCount < 100
+                || this.getHealth() <= 0.0F
+                || this.getHealth() >= RAGE_THRESHOLD
+                || this.getHealth() > this.getMaxHealth() * 0.995F) {
             return;
         }
         this.rageApplied = true;
