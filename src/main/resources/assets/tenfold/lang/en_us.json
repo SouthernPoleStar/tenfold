@@ -172,5 +172,6 @@
   "item.tenfold.demon_contract": "Demon Contract",
   "item.tenfold.bullet": "Bullet",
   "levandin.rewrap": "Re-wrapped — every Shift+Right-click now unwraps unconditionally!",
-  "levandin.tooltip.rewrapped": "Re-wrapped: unwrapping ignores requirements"
+  "levandin.tooltip.rewrapped": "Re-wrapped: unwrapping ignores requirements",
+  "effect.tenfold.perseverance_ally": "Unyielding Grit"
 }

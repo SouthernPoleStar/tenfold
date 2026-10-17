@@ -50,6 +50,37 @@ public class CommonEvents {
 
         // 遮盖伤口的假面: keep Strength II and Resistance I topped up while worn.
         syncMask(player);
+
+        // 莱万丁（完全拆封）: low health grants 过人的毅力（我方版）absorption.
+        syncLevandinGrit(player);
+    }
+
+    /**
+     * 过人的毅力（我方版）: while holding a fully unwrapped (stage 4) Levandin
+     * at 30% health or below, grant Absorption worth 200% of the missing
+     * health. Refreshed every second while the conditions hold.
+     */
+    private void syncLevandinGrit(Player player) {
+        ItemStack held = player.getMainHandItem();
+        if (!com.tenfold.item.LevandinItem.isLevandin(held)
+                || com.tenfold.item.LevandinItem.stage(held)
+                        != com.tenfold.item.LevandinItem.Stage.BLAZING) {
+            return;
+        }
+        float max = player.getMaxHealth();
+        if (max <= 0.0F || player.getHealth() > max * 0.30F) {
+            return;
+        }
+        if (player.tickCount % 20 != 0) {
+            return;
+        }
+        float missing = max - player.getHealth();
+        // 伤害吸收：每级 4 点（2 颗黄心），需要 2×失去血量 的吸收值
+        int points = Math.round(missing * 2.0F);
+        int levels = points / 4;
+        int amplifier = Math.max(0, Math.min(255, levels - 1));
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                ModEffects.PERSEVERANCE_ALLY.get(), 100, amplifier, false, true, true));
     }
 
     private void syncMask(Player player) {

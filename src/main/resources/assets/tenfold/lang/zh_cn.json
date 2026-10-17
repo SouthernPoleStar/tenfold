@@ -172,5 +172,6 @@
   "item.tenfold.demon_contract": "恶魔契约",
   "item.tenfold.bullet": "子弹",
   "levandin.rewrap": "包装纸重新缠上了 —— 之后每次 Shift+右键 都可无视条件直接撕开！",
-  "levandin.tooltip.rewrapped": "已重新包装：撕开包装纸无视条件"
+  "levandin.tooltip.rewrapped": "已重新包装：撕开包装纸无视条件",
+  "effect.tenfold.perseverance_ally": "过人的毅力"
 }

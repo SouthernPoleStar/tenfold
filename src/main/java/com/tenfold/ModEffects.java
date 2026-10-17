@@ -59,6 +59,19 @@ public final class ModEffects {
             });
 
     /**
+     * 过人的毅力（我方版）: holding a fully unwrapped Levandin at 30% HP or
+     * below grants Absorption worth 200% of the missing health. Same icon as
+     * the boss version, but a separate effect so the two never interfere.
+     */
+    public static final RegistryObject<MobEffect> PERSEVERANCE_ALLY = EFFECTS.register("perseverance_ally",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xC03018) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
      * 钢气 (Steel Qi): Lei Heng stacks this on every successful strike, +10%
      * damage per level, up to 255 levels. Damage rule lives in CommonEvents.
      */
