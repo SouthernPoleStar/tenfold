@@ -144,5 +144,12 @@
   "tenfold.leiheng.rage": "Lei Heng is enraged: +30% attack!",
   "tenfold.leiheng.minions": "Lei Heng summons two minions! Kill them within 3 seconds!",
   "tenfold.leiheng.minion_timeout": "The minions survived — Lei Heng gains two levels of Strength!",
-  "tenfold.leiheng.minion_slain": "Minion slain quickly — Lei Heng is weakened!"
+  "tenfold.leiheng.minion_slain": "Minion slain quickly — Lei Heng is weakened!",
+  "item.tenfold.magic_gun": "Demon Gun",
+  "death.tenfold.magic_bullet": "%1$s was pierced by their own Demon Gun",
+  "tenfold.magicgun.desc": "Ranged: first shot %s damage, + %s per shot, up to %s shots",
+  "tenfold.magicgun.warn": "The seventh shell belongs to the demon — after the bang, it's your turn",
+  "tenfold.magicgun.shot": "Demon bullet: %s damage (shot %s/%s)",
+  "tenfold.advancement.magicgun.title": "The Demon's Contract",
+  "tenfold.advancement.magicgun.desc": "Do not step into my firing line. Unless you wish to be the target of these demon-possessed bullets."
 }

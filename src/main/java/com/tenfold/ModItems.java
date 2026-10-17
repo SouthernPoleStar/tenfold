@@ -51,6 +51,10 @@ public final class ModItems {
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.LEIHENG,
                     0x2F4F6F, 0x4A6FA5, new Item.Properties()));
 
+    /** 魔弹枪: 远程，伤害递增，第7发强制击杀持有者。 */
+    public static final RegistryObject<Item> MAGIC_GUN = ITEMS.register("magic_gun",
+            () -> new com.tenfold.item.MagicGunItem());
+
     /** 天退星刀: 7格近战，双弹匣（猛虎弹/猛虎标弹），可自动重装一次。 */
     public static final RegistryObject<Item> SKY_BLADE = ITEMS.register("sky_blade",
             () -> new com.tenfold.item.SkyBladeItem());

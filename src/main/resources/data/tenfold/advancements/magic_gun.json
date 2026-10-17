@@ -1,0 +1,18 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": { "item": "tenfold:magic_gun" },
+    "title": { "translate": "tenfold.advancement.magicgun.title" },
+    "description": { "translate": "tenfold.advancement.magicgun.desc" },
+    "frame": "goal",
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "has_gun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ { "items": ["tenfold:magic_gun"] } ]
+      }
+    }
+  }
+}

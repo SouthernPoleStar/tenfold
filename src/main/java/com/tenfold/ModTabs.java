@@ -25,6 +25,7 @@ public final class ModTabs {
                         output.accept(ModItems.LEVANDIN.get());
                         output.accept(ModItems.MATTHIAS_SPAWN_EGG.get());
                         output.accept(ModItems.LEIHENG_SPAWN_EGG.get());
+                        output.accept(ModItems.MAGIC_GUN.get());
                         output.accept(ModItems.SKY_BLADE.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
