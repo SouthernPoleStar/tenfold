@@ -93,7 +93,7 @@
   "tenfold.sniper.no_reload": "No reload: all 14 rounds spent = scrap",
   "item.tenfold.ammo_box": "Shoulder Ammo Box",
   "tenfold.ammobox.armor": "Grants %s armor points when worn in the chest slot",
-  "tenfold.ammobox.desc": "Right-click: refill the empty sniper of a player within %s blocks (never your own)",
+  "tenfold.ammobox.desc": "Right-click to refill another player's empty sniper or sky blade within %s blocks (never your own)",
   "tenfold.ammobox.help": "Wear it for armor · Hold and right-click to resupply teammates",
   "tenfold.ammobox.no_target": "No other player nearby holds an empty sniper.",
   "tenfold.ammobox.refilled": "%s refilled your sniper: 9 normal · 5 hyper-shredder",
@@ -129,5 +129,12 @@
   "tenfold.boss.unwrap1": "Matthias unwrapped the first layer!",
   "tenfold.boss.unwrap2": "Matthias unwrapped the second layer!",
   "tenfold.boss.unwrap3": "Matthias unwrapped the third layer!",
-  "tenfold.boss.grit": "Matthias gained Perseverance!"
+  "tenfold.boss.grit": "Matthias gained Perseverance!",
+  "item.tenfold.sky_blade": "Sky-Falling Star Blade",
+  "tenfold.skyblade.rounds": "Tiger rounds: %s / Tiger mark rounds: %s",
+  "tenfold.skyblade.damage": "Current damage: %s",
+  "tenfold.skyblade.reach": "Attack reach: %s blocks",
+  "tenfold.skyblade.help": "Sneak + right-click: dump all tiger rounds, force-switch to tiger mark rounds",
+  "tenfold.skyblade.reload_ready": "Auto-reloads once when out of ammo",
+  "tenfold.skyblade.dumped": "Dumped all tiger rounds — switched to tiger mark rounds"
 }

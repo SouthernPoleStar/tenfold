@@ -46,6 +46,10 @@ public final class ModItems {
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.MATTHIAS,
                     0x3A5F3A, 0xC03018, new Item.Properties()));
 
+    /** 天退星刀: 7格近战，双弹匣（猛虎弹/猛虎标弹），可自动重装一次。 */
+    public static final RegistryObject<Item> SKY_BLADE = ITEMS.register("sky_blade",
+            () -> new com.tenfold.item.SkyBladeItem());
+
     private ModItems() {
     }
 }

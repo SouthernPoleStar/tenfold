@@ -93,7 +93,7 @@
   "tenfold.sniper.no_reload": "无法装填：14 发打空后永久报废",
   "item.tenfold.ammo_box": "肩挂式弹药箱",
   "tenfold.ammobox.armor": "穿在胸甲槽提供 %s 点护甲值",
-  "tenfold.ammobox.desc": "右键：为 %s 格内手持空狙击枪的队友装满子弹（不可为自己装填）",
+  "tenfold.ammobox.desc": "右键为 %s 格内手持空狙击枪/空天退星刀的其他玩家装满弹药（不能装自己的）",
   "tenfold.ammobox.help": "穿在身上获得护甲 · 手持右键为队友补给",
   "tenfold.ammobox.no_target": "五格内没有手持空狙击枪的其他玩家。",
   "tenfold.ammobox.refilled": "%s 为你的狙击枪装满了子弹：普通 9 · 高速粉碎 5",
@@ -129,5 +129,12 @@
   "tenfold.boss.unwrap1": "马蒂亚斯拆开了第一层包装纸！",
   "tenfold.boss.unwrap2": "马蒂亚斯拆开了第二层包装纸！",
   "tenfold.boss.unwrap3": "马蒂亚斯拆开了第三层包装纸！",
-  "tenfold.boss.grit": "马蒂亚斯获得了「过人的毅力」！"
+  "tenfold.boss.grit": "马蒂亚斯获得了「过人的毅力」！",
+  "item.tenfold.sky_blade": "天退星刀",
+  "tenfold.skyblade.rounds": "猛虎弹：%s / 猛虎标弹：%s",
+  "tenfold.skyblade.damage": "当前伤害：%s",
+  "tenfold.skyblade.reach": "攻击距离：%s 格",
+  "tenfold.skyblade.help": "Shift+右键：丢弃所有猛虎弹，强制切换猛虎标弹",
+  "tenfold.skyblade.reload_ready": "弹药耗尽时可自动重装一次",
+  "tenfold.skyblade.dumped": "已丢弃全部猛虎弹，切换至猛虎标弹"
 }

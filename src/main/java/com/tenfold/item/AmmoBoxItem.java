@@ -73,15 +73,19 @@ public class AmmoBoxItem extends Item {
         }
         ServerPlayer server = (ServerPlayer) player;
 
-        SniperItem.Sniper target = findGun(server);
+        RefillTarget target = findTarget(server);
         if (target == null) {
             server.displayClientMessage(Component.translatable("tenfold.ammobox.no_target")
                     .withStyle(ChatFormatting.RED), true);
             return InteractionResultHolder.consume(box);
         }
 
-        SniperItem.setNormal(target.stack(), SniperItem.NORMAL_MAG);
-        SniperItem.setSpecial(target.stack(), SniperItem.SPECIAL_MAG);
+        if (target.stack().getItem() instanceof SniperItem) {
+            SniperItem.setNormal(target.stack(), SniperItem.NORMAL_MAG);
+            SniperItem.setSpecial(target.stack(), SniperItem.SPECIAL_MAG);
+        } else {
+            SkyBladeItem.refill(target.stack());
+        }
         level.playSound(null, target.player().blockPosition(), ModSounds.FORM_SHIFT.get(),
                 SoundSource.PLAYERS, 0.9F, 0.8F);
         target.player().displayClientMessage(Component.translatable("tenfold.ammobox.refilled",
@@ -91,9 +95,13 @@ public class AmmoBoxItem extends Item {
         return InteractionResultHolder.consume(box);
     }
 
-    /** Nearest other player within reach holding an empty sniper in either hand. */
+    /** One refillable weapon held by a nearby player. */
+    private record RefillTarget(Player player, ItemStack stack) {
+    }
+
+    /** Nearest other player within reach holding an empty sniper / sky blade. */
     @Nullable
-    private static SniperItem.Sniper findGun(ServerPlayer user) {
+    private static RefillTarget findTarget(ServerPlayer user) {
         return user.level().getEntitiesOfClass(Player.class,
                         user.getBoundingBox().inflate(REACH),
                         p -> p != user && p.isAlive() && !p.isSpectator())
@@ -103,10 +111,13 @@ public class AmmoBoxItem extends Item {
                     for (InteractionHand hand : InteractionHand.values()) {
                         ItemStack gun = p.getItemInHand(hand);
                         if (gun.getItem() instanceof SniperItem && SniperItem.isEmpty(gun)) {
-                            return java.util.Optional.of(new SniperItem.Sniper(p, gun));
+                            return java.util.Optional.of(new RefillTarget(p, gun));
+                        }
+                        if (gun.getItem() instanceof SkyBladeItem && SkyBladeItem.isEmpty(gun)) {
+                            return java.util.Optional.of(new RefillTarget(p, gun));
                         }
                     }
-                    return java.util.Optional.<SniperItem.Sniper>empty();
+                    return java.util.Optional.<RefillTarget>empty();
                 })
                 .orElse(null);
     }
