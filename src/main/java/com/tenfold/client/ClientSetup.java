@@ -23,12 +23,15 @@ public final class ClientSetup {
         @SubscribeEvent
         public static void onRenderers(net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(com.tenfold.ModEntities.MATTHIAS.get(),
-                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
+                    ctx -> new BossZombieRenderer(ctx,
+                            new net.minecraft.resources.ResourceLocation("tenfold", "textures/entity/matthias.png")));
             event.registerEntityRenderer(com.tenfold.ModEntities.LEIHENG.get(),
-                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
-            event.registerEntityRenderer(com.tenfold.ModEntities.MINION.get(),
-                    net.minecraft.client.renderer.entity.ZombieRenderer::new);
+                    ctx -> new BossZombieRenderer(ctx,
+                            new net.minecraft.resources.ResourceLocation("tenfold", "textures/entity/leiheng.png")));
             event.registerEntityRenderer(com.tenfold.ModEntities.LIEN.get(),
+                    ctx -> new BossZombieRenderer(ctx,
+                            new net.minecraft.resources.ResourceLocation("tenfold", "textures/entity/lien.png")));
+            event.registerEntityRenderer(com.tenfold.ModEntities.MINION.get(),
                     net.minecraft.client.renderer.entity.ZombieRenderer::new);
         }
     }
