@@ -4,8 +4,29 @@
     "layer0": "tenfold:item/levandin_0"
   },
   "overrides": [
-    { "predicate": { "custom_model_data": 1 }, "model": "tenfold:item/levandin_1" },
-    { "predicate": { "custom_model_data": 2 }, "model": "tenfold:item/levandin_2" },
-    { "predicate": { "custom_model_data": 3 }, "model": "tenfold:item/levandin_3" }
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "tenfold:item/levandin_1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "tenfold:item/levandin_2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "tenfold:item/levandin_3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4
+      },
+      "model": "tenfold:item/levandin_4"
+    }
   ]
 }

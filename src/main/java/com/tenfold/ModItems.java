@@ -37,7 +37,7 @@ public final class ModItems {
     public static final RegistryObject<Item> AMMO_BOX = ITEMS.register("ammo_box",
             () -> new com.tenfold.item.AmmoBoxItem());
 
-    /** 莱万丁: a wrapped long sword that unwraps itself in four stages. */
+    /** 莱万丁: 一把拆开层层包装后不断觉醒的长剑。 */
     public static final RegistryObject<Item> LEVANDIN = ITEMS.register("levandin",
             () -> new com.tenfold.item.LevandinItem());
 

@@ -19,10 +19,10 @@ public final class ModTabs {
                     .icon(() -> new ItemStack(ModItems.TENFOLD_BLADE.get()))
                     .displayItems((params, output) -> {
                         output.accept(ModItems.TENFOLD_BLADE.get());
-                        output.accept(ModItems.LEVANDIN.get());
                         output.accept(ModItems.SNIPER.get());
                         output.accept(ModItems.AMMO_BOX.get());
                         output.accept(ModItems.OATH_SHARD.get());
+                        output.accept(ModItems.LEVANDIN.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));
