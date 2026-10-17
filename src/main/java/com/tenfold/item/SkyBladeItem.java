@@ -52,7 +52,12 @@ public class SkyBladeItem extends Item {
     private static CompoundTag root(ItemStack stack) {
         CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains("tenfold", CompoundTag.TAG_COMPOUND)) {
-            tag.put("tenfold", new CompoundTag());
+            CompoundTag fresh = new CompoundTag();
+            // A brand-new blade arrives fully loaded.
+            fresh.putInt("tiger", TIGER_MAG);
+            fresh.putInt("mark", MARK_MAG);
+            fresh.putInt("mode", 0);
+            tag.put("tenfold", fresh);
         }
         return tag.getCompound("tenfold");
     }

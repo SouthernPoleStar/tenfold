@@ -182,6 +182,10 @@ public class MatthiasEntity extends Zombie {
 
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return effect.getEffect() != ModEffects.PERSEVERANCE.get() && super.canBeAffected(effect);
+        // Perseverance must always land — the boss grants it to himself below 30%.
+        if (effect.getEffect() == ModEffects.PERSEVERANCE.get()) {
+            return true;
+        }
+        return super.canBeAffected(effect);
     }
 }

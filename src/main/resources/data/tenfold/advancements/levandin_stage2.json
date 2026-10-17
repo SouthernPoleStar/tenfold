@@ -1,7 +1,7 @@
 {
   "parent": "tenfold:levandin_stage1",
   "display": {
-    "icon": { "item": "tenfold:levandin", "nbt": "{CustomModelData:2}" },
+    "icon": { "item": "tenfold:levandin", "nbt": "{CustomModelData:3}" },
     "title": { "translate": "tenfold.advancement.levandin2.title" },
     "description": { "translate": "tenfold.advancement.levandin2.desc" },
     "frame": "goal",
@@ -11,7 +11,7 @@
     "reach_stage2": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [ { "items": ["tenfold:levandin"], "nbt": "{CustomModelData:2}" } ]
+        "items": [ { "items": ["tenfold:levandin"], "nbt": "{CustomModelData:3}" } ]
       }
     }
   }
