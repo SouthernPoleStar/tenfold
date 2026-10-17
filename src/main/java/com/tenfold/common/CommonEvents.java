@@ -84,6 +84,24 @@ public class CommonEvents {
         }
     }
 
+    /** Welcome banner, shown in chat every time a player enters the world. */
+    @SubscribeEvent
+    public void onPlayerLoggedIn(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity().level().isClientSide()
+                || !(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        String[] keys = {
+                "tenfold.welcome.1", "tenfold.welcome.2", "tenfold.welcome.3",
+                "tenfold.welcome.4", "tenfold.welcome.5", "tenfold.welcome.6",
+                "tenfold.welcome.7", "tenfold.welcome.8", "tenfold.welcome.9"
+        };
+        for (String key : keys) {
+            player.sendSystemMessage(net.minecraft.network.chat.Component.translatable(key)
+                    .withStyle(net.minecraft.ChatFormatting.GOLD));
+        }
+    }
+
     /**
      * IRA ledger settlement runs from the tick loop instead of the
      * MobEffectEvent.Expired hook: that event only fires when the potion times

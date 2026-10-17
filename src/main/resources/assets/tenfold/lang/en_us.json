@@ -159,5 +159,14 @@
   "tenfold.lien.unmask": "%s tears off the mask, exposing the wounds... he gains Contract Addiction!",
   "tenfold.lien.contract": "%s issues a contract: %s is marked (the mask dulls the curse — no slowness)",
   "item.tenfold.lien_spawn_egg": "Lien Spawn Egg",
-  "death.attack.tenfold.magic_bullet": "%1$s was pierced by their own Demon Gun"
+  "death.attack.tenfold.magic_bullet": "%1$s was pierced by their own Demon Gun",
+  "tenfold.welcome.1": "Welcome to this mod!",
+  "tenfold.welcome.2": "This mod is still v0.1.x (beta)",
+  "tenfold.welcome.3": "There may be bugs and rough textures.",
+  "tenfold.welcome.4": "Thanks for your understanding.",
+  "tenfold.welcome.5": "",
+  "tenfold.welcome.6": "Also,",
+  "tenfold.welcome.7": "Author 南极星 arr (all rights reserved)",
+  "tenfold.welcome.8": "Feedback: QQ 3618576581",
+  "tenfold.welcome.9": "Thanks for playing!"
 }

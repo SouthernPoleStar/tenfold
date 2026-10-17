@@ -159,5 +159,14 @@
   "tenfold.lien.unmask": "%s 摘下了假面，伤口暴露在空气中……他获得了指令成瘾！",
   "tenfold.lien.contract": "%s 发出了指令：%s 已被标记（假面削弱了诅咒，未附加缓慢）",
   "item.tenfold.lien_spawn_egg": "里恩刷怪蛋",
-  "death.attack.tenfold.magic_bullet": "%1$s 使用魔弹枪贯穿了自己"
+  "death.attack.tenfold.magic_bullet": "%1$s 使用魔弹枪贯穿了自己",
+  "tenfold.welcome.1": "欢迎游玩本模组",
+  "tenfold.welcome.2": "本模组尚为v0.1.x（测试版本）",
+  "tenfold.welcome.3": "可能存在BUG并且贴图粗糙",
+  "tenfold.welcome.4": "请谅解",
+  "tenfold.welcome.5": "",
+  "tenfold.welcome.6": "另外",
+  "tenfold.welcome.7": "作者南极星 arr（all rights reserved）",
+  "tenfold.welcome.8": "反馈渠道：QQ3618576581",
+  "tenfold.welcome.9": "感谢游玩本模组！"
 }
