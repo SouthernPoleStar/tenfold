@@ -1,0 +1,18 @@
+{
+  "parent": "tenfold:levandin_root",
+  "display": {
+    "icon": { "item": "tenfold:levandin", "nbt": "{CustomModelData:1}" },
+    "title": { "translate": "tenfold.advancement.levandin1.title" },
+    "description": { "translate": "tenfold.advancement.levandin1.desc" },
+    "frame": "goal",
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "reach_stage1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ { "items": ["tenfold:levandin"], "nbt": "{CustomModelData:1}" } ]
+      }
+    }
+  }
+}

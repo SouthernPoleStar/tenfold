@@ -114,5 +114,13 @@
   "levandin.unwrap.need": "还包着呢 —— 请先攻击 %s 次",
   "levandin.unwrap.final": "已经没有包装纸可拆了。",
   "levandin.unwrap.done": "撕开第 %s 层包装 —— 剑露出了第 %s 种形态！",
-  "levandin.self_burn": "剑刃的热度烧回了你自己！"
+  "levandin.self_burn": "剑刃的热度烧回了你自己！",
+  "tenfold.advancement.levandin0.title": "传说之剑",
+  "tenfold.advancement.levandin0.desc": "就算遭到一些怀疑又能如何？那把传说之剑，已经在我手中了！",
+  "tenfold.advancement.levandin1.title": "是时候拆开一层包装纸了",
+  "tenfold.advancement.levandin1.desc": "这把剑，永远都玩不腻。",
+  "tenfold.advancement.levandin2.title": "连第二层包装纸都要打开吗？",
+  "tenfold.advancement.levandin2.desc": "哈哈，有意思，原来特色是这种手感。",
+  "tenfold.advancement.levandin3.title": "莱万丁，完全解放",
+  "tenfold.advancement.levandin3.desc": "这会很烫的，非常烫！"
 }

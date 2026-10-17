@@ -1,0 +1,18 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": { "item": "tenfold:levandin" },
+    "title": { "translate": "tenfold.advancement.levandin0.title" },
+    "description": { "translate": "tenfold.advancement.levandin0.desc" },
+    "frame": "task",
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "has_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ { "items": ["tenfold:levandin"] } ]
+      }
+    }
+  }
+}

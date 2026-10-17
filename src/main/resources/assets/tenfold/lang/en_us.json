@@ -114,5 +114,13 @@
   "levandin.unwrap.need": "Still wrapped tight — strike %s more time(s) first",
   "levandin.unwrap.final": "Nothing left to unwrap.",
   "levandin.unwrap.done": "Layer %s torn away — the sword reveals form %s!",
-  "levandin.self_burn": "The blade's heat crawls back onto you!"
+  "levandin.self_burn": "The blade's heat crawls back onto you!",
+  "tenfold.advancement.levandin0.title": "The Legendary Sword",
+  "tenfold.advancement.levandin0.desc": "So what if some doubt me? That legendary sword is already in my hands!",
+  "tenfold.advancement.levandin1.title": "Time to Unwrap the First Layer",
+  "tenfold.advancement.levandin1.desc": "This sword, I will never get tired of it.",
+  "tenfold.advancement.levandin2.title": "Open the Second Layer Too?",
+  "tenfold.advancement.levandin2.desc": "Haha, interesting — so this is the feel of it.",
+  "tenfold.advancement.levandin3.title": "Levandin, Full Unleash",
+  "tenfold.advancement.levandin3.desc": "This will be hot. Very hot!"
 }
