@@ -16,5 +16,5 @@
 
 ---
 
-版本 **0.1.22**
+版本 **0.1.23**
 [更新日志](https://github.com/SouthernPoleStar/tenfold/blob/master/CHANGELOG.md)
