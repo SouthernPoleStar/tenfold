@@ -13,3 +13,4 @@ run/
 bin/
 # Misc
 *.log
+*.zip

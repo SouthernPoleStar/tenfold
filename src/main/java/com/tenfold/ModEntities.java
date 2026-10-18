@@ -4,6 +4,7 @@ import com.tenfold.entity.MatthiasEntity;
 import com.tenfold.entity.MinionEntity;
 import com.tenfold.entity.LeiHengEntity;
 import com.tenfold.entity.LienEntity;
+import com.tenfold.entity.PoeyEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -46,6 +47,13 @@ public final class ModEntities {
                     .clientTrackingRange(12)
                     .build("lien"));
 
+    /** Poey: 友方支援单位，跟随玩家、治疗濒死玩家、给敌人挂「卑贱之物」。 */
+    public static final RegistryObject<EntityType<PoeyEntity>> POEY =
+            ENTITIES.register("poey", () -> EntityType.Builder.of(PoeyEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.8F)
+                    .clientTrackingRange(10)
+                    .build("poey"));
+
     @Mod.EventBusSubscriber(modid = Tenfold.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     private static class AttributeHandler {
         @SubscribeEvent
@@ -54,6 +62,7 @@ public final class ModEntities {
             event.put(LEIHENG.get(), LeiHengEntity.createAttributes().build());
             event.put(MINION.get(), MinionEntity.createAttributes().build());
             event.put(LIEN.get(), LienEntity.createAttributes().build());
+            event.put(POEY.get(), PoeyEntity.createAttributes().build());
         }
     }
 

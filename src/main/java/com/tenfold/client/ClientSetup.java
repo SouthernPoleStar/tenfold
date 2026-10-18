@@ -8,7 +8,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ComputeFovModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
  * Client-only glue: FOV nudge for the greatsword and a small held-item
@@ -33,12 +32,8 @@ public final class ClientSetup {
                             new net.minecraft.resources.ResourceLocation("tenfold", "textures/entity/lien.png")));
             event.registerEntityRenderer(com.tenfold.ModEntities.MINION.get(),
                     net.minecraft.client.renderer.entity.ZombieRenderer::new);
+            event.registerEntityRenderer(com.tenfold.ModEntities.POEY.get(), PoeyRenderer::new);
         }
-    }
-
-    public static void onClientSetup(FMLClientSetupEvent event) {
-        // Intentionally empty: item models are chosen by the item properties,
-        // see TenfoldBladeItem#getModelKey. Kept as the FML hook target.
     }
 
     @SubscribeEvent

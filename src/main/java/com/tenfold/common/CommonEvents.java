@@ -2,9 +2,11 @@ package com.tenfold.common;
 
 import com.tenfold.ModEffects;
 import com.tenfold.ModItems;
+import com.tenfold.entity.MatthiasEntity;
 import com.tenfold.item.WeaponData;
 import com.tenfold.item.WeaponForm;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /**
@@ -37,9 +40,8 @@ public class CommonEvents {
         }
         ServerPlayer server = (ServerPlayer) player;
 
-        ItemStack held = player.getMainHandItem();
-        if (player.tickCount % 20 == 0 && held.is(ModItems.TENFOLD_BLADE.get())) {
-            ContractManager.tick(server, held);
+        if (player.tickCount % 20 == 0) {
+            tickContractBlades(server);
         }
 
         // Contract Addiction: flat +10 damage while the effect lasts.
@@ -53,6 +55,23 @@ public class CommonEvents {
 
         // 莱万丁（完全拆封）: low health grants 过人的毅力（我方版）absorption.
         syncLevandinGrit(player);
+    }
+
+    /**
+     * 契约计时跟着刀走，而不是只跟主手：刀收进背包/副手时，超时同样要判违约，
+     * 目标的高亮也不会因为换手而永远挂着。
+     */
+    private void tickContractBlades(ServerPlayer player) {
+        for (ItemStack stack : player.getInventory().items) {
+            if (stack.is(ModItems.TENFOLD_BLADE.get())) {
+                ContractManager.tick(player, stack);
+            }
+        }
+        for (ItemStack stack : player.getInventory().offhand) {
+            if (stack.is(ModItems.TENFOLD_BLADE.get())) {
+                ContractManager.tick(player, stack);
+            }
+        }
     }
 
     /**
@@ -223,6 +242,15 @@ public class CommonEvents {
             amount *= 0.3F;
         }
 
+        // 卑贱之物：持有者造成的伤害 -70%，受到的伤害 +110%。
+        if (event.getSource().getEntity() instanceof LivingEntity striker
+                && striker.hasEffect(ModEffects.ABJECT.get())) {
+            amount *= 0.3F;
+        }
+        if (event.getEntity().hasEffect(ModEffects.ABJECT.get())) {
+            amount *= 2.1F;
+        }
+
         // Rapier ramp (wielder bonus, independent of the contract).
         if (event.getSource().getEntity() instanceof Player player) {
             ItemStack held = player.getMainHandItem();
@@ -240,7 +268,7 @@ public class CommonEvents {
             amount *= 2.0F;
         }
 
-        // 钢气: +10% damage per stack (amplifier 0 = level 1), up to 255 levels.
+        // 钢气: +10% damage per stack (amplifier 0 = level 1), capped at 10 levels.
         if (event.getSource().getEntity() instanceof LivingEntity striker) {
             var steel = striker.getEffect(ModEffects.STEEL_QI.get());
             if (steel != null) {
@@ -248,12 +276,46 @@ public class CommonEvents {
             }
         }
 
-        // 过人的毅力: any single hit against the bearer is forced to 3 or less.
-        if (event.getEntity().hasEffect(ModEffects.PERSEVERANCE.get())) {
-            amount = Math.min(amount, 3.0F);
+        // 锥子: ignore half the target's armor. This event runs *before* vanilla
+        // applies armor, and the vanilla armor formula is not linear in the damage
+        // value (low hits get pinned by the reduction floor), so we solve for the
+        // raw amount whose post-armor result is exactly "half the reduction".
+        if (event.getSource().getEntity() instanceof Player coneWielder
+                && coneWielder.getMainHandItem().is(ModItems.TENFOLD_BLADE.get())
+                && WeaponData.form(coneWielder.getMainHandItem()) == WeaponForm.CONE) {
+            LivingEntity victim = event.getEntity();
+            float armor = victim.getArmorValue();
+            if (armor > 0.0F) {
+                float toughness = (float) victim.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+                float afterArmor = CombatRules.getDamageAfterAbsorb(amount, armor, toughness);
+                if (afterArmor > 0.0F && afterArmor < amount) {
+                    float desired = amount - (amount - afterArmor) * 0.5F;
+                    amount = rawForPostArmor(desired, armor, toughness);
+                }
+            }
         }
 
+        // 过人的毅力 is resolved in LivingDamageEvent: the 3-point cap must sit
+        // *after* armor and absorption to be the final number that lands.
         event.setAmount(amount);
+    }
+
+    /**
+     * 求一个原始伤害值，使它在 {@link CombatRules#getDamageAfterAbsorb} 之后正好
+     * 等于 {@code desired}。护甲公式分段且带 clamp，直接反解很啰嗦，二分足够快。
+     */
+    private static float rawForPostArmor(float desired, float armor, float toughness) {
+        float lo = 0.0F;
+        float hi = Math.max(desired * 8.0F, 1.0F);
+        for (int i = 0; i < 16; i++) {
+            float mid = (lo + hi) * 0.5F;
+            if (CombatRules.getDamageAfterAbsorb(mid, armor, toughness) < desired) {
+                lo = mid;
+            } else {
+                hi = mid;
+            }
+        }
+        return hi;
     }
 
     /**
@@ -283,27 +345,57 @@ public class CommonEvents {
         }
     }
 
-    /** Half-sword form: while the blade is held up in a block, damage is halved and reflected. */
+    /**
+     * 马蒂亚斯的「过人的毅力」。
+     * <p>
+     * 单次伤害封顶 3 点，但这份毅力有总耐久（{@link MatthiasEntity#GRIT_ABSORPTION}）：
+     * 每次受到的伤害都会消耗耐久，耐久被打空的那一刀按真实伤害结算，之后他永久
+     * 失去减伤与双倍伤害。这样堆 buff 的爆发流能更快撕开毅力，而不是被无限墙挡住。
+     * <p>
+     * 放在 {@code LivingDamageEvent}（护甲/吸收结算之后）而不是
+     * {@code LivingHurtEvent}，封顶的 3 点才是真正落在他身上的数字。
+     */
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent event) {
-        if (!(event.getEntity() instanceof Player player) || !player.isBlocking()) {
+        if (event.getEntity().level().isClientSide()) {
             return;
         }
-
-        ItemStack candidate = null;
-        for (ItemStack stack : new ItemStack[]{player.getMainHandItem(), player.getOffhandItem()}) {
-            if (stack.is(ModItems.TENFOLD_BLADE.get()) && WeaponData.form(stack) == WeaponForm.HALFSWORD) {
-                candidate = stack;
-                break;
-            }
-        }
-        if (candidate == null) {
+        if (!(event.getEntity() instanceof MatthiasEntity matthias)
+                || !matthias.hasEffect(ModEffects.PERSEVERANCE.get())) {
             return;
         }
+        float raw = event.getAmount();
+        if (raw <= 0.0F) {
+            return;
+        }
+        // 耐久还在：这一刀被压到 3；打空的那一刀吃满伤害。
+        if (matthias.grindDownGrit(raw)) {
+            event.setAmount(Math.min(raw, 3.0F));
+        }
+    }
 
-        float original = event.getAmount();
-        event.setAmount(original * 0.5F);
-        if (event.getSource().getEntity() instanceof LivingEntity attacker && attacker != player) {
+    /**
+     * 半手剑格挡。
+     * <p>
+     * 玩家举剑后会进入 vanilla 的 isBlocking 状态，原版把伤害全额挡下并触发本事件。
+     * 这里把挡下的部分压到一半（即"受到伤害减半"），再把原伤害的 30% 反弹给攻击者。
+     * 剑不是盾牌，所以不让它掉耐久。
+     */
+    @SubscribeEvent
+    public void onShieldBlock(ShieldBlockEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        ItemStack used = player.getUseItem();
+        if (!used.is(ModItems.TENFOLD_BLADE.get())
+                || WeaponData.form(used) != WeaponForm.HALFSWORD) {
+            return;
+        }
+        float original = event.getBlockedDamage();
+        event.setBlockedDamage(original * 0.5F);
+        event.setShieldTakesDamage(false);
+        if (event.getDamageSource().getEntity() instanceof LivingEntity attacker
+                && attacker != player) {
             attacker.hurt(player.damageSources().thorns(player), original * 0.3F);
         }
     }

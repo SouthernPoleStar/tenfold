@@ -20,6 +20,7 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -120,9 +121,25 @@ public final class ContractManager {
         AABB box = player.getBoundingBox().inflate(TARGET_RANGE);
         List<LivingEntity> candidates = player.level().getEntitiesOfClass(LivingEntity.class, box,
                 e -> isValidTarget(player, e));
+        if (candidates.isEmpty()) {
+            return null;
+        }
+        // 优先选"正看着、并且看得见"的那一只：混战里只按距离选，会经常选到
+        // 贴身的小怪，导致续不上 Boss 的标记。正前方 60° 内没有目标时才退回最近的一只。
+        Vec3 eye = player.getEyePosition();
+        Vec3 look = player.getLookAngle();
         return candidates.stream()
+                .filter(e -> {
+                    Vec3 dir = e.getEyePosition().subtract(eye);
+                    if (dir.lengthSqr() < 1.0E-4D) {
+                        return true;
+                    }
+                    return dir.normalize().dot(look) >= 0.5D && player.hasLineOfSight(e);
+                })
                 .min(Comparator.comparingDouble(e -> e.distanceToSqr(player)))
-                .orElse(null);
+                .orElseGet(() -> candidates.stream()
+                        .min(Comparator.comparingDouble(e -> e.distanceToSqr(player)))
+                        .orElse(null));
     }
 
     private static boolean isValidTarget(ServerPlayer player, Entity e) {

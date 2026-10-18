@@ -23,10 +23,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = "tenfold", value = Dist.CLIENT)
 public final class ClientEvents {
 
-    public static void onRegisterKeyMappings(net.minecraftforge.client.event.RegisterKeyMappingsEvent event) {
-        // Reserved for future keybinds (quick form wheel).
-    }
-
     /**
      * Never cancel the interaction: the server needs the packet to run the
      * contract / form-switch logic. This hook only provides immediate visual

@@ -37,6 +37,8 @@ public class Tenfold {
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Custom advancement triggers must be registered before datapacks load.
         event.enqueueWork(() -> {
+            // 原版 max_health 上限 1024，不放开的话 8000/7500/2000 血的 Boss 会被压成 1024。
+            com.tenfold.common.AttributeLimits.raiseMaxHealthLimit();
             CriteriaTriggers.register(ContractTriggers.CONTRACT_ISSUED);
             CriteriaTriggers.register(ContractTriggers.CONTRACT_DONE);
             CriteriaTriggers.register(ContractTriggers.CONTRACT_BROKEN);

@@ -48,7 +48,11 @@ public class MaskItem extends ArmorItem {
 
         @Override
         public String getName() {
-            return "tenfold_mask";
+            // 必须带命名空间前缀：HumanoidArmorLayer#getArmorResource 按第一个 ':' 拆分，
+            // 没有前缀时命名空间会落到 minecraft，找不到贴图 → 渲染成黑紫棋盘"头套"。
+            // tenfold:textures/models/armor/tenfold_mask_layer_1.png 是全透明图，
+            // 佩戴后视觉上完全不显示（符合假面"隐藏显示"的设计）。
+            return "tenfold:tenfold_mask";
         }
 
         @Override

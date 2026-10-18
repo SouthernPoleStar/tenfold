@@ -118,7 +118,7 @@ public class MagicGunItem extends Item {
         LivingEntity best = null;
         double bestT = Double.MAX_VALUE;
         for (Entity e : player.level().getEntities(player, player.getBoundingBox()
-                .inflate(RANGE / 2), this_ -> this_ instanceof LivingEntity l && l.isAlive() && l != player)) {
+                .inflate(RANGE), this_ -> this_ instanceof LivingEntity l && l.isAlive() && l != player)) {
             AABB box = e.getBoundingBox().inflate(0.3D);
             var clip = box.clip(from, to);
             if (clip.isPresent()) {

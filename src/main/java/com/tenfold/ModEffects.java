@@ -98,6 +98,31 @@ public final class ModEffects {
                 }
             });
 
+    /**
+     * 卑贱之物 (Abject Thing): Poey's mark. The bearer deals 30% damage and
+     * takes 210% damage. Both multipliers live in CommonEvents.
+     */
+    public static final RegistryObject<MobEffect> ABJECT = EFFECTS.register("abject",
+            () -> new MobEffect(MobEffectCategory.HARMFUL, 0x6B2FA0) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
+     * 脉动 (Pulse): Poey gains one stack per successful hit. Each stack means
+     * +20% healing speed, +10% movement speed and +30% attack damage; the
+     * attribute side is applied by PoeyEntity itself.
+     */
+    public static final RegistryObject<MobEffect> PULSE = EFFECTS.register("pulse",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xFF6FA8) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
     private ModEffects() {
     }
 }

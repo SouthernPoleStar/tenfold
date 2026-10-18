@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:ghast_tear" },
+    { "item": "minecraft:egg" },
+    { "item": "minecraft:netherite_scrap" }
+  ],
+  "result": {
+    "item": "tenfold:poey_spawn_egg"
+  }
+}

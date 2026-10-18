@@ -10,35 +10,40 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
  * 雷横 — a zombie-styled boss swinging the 天退星刀.
  * <p>
  * 8000 HP. Every successful strike grants one stack of 钢气 (+10% damage per
- * stack, max 255). His blade reloads itself endlessly. Below 5000 HP his
- * attack rises by 30% and he may call two 弹药箱-clad minion zombies: kill
- * them within 3 seconds and he weakens, fail and he grows stronger while
+ * stack, capped at 10 stacks = 2x). His blade reloads itself endlessly. Below
+ * 5000 HP his attack rises by 30% and he may call two 弹药箱-clad minion zombies:
+ * kill them within 3 seconds and he weakens, fail and he grows stronger while
  * they vanish. Cannot burn in sunlight. Has a proper boss health bar.
  */
 public class LeiHengEntity extends Zombie {
 
     /** 8000 HP. */
     public static final double MAX_HP = 8000.0D;
-    /** Below this health the boss enters his second phase. */
-    public static final float RAGE_THRESHOLD = 5000.0F;
-    private static final int MAX_STEEL_QI_LEVEL = 255;
+    /** 血量降到最大值的 62.5%（原设计 5000/8000）时进入二阶段。 */
+    public static final float RAGE_RATIO = 0.625F;
+    private static final int MAX_STEEL_QI_LEVEL = 10;
     private static final UUID RAGE_UUID = UUID.fromString("b7e2f4a1-3c8d-4e52-9a10-6d3f55c0b7a3");
 
     private boolean rageApplied = false;
@@ -124,6 +129,21 @@ public class LeiHengEntity extends Zombie {
     }
 
     /* ------------------------------------------------------------------ */
+    /* Spawning                                                            */
+    /* ------------------------------------------------------------------ */
+
+    @Override
+    @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType reason, @Nullable SpawnGroupData spawnData,
+                                        @Nullable CompoundTag tag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+        // 刷怪蛋 / /summon / 自然生成统一按满血出生。
+        this.setHealth(this.getMaxHealth());
+        return result;
+    }
+
+    /* ------------------------------------------------------------------ */
     /* Tick                                                                */
     /* ------------------------------------------------------------------ */
 
@@ -148,14 +168,15 @@ public class LeiHengEntity extends Zombie {
         checkRage();
     }
 
-    /** Below 5000 HP: +30% attack once, and from then on he may call minions. */
+    /** Below 62.5% HP: +30% attack once, and from then on he may call minions. */
     private void checkRage() {
-        // Guard: during the first seconds after spawning the health readout
-        // can be inconsistent; never judge rage in that window.
-        if (this.rageApplied || this.tickCount < 100
-                || this.getHealth() <= 0.0F
-                || this.getHealth() >= RAGE_THRESHOLD
-                || this.getHealth() > this.getMaxHealth() * 0.995F) {
+        // 前 5 秒不判定：生成瞬间的血量读数可能还是脏的。
+        if (this.rageApplied || this.tickCount < 100 || this.getHealth() <= 0.0F) {
+            return;
+        }
+        // 用比例而不是写死 5000：即使 max_health 被原版 1024 上限压过，
+        // 二阶段也落在同样的血量百分比上，不会"砍两刀就进二阶段"。
+        if (this.getHealth() > this.getMaxHealth() * RAGE_RATIO) {
             return;
         }
         this.rageApplied = true;
@@ -234,7 +255,8 @@ public class LeiHengEntity extends Zombie {
     /** Called by minions when their 3-second timer runs out untouched. */
     void onMinionTimedOut() {
         MobEffectInstance current = this.getEffect(MobEffects.DAMAGE_BOOST);
-        int amplifier = (current == null ? -1 : current.getAmplifier()) + 2;
+        // Strength 最高叠到 V，否则一场打久了的仗会无限滚雪球。
+        int amplifier = Math.min(4, (current == null ? -1 : current.getAmplifier()) + 2);
         this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 20, amplifier, false, true, true));
         announce("tenfold.leiheng.minion_timeout");
     }
@@ -267,12 +289,20 @@ public class LeiHengEntity extends Zombie {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("LeiRage", rageApplied);
+        // 标记"血量已经迁移过"，避免每次读档都把低血量误判成旧版本 clamp 损坏。
+        tag.putBoolean("HealthMigrated", true);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.rageApplied = tag.getBoolean("LeiRage");
+        // 旧存档的 max_health 曾被原版 1024 上限压过，血量也跟着被压到 1024；
+        // 只在"第一次读档且没有迁移标记"时重置一次，避免战斗中重载区块无限回血。
+        if (!tag.getBoolean("HealthMigrated")
+                && this.getHealth() <= 1024.0F && this.getMaxHealth() > 1024.0F) {
+            this.setHealth(this.getMaxHealth());
+        }
         if (this.rageApplied) {
             var attr = this.getAttribute(Attributes.ATTACK_DAMAGE);
             if (attr != null && attr.getModifier(RAGE_UUID) == null) {

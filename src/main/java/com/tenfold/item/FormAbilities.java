@@ -5,8 +5,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -65,15 +63,9 @@ public final class FormAbilities {
             }
             case SPEAR -> pierce(player, primary);
             case CONE -> {
-                if (primary instanceof Mob mob) {
-                    var armor = mob.getAttribute(Attributes.ARMOR);
-                    if (armor != null) {
-                        armor.removeModifier(ARMOR_SHRED);
-                        armor.addTransientModifier(new AttributeModifier(ARMOR_SHRED, "tenfold_armor_shred",
-                                -armor.getValue() * 0.5, AttributeModifier.Operation.ADDITION));
-                        mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 0, false, false));
-                    }
-                }
+                // 破甲在 CommonEvents#onLivingHurt 里按"这一刀只吃一半护甲减免"结算，
+                // 不再往目标身上挂永久的 -50% 护甲 modifier。
+                primary.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 0, false, false));
             }
             case SHOVEL -> {
                 // no bonus: the shovel is the penalty form
@@ -83,30 +75,6 @@ public final class FormAbilities {
             server.sendParticles(ParticleTypes.SWEEP_ATTACK,
                     primary.getX(), primary.getY(0.6), primary.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         }
-    }
-
-    private static final java.util.UUID ARMOR_SHRED = java.util.UUID.fromString("1f3a9c62-2c4a-4d3f-8f2a-1a2b3c4d5e6f");
-
-    /**
-     * Absolute damage for a form, in half-hearts.
-     * <p>
-     * These are final weapon damages, not bonuses: the item suppresses the
-     * player's own attack-damage attribute so the number on the tooltip is the
-     * number that lands. Scythe is the ceiling at 15, shovel the floor at 6.
-     */
-    public static float damage(WeaponForm form) {
-        return switch (form) {
-            case GREATSWORD -> 13.0F;
-            case SCYTHE -> 15.0F;
-            case RAPIER -> 9.0F;
-            case AXE -> 12.0F;
-            case HAMMER -> 14.0F;
-            case WHIP -> 8.0F;
-            case HALFSWORD -> 10.0F;
-            case SPEAR -> 12.0F;
-            case CONE -> 11.0F;
-            case SHOVEL -> 6.0F;
-        };
     }
 
     private static void cleave(Player player, LivingEntity primary, double arcDegrees, double range,

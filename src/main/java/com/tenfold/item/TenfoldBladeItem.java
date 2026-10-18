@@ -22,10 +22,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -42,6 +47,8 @@ public class TenfoldBladeItem extends SwordItem {
             java.util.UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
     private static final java.util.UUID BASE_ATTACK_SPEED_UUID =
             java.util.UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
+    private static final java.util.UUID BASE_ENTITY_REACH_UUID =
+            java.util.UUID.fromString("7C0E6E3A-5B1D-4C8F-9A2E-3D4B5C6D7E8F");
 
     public TenfoldBladeItem() {
         super(Tiers.IRON, 3, -2.4F, new Item.Properties().durability(2031));
@@ -105,6 +112,11 @@ public class TenfoldBladeItem extends SwordItem {
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(
                 BASE_ATTACK_SPEED_UUID, "Weapon modifier",
                 form.attackSpeed, AttributeModifier.Operation.ADDITION));
+        // 形态触及距离（鞭子 5.5、长枪 4.5、锥子 2.4…）。玩家默认 ENTITY_REACH 是 3.0，
+        // 所以写入 reach - 3.0；Forge 的 Player#getEntityReach 会读这个属性来判断攻击距离。
+        builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(
+                BASE_ENTITY_REACH_UUID, "Weapon modifier",
+                form.reach - 3.0D, AttributeModifier.Operation.ADDITION));
         return builder.build();
     }
 
@@ -122,6 +134,15 @@ public class TenfoldBladeItem extends SwordItem {
         }
 
         boolean sneaking = player.isShiftKeyDown();
+
+        // 半手剑：右键举剑格挡，而不是下达指令。减伤与反弹在
+        // CommonEvents#onShieldBlock 里结算（举剑 = vanilla 的 isBlocking 状态）。
+        // 潜行+右键仍然切形态，否则玩家会被困在半手剑里出不来。
+        if (!sneaking && WeaponData.form(stack) == WeaponForm.HALFSWORD) {
+            player.startUsingItem(hand);
+            return InteractionResultHolder.consume(stack);
+        }
+
         if (!level.isClientSide) {
             if (sneaking) {
                 ContractManager.cycleForm(player, stack, true);
@@ -147,6 +168,33 @@ public class TenfoldBladeItem extends SwordItem {
         }
         use(context.getLevel(), player, context.getHand());
         return InteractionResult.CONSUME;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Half-sword guard                                                    */
+    /* ------------------------------------------------------------------ */
+
+    @Override
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return WeaponData.form(stack) == WeaponForm.HALFSWORD ? UseAnim.BLOCK : UseAnim.NONE;
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        return WeaponData.form(stack) == WeaponForm.HALFSWORD ? 72000 : 0;
+    }
+
+    /**
+     * 让半手剑进入 vanilla 的格挡状态。
+     * <p>
+     * 1.20.1 的 {@code LivingEntity#isBlocking()} 要求 useItem 的
+     * {@code canPerformAction(SHIELD_BLOCK)} 为 true；默认实现恒为 false，
+     * 所以不重写这里的话，"举剑格挡"永远不会生效。
+     */
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        return toolAction == ToolActions.SHIELD_BLOCK
+                && WeaponData.form(stack) == WeaponForm.HALFSWORD;
     }
 
     @Override
@@ -194,8 +242,10 @@ public class TenfoldBladeItem extends SwordItem {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        if (WeaponData.form(stack) == WeaponForm.SHOVEL) {
-            return 6.0F;
+        // 只有叉勺形态、且只对"铲类方块"给铲子速度；其余情况仍是剑的 1.0。
+        WeaponForm form = WeaponData.form(stack);
+        if (form.digSpeed > 0.0F && state.is(BlockTags.MINEABLE_WITH_SHOVEL)) {
+            return form.digSpeed;
         }
         return super.getDestroySpeed(stack, state);
     }
@@ -203,6 +253,15 @@ public class TenfoldBladeItem extends SwordItem {
     @Override
     public boolean isCorrectToolForDrops(BlockState state) {
         return false;
+    }
+
+    /**
+     * 带 stack 的重载：1.20.1 的 {@code ItemStack#isCorrectToolForDrops} 会走这里，
+     * 叉勺形态下才对铲类方块算"正确工具"（否则挖雪一类方块不掉落）。
+     */
+    @Override
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        return WeaponData.form(stack) == WeaponForm.SHOVEL && state.is(BlockTags.MINEABLE_WITH_SHOVEL);
     }
 
     /* ------------------------------------------------------------------ */
@@ -217,6 +276,11 @@ public class TenfoldBladeItem extends SwordItem {
         tooltip.add(Component.translatable("tooltip.tenfold.damage",
                         String.format("%.1f", form.damage))
                 .withStyle(ChatFormatting.RED));
+
+        if (form == WeaponForm.HALFSWORD) {
+            tooltip.add(Component.translatable("tooltip.tenfold.halfsword")
+                    .withStyle(ChatFormatting.AQUA));
+        }
 
         int streak = WeaponData.streak(stack);
         tooltip.add(Component.translatable("tooltip.tenfold.streak", streak, WeaponData.STREAK_GOAL)

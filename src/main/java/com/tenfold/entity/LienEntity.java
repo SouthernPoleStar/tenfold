@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -16,11 +17,16 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+
+import javax.annotation.Nullable;
 
 /**
  * 里恩 — a zombie boss wearing the 遮盖伤口的假面 and wielding the 双蛇杖.
@@ -33,11 +39,11 @@ import net.minecraft.world.level.Level;
 public class LienEntity extends Zombie {
 
     public static final double MAX_HP = 7500.0D;
-    public static final float UNMASK_THRESHOLD = 5000.0F;
+    /** 血量降到最大值的 2/3（原设计 5000/7500）时摘下面具、进入二阶段。 */
+    public static final float UNMASK_RATIO = 2.0F / 3.0F;
     private static final int SWAP_INTERVAL = 20 * 10;
 
     private boolean unmasked = false;
-    private boolean addictionPending = false;
 
     private final net.minecraft.server.level.ServerBossEvent bossEvent =
             new net.minecraft.server.level.ServerBossEvent(this.getDisplayName(),
@@ -100,13 +106,19 @@ public class LienEntity extends Zombie {
         return false;
     }
 
+    /* ------------------------------------------------------------------ */
+    /* Spawning                                                            */
+    /* ------------------------------------------------------------------ */
+
     @Override
-    public boolean canBeAffected(MobEffectInstance effect) {
-        // Addiction is granted once, by himself, below 5000 HP.
-        if (effect.getEffect() == ModEffects.ADDICTION.get() && !this.addictionPending) {
-            return false;
-        }
-        return super.canBeAffected(effect);
+    @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType reason, @Nullable SpawnGroupData spawnData,
+                                        @Nullable CompoundTag tag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+        // 刷怪蛋 / /summon / 自然生成统一按满血出生。
+        this.setHealth(this.getMaxHealth());
+        return result;
     }
 
     /* ------------------------------------------------------------------ */
@@ -119,10 +131,9 @@ public class LienEntity extends Zombie {
         if (this.level().isClientSide) {
             return;
         }
-        // First spawn: wear the mask (unless it was torn off for good).
-        if (!this.unmasked && !this.hasItemInSlot(EquipmentSlot.HEAD)) {
-            this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.MASK.get()));
-        }
+        // 里恩不真的把假面穿在头盔槽上：假面贴图是全透明的，穿上去只会多一层
+        // 盔甲渲染（旧版还会因为材质名缺命名空间而渲染成黑紫棋盘头套）。
+        // "戴假面 / 摘假面" 现在只是 unmasked 标记，不影响任何装备槽。
         ItemStack held = this.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!(held.getItem() instanceof com.tenfold.item.TenfoldBladeItem)) {
             held = new ItemStack(ModItems.TENFOLD_BLADE.get());
@@ -150,20 +161,19 @@ public class LienEntity extends Zombie {
         }
     }
 
-    /** At 5000 HP: tear the mask off, gain one round of Contract Addiction. */
+    /** At 2/3 HP: tear the mask off, gain one round of Contract Addiction. */
     private void checkUnmask() {
-        // Same spawn-window guard as Lei Heng: never judge during the first
-        // seconds, and only when the health readout is meaningful.
-        if (this.unmasked || this.tickCount < 100
-                || this.getHealth() <= 0.0F
-                || this.getHealth() >= UNMASK_THRESHOLD
-                || this.getHealth() > this.getMaxHealth() * 0.995F) {
+        // 前 5 秒不判定：生成瞬间的血量读数可能还是脏的。
+        if (this.unmasked || this.tickCount < 100 || this.getHealth() <= 0.0F) {
+            return;
+        }
+        // 比例阈值：即使 max_health 被原版 1024 上限压过，也落在同样的血量百分比上。
+        if (this.getHealth() > this.getMaxHealth() * UNMASK_RATIO) {
             return;
         }
         this.unmasked = true;
-        this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-        this.addictionPending = true;
-        // One round of addiction, then it wears off and can never come back.
+        // 一阶段他与玩家一样，可以正常获得「指令成瘾」（不再被 canBeAffected
+        // 拒绝）；二阶段额外获得一次，持续 30 秒。
         this.addEffect(new MobEffectInstance(ModEffects.ADDICTION.get(), 20 * 30, 0, false, true, true));
         announce("tenfold.lien.unmask");
     }
@@ -207,13 +217,22 @@ public class LienEntity extends Zombie {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("LienUnmasked", unmasked);
+        // 标记"血量已经迁移过"，避免每次读档都把低血量误判成旧版本 clamp 损坏。
+        tag.putBoolean("HealthMigrated", true);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.unmasked = tag.getBoolean("LienUnmasked");
-        if (this.unmasked) {
+        // 旧存档的 max_health 曾被原版 1024 上限压过，血量也跟着被压到 1024；
+        // 只在"第一次读档且没有迁移标记"时重置一次，避免战斗中重载区块无限回血。
+        if (!tag.getBoolean("HealthMigrated")
+                && this.getHealth() <= 1024.0F && this.getMaxHealth() > 1024.0F) {
+            this.setHealth(this.getMaxHealth());
+        }
+        // 旧存档里里恩可能真的穿着假面；现在统一不戴，避免任何头部盔甲层渲染。
+        if (this.hasItemInSlot(EquipmentSlot.HEAD)) {
             this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
         }
     }

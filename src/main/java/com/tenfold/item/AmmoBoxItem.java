@@ -106,20 +106,27 @@ public class AmmoBoxItem extends Item {
                         user.getBoundingBox().inflate(REACH),
                         p -> p != user && p.isAlive() && !p.isSpectator())
                 .stream()
-                .min(Comparator.comparingDouble(p -> p.distanceToSqr(user)))
-                .flatMap(p -> {
-                    for (InteractionHand hand : InteractionHand.values()) {
-                        ItemStack gun = p.getItemInHand(hand);
-                        if (gun.getItem() instanceof SniperItem && SniperItem.isEmpty(gun)) {
-                            return java.util.Optional.of(new RefillTarget(p, gun));
-                        }
-                        if (gun.getItem() instanceof SkyBladeItem && SkyBladeItem.isEmpty(gun)) {
-                            return java.util.Optional.of(new RefillTarget(p, gun));
-                        }
-                    }
-                    return java.util.Optional.<RefillTarget>empty();
-                })
+                // 先筛出"手上真的有空枪"的人，再按距离取最近 —— 之前只看最近的那个
+                // 玩家，最近的人没空枪就直接失败，旁边有空枪的队友反而补给不到。
+                .map(AmmoBoxItem::emptyWeaponOf)
+                .filter(t -> t != null)
+                .min(Comparator.comparingDouble(t -> t.player().distanceToSqr(user)))
                 .orElse(null);
+    }
+
+    /** 该玩家手上第一把空弹的枪 / 刀，没有则返回 null。 */
+    @Nullable
+    private static RefillTarget emptyWeaponOf(Player player) {
+        for (InteractionHand hand : InteractionHand.values()) {
+            ItemStack stack = player.getItemInHand(hand);
+            if (stack.getItem() instanceof SniperItem && SniperItem.isEmpty(stack)) {
+                return new RefillTarget(player, stack);
+            }
+            if (stack.getItem() instanceof SkyBladeItem && SkyBladeItem.isEmpty(stack)) {
+                return new RefillTarget(player, stack);
+            }
+        }
+        return null;
     }
 
     /* ------------------------------------------------------------------ */

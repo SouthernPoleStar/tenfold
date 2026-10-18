@@ -60,6 +60,11 @@ public final class ModItems {
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.LIEN,
                     0x4A3F5F, 0xC9A648, new Item.Properties()));
 
+    /** Poey 刷怪蛋：恶魂之泪 + 鸡蛋 + 下界合金碎片（1.20.1 没有"失水恶魂"，用恶魂之泪代替）。 */
+    public static final RegistryObject<Item> POEY_SPAWN_EGG = ITEMS.register("poey_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.POEY,
+                    0xEDEDED, 0x1C1C1C, new Item.Properties()));
+
     /** 恶魔契约: 僵尸30%掉落，锻造魔弹枪的材料。 */
     public static final RegistryObject<Item> DEMON_CONTRACT = ITEMS.register("demon_contract",
             () -> new Item(new Item.Properties()));

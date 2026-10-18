@@ -26,6 +26,7 @@ public final class ModTabs {
                         output.accept(ModItems.MATTHIAS_SPAWN_EGG.get());
                         output.accept(ModItems.LEIHENG_SPAWN_EGG.get());
                         output.accept(ModItems.LIEN_SPAWN_EGG.get());
+                        output.accept(ModItems.POEY_SPAWN_EGG.get());
                         output.accept(ModItems.MAGIC_GUN.get());
                         output.accept(ModItems.MASK.get());
                         output.accept(ModItems.DEMON_CONTRACT.get());

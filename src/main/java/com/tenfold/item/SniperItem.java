@@ -19,8 +19,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -184,7 +182,7 @@ public class SniperItem extends Item {
         LivingEntity best = null;
         double bestT = Double.MAX_VALUE;
         for (Entity e : player.level().getEntities(player, player.getBoundingBox()
-                .inflate(RANGE / 2), this_ -> this_ instanceof LivingEntity l && l.isAlive() && l != player)) {
+                .inflate(RANGE), this_ -> this_ instanceof LivingEntity l && l.isAlive() && l != player)) {
             AABB box = e.getBoundingBox().inflate(0.3D);
             var clip = box.clip(from, to);
             if (clip.isPresent()) {
@@ -218,7 +216,6 @@ public class SniperItem extends Item {
     /* ------------------------------------------------------------------ */
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable net.minecraft.world.level.Level level,
                                 List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable(specialMode(stack)
