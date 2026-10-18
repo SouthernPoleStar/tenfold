@@ -55,6 +55,9 @@ public class CommonEvents {
 
         // 莱万丁（完全拆封）: low health grants 过人的毅力（我方版）absorption.
         syncLevandinGrit(player);
+
+        // 长剑 · 不稳定的神备：抢装套装与属性维护 / 退出恢复。
+        UnstableGearManager.tickPlayer(server);
     }
 
     /**
@@ -295,6 +298,15 @@ public class CommonEvents {
             }
         }
 
+        // 不稳定的神备：造成伤害 +20%，受到的伤害 +15%。
+        if (event.getSource().getEntity() instanceof LivingEntity gearStriker
+                && gearStriker.hasEffect(ModEffects.UNSTABLE_GEAR.get())) {
+            amount *= 1.2F;
+        }
+        if (event.getEntity().hasEffect(ModEffects.UNSTABLE_GEAR.get())) {
+            amount *= 1.15F;
+        }
+
         // 过人的毅力 is resolved in LivingDamageEvent: the 3-point cap must sit
         // *after* armor and absorption to be the final number that lands.
         event.setAmount(amount);
@@ -360,6 +372,14 @@ public class CommonEvents {
         if (event.getEntity().level().isClientSide()) {
             return;
         }
+        // 不稳定的神备：每次进入后的第一次致命伤害由一次「不死图腾」抵消。
+        if (event.getEntity() instanceof ServerPlayer gearPlayer
+                && gearPlayer.hasEffect(ModEffects.UNSTABLE_GEAR.get())
+                && event.getAmount() >= gearPlayer.getHealth()
+                && UnstableGearManager.handleLethalHit(gearPlayer)) {
+            event.setAmount(0.0F);
+            return;
+        }
         if (!(event.getEntity() instanceof MatthiasEntity matthias)
                 || !matthias.hasEffect(ModEffects.PERSEVERANCE.get())) {
             return;
@@ -416,6 +436,10 @@ public class CommonEvents {
         }
         if (victim.level().isClientSide) {
             return;
+        }
+        // 神备期间死亡：先把进入前保存的护甲还回去，让掉落按原装备结算。
+        if (victim instanceof ServerPlayer deadPlayer) {
+            UnstableGearManager.onPlayerDeath(deadPlayer);
         }
         // 恶魔契约: plain zombies drop it 30% of the time.
         if (victim.getType() == net.minecraft.world.entity.EntityType.ZOMBIE

@@ -123,6 +123,32 @@ public final class ModEffects {
                 }
             });
 
+    /**
+     * 情感 (Emotion): 长剑每次命中叠加一层，最多 15 层。到 15 层后可以用
+     * Shift+右键消耗全部层数换取「不稳定的神备」。
+     */
+    public static final RegistryObject<MobEffect> EMOTION = EFFECTS.register("emotion",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xE04060) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
+     * 不稳定的神备 (Unstable Gear): 长剑的爆发形态。伤害 +20%、受伤 +15%、
+     * 移速 +30%；强制换上一套不显示模型的护甲，长剑攻击力 +30 并附带灼烧，
+     * 期间第一次致命伤害会被一次「不死图腾」抵消。属性与护甲逻辑在
+     * {@code UnstableGearManager} 里结算。
+     */
+    public static final RegistryObject<MobEffect> UNSTABLE_GEAR = EFFECTS.register("unstable_gear",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xB02040) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
     private ModEffects() {
     }
 }

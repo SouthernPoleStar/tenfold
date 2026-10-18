@@ -81,6 +81,24 @@ public final class ModItems {
     public static final RegistryObject<Item> SKY_BLADE = ITEMS.register("sky_blade",
             () -> new com.tenfold.item.SkyBladeItem());
 
+    /** 长剑：攻击力 10，命中叠「情感」，满 15 层后 Shift+右键进入「不稳定的神备」。 */
+    public static final RegistryObject<Item> LONGSWORD = ITEMS.register("longsword",
+            () -> new com.tenfold.item.LongswordItem());
+
+    /** 神备套装（只由神备强制穿戴，穿上不显示模型）。 */
+    public static final RegistryObject<Item> GEAR_HELMET = ITEMS.register("gear_helmet",
+            () -> new com.tenfold.item.GearArmorItem(net.minecraft.world.item.ArmorItem.Type.HELMET,
+                    7.0D, "A1B2C3D4-0001-4E5F-8A90-1234567890AB"));
+    public static final RegistryObject<Item> GEAR_CHEST = ITEMS.register("gear_chest",
+            () -> new com.tenfold.item.GearArmorItem(net.minecraft.world.item.ArmorItem.Type.CHESTPLATE,
+                    8.0D, "A1B2C3D4-0002-4E5F-8A90-1234567890AB"));
+    public static final RegistryObject<Item> GEAR_LEGS = ITEMS.register("gear_legs",
+            () -> new com.tenfold.item.GearArmorItem(net.minecraft.world.item.ArmorItem.Type.LEGGINGS,
+                    6.0D, "A1B2C3D4-0003-4E5F-8A90-1234567890AB"));
+    public static final RegistryObject<Item> GEAR_BOOTS = ITEMS.register("gear_boots",
+            () -> new com.tenfold.item.GearArmorItem(net.minecraft.world.item.ArmorItem.Type.BOOTS,
+                    8.0D, "A1B2C3D4-0004-4E5F-8A90-1234567890AB"));
+
     private ModItems() {
     }
 }

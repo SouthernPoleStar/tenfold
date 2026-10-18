@@ -32,6 +32,11 @@ public final class ModTabs {
                         output.accept(ModItems.DEMON_CONTRACT.get());
                         output.accept(ModItems.BULLET.get());
                         output.accept(ModItems.SKY_BLADE.get());
+                        output.accept(ModItems.LONGSWORD.get());
+                        output.accept(ModItems.GEAR_HELMET.get());
+                        output.accept(ModItems.GEAR_CHEST.get());
+                        output.accept(ModItems.GEAR_LEGS.get());
+                        output.accept(ModItems.GEAR_BOOTS.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));
