@@ -303,58 +303,51 @@ public class BloodDemonEvents {
     }
 
     /* ------------------------------------------------------------------ */
-    /* 祭祀仪式：副手匕首 + 主手空瓶 + Shift+右键 → 硬血瓶                  */
-    /* ------------------------------------------------------------------ */
-
-    @SubscribeEvent
-    public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
-        if (event.getSide().isClient() || event.getHand() != InteractionHand.MAIN_HAND) {
-            return;
-        }
-        Player player = event.getEntity();
-        if (!(player instanceof ServerPlayer serverPlayer) || !player.isShiftKeyDown()) {
-            return;
-        }
-        ItemStack bottle = player.getMainHandItem();
-        ItemStack dagger = player.getOffhandItem();
-        if (!bottle.is(Items.GLASS_BOTTLE) || !dagger.is(ModItems.SACRIFICIAL_DAGGER.get())) {
-            return;
-        }
-        if (!BloodDemonManager.isBloodDemon(serverPlayer)) {
-            serverPlayer.displayClientMessage(
-                    Component.translatable("tenfold.blood.need_demon"), true);
-            return;
-        }
-        // 扣自己 1 点生命（无视护甲的魔法伤害），凝成硬血瓶。
-        serverPlayer.hurt(serverPlayer.damageSources().magic(), 1.0F);
-        if (!serverPlayer.getAbilities().instabuild) {
-            bottle.shrink(1);
-            dagger.hurtAndBreak(1, serverPlayer, p -> {
-            });
-        }
-        ItemStack hardBlood = new ItemStack(ModItems.HARD_BLOOD_BOTTLE.get());
-        if (!serverPlayer.addItem(hardBlood)) {
-            serverPlayer.spawnAtLocation(hardBlood, 1);
-        }
-        serverPlayer.displayClientMessage(
-                Component.translatable("tenfold.blood.ritual"), true);
-        event.setCanceled(true);
-    }
-
-    /* ------------------------------------------------------------------ */
-    /* 血魔不能再吃普通食物                                                */
+    /* 祭祀仪式 + 血魔禁食普通食物（挂在 RightClickItem 上，两侧都会触发）  */
     /* ------------------------------------------------------------------ */
 
     @SubscribeEvent
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-        if (event.getSide().isClient()) {
+        if (event.getSide().isClient() || event.getHand() != InteractionHand.MAIN_HAND) {
             return;
         }
         Player player = event.getEntity();
+        ItemStack stack = event.getItemStack();
+
+        // 祭祀仪式：副手匕首 + 主手空瓶 + Shift+右键 → 扣自己 1 点生命，凝成硬血瓶。
+        // （1.20.1 的 Forge 不触发 RightClickEmpty，所以这里挂在 RightClickItem 上。）
+        if (player.isShiftKeyDown()
+                && stack.is(Items.GLASS_BOTTLE)
+                && player.getOffhandItem().is(ModItems.SACRIFICIAL_DAGGER.get())) {
+            if (!(player instanceof ServerPlayer serverPlayer)) {
+                return;
+            }
+            if (!BloodDemonManager.isBloodDemon(serverPlayer)) {
+                serverPlayer.displayClientMessage(
+                        Component.translatable("tenfold.blood.need_demon"), true);
+                return;
+            }
+            // 扣自己 1 点生命（无视护甲的魔法伤害），凝成硬血瓶。
+            serverPlayer.hurt(serverPlayer.damageSources().magic(), 1.0F);
+            if (!serverPlayer.getAbilities().instabuild) {
+                stack.shrink(1);
+                player.getOffhandItem().hurtAndBreak(1, serverPlayer, p -> {
+                });
+            }
+            ItemStack hardBlood = new ItemStack(ModItems.HARD_BLOOD_BOTTLE.get());
+            if (!serverPlayer.addItem(hardBlood)) {
+                serverPlayer.spawnAtLocation(hardBlood, 1);
+            }
+            serverPlayer.displayClientMessage(
+                    Component.translatable("tenfold.blood.ritual"), true);
+            event.setCanceled(true);
+            return;
+        }
+
+        // 血魔不能再吃普通食物。
         if (!BloodDemonManager.isBloodDemon(player)) {
             return;
         }
-        ItemStack stack = event.getItemStack();
         if (stack.isEdible() && !stack.is(ModItems.BLOOD_BOTTLE.get())) {
             if (player.tickCount % 40 == 0) {
                 player.displayClientMessage(
