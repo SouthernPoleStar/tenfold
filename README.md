@@ -2,7 +2,7 @@
 
 Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态**的武器「双蛇杖」，围绕它衍生出三场 Boss 战、多把专属武器、一套状态体系与一棵独立进度树。
 
-- **模组版本**：0.1.13
+- **模组版本**：0.1.14
 - **模组 ID**：`tenfold`
 - **作者**：南极星
 - **反馈渠道**：QQ 3618576581
@@ -13,7 +13,7 @@ Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态
 ## 安装
 
 1. 安装 **Minecraft Forge 1.20.1**（47.2.0 或更高）。
-2. 把 `build/libs/tenfold-0.1.13.jar` 放进 `.minecraft/mods/`。
+2. 把 `build/libs/tenfold-0.1.14.jar` 放进 `.minecraft/mods/`。
 3. 客户端与服务端都需要安装（`side="BOTH"`）。
 
 ---
@@ -392,4 +392,4 @@ src/main/resources/
 
 ## 版本历史
 
-见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.1.13**。
+见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.1.14**。

@@ -1,5 +1,11 @@
 # 更新日志
 
+## v0.1.14
+
+### 修复
+- IRA 酿造注册不再读取 `PotionBrewing` 的私有字段 `POTION_MIXES`：正式包里的字段名是 SRG（`f_43494_`），按名字取会抛 `NoSuchFieldException`，把已经成功的注册误报成 `Failed to register the IRA brewing recipe`（玩家日志里那条 ERROR）。
+- 补齐四个刷怪蛋的模型（`matthias_spawn_egg` / `leiheng_spawn_egg` / `lien_spawn_egg` / `poey_spawn_egg`）：之前缺少 `models/item/*.json`，客户端报 `FileNotFoundException`，刷怪蛋会显示成紫黑方块。
+
 ## v0.1.13
 
 ### 修复
