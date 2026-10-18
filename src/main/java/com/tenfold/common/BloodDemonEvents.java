@@ -344,11 +344,11 @@ public class BloodDemonEvents {
             return;
         }
 
-        // 血魔不能再吃普通食物。
+        // 血魔不能再吃普通食物（带增益效果的食品除外）。
         if (!BloodDemonManager.isBloodDemon(player)) {
             return;
         }
-        if (stack.isEdible() && !stack.is(ModItems.BLOOD_BOTTLE.get())) {
+        if (isBlockedFood(stack, player)) {
             if (player.tickCount % 40 == 0) {
                 player.displayClientMessage(
                         Component.translatable("tenfold.blood.no_food"), true);
@@ -366,9 +366,35 @@ public class BloodDemonEvents {
         if (!BloodDemonManager.isBloodDemon(player)) {
             return;
         }
-        ItemStack stack = event.getItemStack();
-        if (stack.isEdible() && !stack.is(ModItems.BLOOD_BOTTLE.get())) {
+        if (isBlockedFood(event.getItemStack(), player)) {
             event.setCanceled(true);
         }
+    }
+
+    /**
+     * 血魔禁食的判定：
+     * <ul>
+     *   <li>血瓶：放行（血魔的主食）。</li>
+     *   <li>带**增益效果**的食品（金苹果、附魔金苹果、正面效果的迷之炖菜等）：放行。</li>
+     *   <li>其余普通食物：禁止。</li>
+     * </ul>
+     * 蜂蜜瓶这类"纯回饥饿、没有增益"的普通食物仍然算被禁食。
+     */
+    private static boolean isBlockedFood(ItemStack stack, Player player) {
+        if (!stack.isEdible() || stack.is(ModItems.BLOOD_BOTTLE.get())) {
+            return false;
+        }
+        net.minecraft.world.food.FoodProperties food =
+                stack.getItem().getFoodProperties(stack, player);
+        if (food == null) {
+            return false;
+        }
+        for (var pair : food.getEffects()) {
+            if (pair.getFirst().getEffect().getCategory()
+                    == net.minecraft.world.effect.MobEffectCategory.BENEFICIAL) {
+                return false;
+            }
+        }
+        return true;
     }
 }
