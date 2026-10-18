@@ -252,5 +252,18 @@
   "tenfold.blood.extracted": "你吸取了血液。",
   "tenfold.blood.ritual": "你献祭了自己 1 点生命，凝成了硬血瓶。",
   "tenfold.blood.no_food": "血魔无法食用普通食物。",
-  "tenfold.blood.infect": "你将%s转化成了血魔。"
+  "tenfold.blood.infect": "你将%s转化成了血魔。",
+  "tenfold.blood.request_sent": "已向 %s 发送转化请求，等待对方同意。",
+  "tenfold.blood.request_received": "%s 请求将你转化为 %s 代血魔：",
+  "tenfold.blood.accept_button": "[同意]",
+  "tenfold.blood.deny_button": "[拒绝]",
+  "tenfold.blood.no_request": "没有待处理的转化请求。",
+  "tenfold.blood.request_failed": "转化失败（名额已用完或对方状态异常）。",
+  "tenfold.blood.source_gone": "发起转化的血魔已经离线。",
+  "tenfold.blood.accepted": "你接受了转化，现在是 %s 代血魔。",
+  "tenfold.blood.denied_target": "你拒绝了 %s 的转化请求。",
+  "tenfold.blood.denied_source": "%s 拒绝了你的转化请求。",
+  "tenfold.blood.no_quota": "你的转化名额已用完（每名血魔限 2 名）。",
+  "tenfold.blood.target_already": "对方已经是血魔了。",
+  "tenfold.blood.too_deep": "你的代数已经无法继续转化后代。"
 }

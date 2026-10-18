@@ -255,16 +255,10 @@ public class BloodDemonEvents {
                 BloodDemonManager.convert(dead, 2);
             }
         }
-
-        // 3) 血魔玩家击杀普通玩家 → 传染出下一代（每名血魔限两名后裔）。
-        if (victim instanceof ServerPlayer deadPlayer
-                && source.getEntity() instanceof ServerPlayer killerPlayer) {
-            BloodDemonManager.tryInfect(killerPlayer, deadPlayer);
-        }
     }
 
     /* ------------------------------------------------------------------ */
-    /* 空瓶吸血：Shift+右键 任意生物                                       */
+    /* Shift+右键 其他玩家：发起转化请求（需要对方在聊天栏点同意）          */
     /* ------------------------------------------------------------------ */
 
     @SubscribeEvent
@@ -277,6 +271,16 @@ public class BloodDemonEvents {
             return;
         }
         ItemStack held = player.getMainHandItem();
+
+        // 对着另一名玩家 Shift+右键：发起转化请求（空手或非玻璃瓶都可以）。
+        if (event.getTarget() instanceof ServerPlayer targetPlayer
+                && targetPlayer != serverPlayer
+                && !held.is(Items.GLASS_BOTTLE)) {
+            BloodDemonManager.requestConversion(serverPlayer, targetPlayer);
+            event.setCanceled(true);
+            return;
+        }
+
         if (!held.is(Items.GLASS_BOTTLE)) {
             return;
         }

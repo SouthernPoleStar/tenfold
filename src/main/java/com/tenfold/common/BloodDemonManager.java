@@ -128,6 +128,119 @@ public final class BloodDemonManager {
     }
 
     /* ------------------------------------------------------------------ */
+    /* 转化请求（Shift+右键 发起，对方点击聊天栏按钮同意）                  */
+    /* ------------------------------------------------------------------ */
+
+    /** 请求有效期：60 秒。 */
+    public static final long REQUEST_TIMEOUT_TICKS = 60L * 20L;
+
+    private static final java.util.Map<java.util.UUID, PendingRequest> PENDING = new java.util.HashMap<>();
+
+    private record PendingRequest(java.util.UUID source, long expireAt) {
+    }
+
+    /**
+     * 血魔对另一名玩家发起转化请求：对方会在聊天栏收到「同意 / 拒绝」按钮。
+     * 只有血魔、还有转化名额、目标还不是血魔时才发得出去。
+     */
+    public static boolean requestConversion(ServerPlayer source, ServerPlayer target) {
+        int sourceGen = generation(source);
+        if (sourceGen <= 0) {
+            source.displayClientMessage(Component.translatable("tenfold.blood.need_demon"), true);
+            return false;
+        }
+        if (sourceGen >= MAX_GENERATION) {
+            source.displayClientMessage(Component.translatable("tenfold.blood.too_deep"), true);
+            return false;
+        }
+        if (isBloodDemon(target)) {
+            source.displayClientMessage(Component.translatable("tenfold.blood.target_already"), true);
+            return false;
+        }
+        if (conversionsLeft(source) <= 0) {
+            source.displayClientMessage(Component.translatable("tenfold.blood.no_quota"), true);
+            return false;
+        }
+
+        long now = source.level().getGameTime();
+        PENDING.put(target.getUUID(), new PendingRequest(source.getUUID(), now + REQUEST_TIMEOUT_TICKS));
+
+        source.displayClientMessage(Component.translatable("tenfold.blood.request_sent",
+                target.getName().getString()), false);
+
+        target.displayClientMessage(Component.translatable("tenfold.blood.request_received",
+                source.getName().getString(), String.valueOf(sourceGen + 1)), false);
+        Component accept = Component.translatable("tenfold.blood.accept_button")
+                .withStyle(style -> style.withColor(net.minecraft.ChatFormatting.GREEN)
+                        .withClickEvent(new net.minecraft.network.chat.ClickEvent(
+                                net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND,
+                                "/tenfold blood accept")));
+        Component deny = Component.translatable("tenfold.blood.deny_button")
+                .withStyle(style -> style.withColor(net.minecraft.ChatFormatting.RED)
+                        .withClickEvent(new net.minecraft.network.chat.ClickEvent(
+                                net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND,
+                                "/tenfold blood deny")));
+        target.displayClientMessage(accept.copy().append("   ").append(deny.copy()), false);
+        return true;
+    }
+
+    /** 取出并校验目标的待处理请求（过期或不存在返回 null）。 */
+    private static PendingRequest takeValid(ServerPlayer target) {
+        PendingRequest pending = PENDING.remove(target.getUUID());
+        if (pending == null) {
+            return null;
+        }
+        long now = target.level().getGameTime();
+        if (now > pending.expireAt()) {
+            return null;
+        }
+        return pending;
+    }
+
+    /** 目标同意：扣掉发起者一个名额并完成转化。 */
+    public static boolean acceptRequest(ServerPlayer target) {
+        PendingRequest pending = takeValid(target);
+        if (pending == null) {
+            target.displayClientMessage(Component.translatable("tenfold.blood.no_request"), false);
+            return false;
+        }
+        var server = target.getServer();
+        ServerPlayer source = server == null ? null
+                : server.getPlayerList().getPlayer(pending.source());
+        if (source == null) {
+            target.displayClientMessage(Component.translatable("tenfold.blood.source_gone"), false);
+            return false;
+        }
+        if (!tryInfect(source, target)) {
+            target.displayClientMessage(Component.translatable("tenfold.blood.request_failed"), false);
+            return false;
+        }
+        target.displayClientMessage(Component.translatable("tenfold.blood.accepted",
+                String.valueOf(generation(target))), false);
+        return true;
+    }
+
+    /** 目标拒绝：只清掉请求并通知双方。 */
+    public static boolean denyRequest(ServerPlayer target) {
+        PendingRequest pending = takeValid(target);
+        if (pending == null) {
+            target.displayClientMessage(Component.translatable("tenfold.blood.no_request"), false);
+            return false;
+        }
+        var server = target.getServer();
+        ServerPlayer source = server == null ? null
+                : server.getPlayerList().getPlayer(pending.source());
+        String sourceName = source != null ? source.getName().getString() : "未知血魔";
+        target.displayClientMessage(Component.translatable("tenfold.blood.denied_target",
+                sourceName), false);
+        if (source != null) {
+            source.displayClientMessage(Component.translatable("tenfold.blood.denied_source",
+                    target.getName().getString()), false);
+        }
+        return true;
+    }
+
+    /* ------------------------------------------------------------------ */
     /* 永久 Buff（死亡也不清除）                                            */
     /* ------------------------------------------------------------------ */
 

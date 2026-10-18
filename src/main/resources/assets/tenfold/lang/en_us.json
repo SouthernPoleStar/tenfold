@@ -252,5 +252,18 @@
   "tenfold.blood.extracted": "You drew blood.",
   "tenfold.blood.ritual": "You offered 1 HP and formed a Hard Blood Bottle.",
   "tenfold.blood.no_food": "Blood Demons cannot eat normal food.",
-  "tenfold.blood.infect": "You turned %s into a Blood Demon."
+  "tenfold.blood.infect": "You turned %s into a Blood Demon.",
+  "tenfold.blood.request_sent": "Conversion request sent to %s, waiting for their consent.",
+  "tenfold.blood.request_received": "%s asks to turn you into a generation %s Blood Demon:",
+  "tenfold.blood.accept_button": "[Accept]",
+  "tenfold.blood.deny_button": "[Deny]",
+  "tenfold.blood.no_request": "You have no pending conversion request.",
+  "tenfold.blood.request_failed": "Conversion failed (no quota left or target state changed).",
+  "tenfold.blood.source_gone": "The Blood Demon who asked is offline now.",
+  "tenfold.blood.accepted": "You accepted the conversion. You are now a generation %s Blood Demon.",
+  "tenfold.blood.denied_target": "You denied the conversion request from %s.",
+  "tenfold.blood.denied_source": "%s denied your conversion request.",
+  "tenfold.blood.no_quota": "Your conversion quota is used up (2 per Blood Demon).",
+  "tenfold.blood.target_already": "That player is already a Blood Demon.",
+  "tenfold.blood.too_deep": "Your generation can no longer create descendants."
 }
