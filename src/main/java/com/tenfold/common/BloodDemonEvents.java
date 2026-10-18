@@ -333,32 +333,8 @@ public class BloodDemonEvents {
         Player player = event.getEntity();
         ItemStack stack = event.getItemStack();
 
-        // 祭祀仪式：副手匕首 + 主手空瓶 + Shift+右键 → 扣自己 1 点生命，凝成硬血瓶。
-        // （1.20.1 的 Forge 不触发 RightClickEmpty，所以这里挂在 RightClickItem 上。）
-        if (player.isShiftKeyDown()
-                && stack.is(Items.GLASS_BOTTLE)
-                && player.getOffhandItem().is(ModItems.SACRIFICIAL_DAGGER.get())) {
-            if (!(player instanceof ServerPlayer serverPlayer)) {
-                return;
-            }
-            if (!BloodDemonManager.isBloodDemon(serverPlayer)) {
-                serverPlayer.displayClientMessage(
-                        Component.translatable("tenfold.blood.need_demon"), true);
-                return;
-            }
-            // 扣自己 1 点生命（无视护甲的魔法伤害），凝成硬血瓶。
-            serverPlayer.hurt(serverPlayer.damageSources().magic(), 1.0F);
-            if (!serverPlayer.getAbilities().instabuild) {
-                stack.shrink(1);
-                player.getOffhandItem().hurtAndBreak(1, serverPlayer, p -> {
-                });
-            }
-            ItemStack hardBlood = new ItemStack(ModItems.HARD_BLOOD_BOTTLE.get());
-            if (!serverPlayer.addItem(hardBlood)) {
-                serverPlayer.spawnAtLocation(hardBlood, 1);
-            }
-            serverPlayer.displayClientMessage(
-                    Component.translatable("tenfold.blood.ritual"), true);
+        // 祭祀仪式（对着空气 / 生物时走这里）。
+        if (tryPerformRitual(player)) {
             event.setCanceled(true);
             return;
         }
@@ -382,12 +358,72 @@ public class BloodDemonEvents {
             return;
         }
         Player player = event.getEntity();
+
+        // 祭祀仪式：对着**方块**右键走的是 RightClickBlock，这里也要处理，
+        // 否则玩家只要把准心对着地面就做不出硬血瓶。
+        if (tryPerformRitual(player)) {
+            event.setCanceled(true);
+            return;
+        }
+
         if (!BloodDemonManager.isBloodDemon(player)) {
             return;
         }
         if (isBlockedFood(event.getItemStack(), player)) {
             event.setCanceled(true);
         }
+    }
+
+    /** 同一 tick 内 RightClickBlock / RightClickItem 可能都会触发，用它防重复发放。 */
+    private static final java.util.Map<java.util.UUID, Integer> RITUAL_TICK = new java.util.HashMap<>();
+
+    /**
+     * 血魔取血仪式：**副手祭祀匕首 + 主手玻璃瓶 + Shift+右键**（反过来放也认），
+     * 扣自己 1 点生命，玻璃瓶换成硬血瓶，匕首掉 1 点耐久。
+     *
+     * @return 是否触发了仪式（触发后调用方要取消事件，避免原版继续处理这次点击）
+     */
+    private boolean tryPerformRitual(Player player) {
+        if (!player.isShiftKeyDown() || !(player instanceof ServerPlayer serverPlayer)) {
+            return false;
+        }
+        ItemStack main = player.getMainHandItem();
+        ItemStack off = player.getOffhandItem();
+        ItemStack bottle = main.is(Items.GLASS_BOTTLE) ? main
+                : off.is(Items.GLASS_BOTTLE) ? off : ItemStack.EMPTY;
+        ItemStack dagger = main.is(ModItems.SACRIFICIAL_DAGGER.get()) ? main
+                : off.is(ModItems.SACRIFICIAL_DAGGER.get()) ? off : ItemStack.EMPTY;
+        if (bottle.isEmpty() || dagger.isEmpty()) {
+            return false;
+        }
+
+        // 两个事件可能同时来一次点击，同一 tick 只做一次。
+        Integer last = RITUAL_TICK.get(player.getUUID());
+        if (last != null && last == player.tickCount) {
+            return true;
+        }
+        RITUAL_TICK.put(player.getUUID(), player.tickCount);
+
+        if (!BloodDemonManager.isBloodDemon(serverPlayer)) {
+            serverPlayer.displayClientMessage(
+                    Component.translatable("tenfold.blood.need_demon"), true);
+            return true;
+        }
+
+        // 扣自己 1 点生命（无视护甲的魔法伤害），凝成硬血瓶。
+        serverPlayer.hurt(serverPlayer.damageSources().magic(), 1.0F);
+        if (!serverPlayer.getAbilities().instabuild) {
+            bottle.shrink(1);
+            dagger.hurtAndBreak(1, serverPlayer, entity -> {
+            });
+        }
+        ItemStack hardBlood = new ItemStack(ModItems.HARD_BLOOD_BOTTLE.get());
+        if (!serverPlayer.addItem(hardBlood)) {
+            serverPlayer.spawnAtLocation(hardBlood, 1);
+        }
+        serverPlayer.displayClientMessage(
+                Component.translatable("tenfold.blood.ritual"), true);
+        return true;
     }
 
     /**
