@@ -2,11 +2,11 @@
 
 Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态**的武器「双蛇杖」，围绕它衍生出三场 Boss 战、多把专属武器、一套状态体系与一棵独立进度树。
 
-- **模组版本**：0.1.20
+- **模组版本**：0.1.21
 - **模组 ID**：`tenfold`
 - **作者**：南极星
 - **反馈渠道**：[GitHub Issues](https://github.com/SouthernPoleStar/tenfold/issues)
-- **下载**：本地构建 `build/libs/tenfold-0.1.20.jar`，或见 Releases 页面
+- **下载**：本地构建 `build/libs/tenfold-0.1.21.jar`，或见 Releases 页面
 
 > **免责声明**
 > 本模组是爱好者制作的**非官方** Minecraft 模组，与 Mojang Studios、Microsoft 均无隶属或合作关系，未获得其认可或授权。
@@ -336,8 +336,7 @@ Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态
 | 途径 | 概率 | 结果 |
 |---|---|---|
 | 被血魔老祖杀死 | **5%** | 成为二代血魔 |
-| 直接击杀血魔老祖 | **100%** | 成为二代血魔 |
-| 右键使用血魔老祖的牙 | **100%** | 成为二代血魔 |
+| 击杀血魔老祖 → 掉落**血魔老祖的牙** → 手持牙 **Shift+右键** | **100%** | 成为二代血魔 |
 
 ### 传染规则
 
@@ -499,4 +498,4 @@ src/main/resources/
 
 ## 版本历史
 
-见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.1.20**。
+见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.1.21**。

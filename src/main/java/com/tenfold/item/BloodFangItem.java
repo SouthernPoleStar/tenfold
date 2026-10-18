@@ -12,7 +12,9 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 /**
- * 血魔老祖的牙：右键使用，把自己 100% 转化为二代血魔。
+ * 血魔老祖的牙：击杀血魔老祖后掉落。
+ * <p>
+ * 普通右键只提示用法；**Shift + 右键** 才会把自己 100% 转化为二代血魔。
  * 已经是血魔的话没有效果。
  */
 public class BloodFangItem extends Item {
@@ -25,6 +27,11 @@ public class BloodFangItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            if (!player.isShiftKeyDown()) {
+                serverPlayer.displayClientMessage(
+                        Component.translatable("tenfold.blood.fang_help"), true);
+                return InteractionResultHolder.sidedSuccess(stack, false);
+            }
             if (BloodDemonManager.isBloodDemon(serverPlayer)) {
                 serverPlayer.displayClientMessage(
                         Component.translatable("tenfold.blood.fang_already"), false);

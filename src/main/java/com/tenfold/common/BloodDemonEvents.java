@@ -65,6 +65,19 @@ public class BloodDemonEvents {
         }
     }
 
+    /**
+     * 死亡重生 / 跨维度时手动搬血魔数据：原版 {@code restoreFrom} 不会复制
+     * 写在 {@code getPersistentData()} 顶层的键，不搬的话复活后就不再是血魔，
+     * 连带吸血条（靠恐水症效果判断）和硬血瓶仪式都会失效。
+     */
+    @SubscribeEvent
+    public void onPlayerClone(PlayerEvent.Clone event) {
+        BloodDemonManager.copyAcrossRespawn(event.getOriginal(), event.getEntity());
+        if (event.getEntity() instanceof ServerPlayer player) {
+            BloodDemonManager.applyPermanentEffects(player);
+        }
+    }
+
     /* ------------------------------------------------------------------ */
     /* 恐水症 + 吸血条（渴血）                                              */
     /* ------------------------------------------------------------------ */
@@ -96,6 +109,12 @@ public class BloodDemonEvents {
         // 吸血条与渴血。
         if (BloodDemonManager.isBloodDemon(serverPlayer)) {
             tickBloodBar(serverPlayer);
+            // 每秒兜底：四件套（x代血魔 / 力量 II / 抗性 I / 恐水症）掉了就补回来。
+            // 死亡、跨维度、原版清效果等情况下都能自动恢复。
+            if (player.tickCount % 20 == 0
+                    && !BloodDemonManager.hasAllPermanentEffects(serverPlayer)) {
+                BloodDemonManager.applyPermanentEffects(serverPlayer);
+            }
         }
     }
 
@@ -241,14 +260,10 @@ public class BloodDemonEvents {
         }
         DamageSource source = event.getSource();
 
-        // 1) 直接击杀血魔老祖 → 100% 转化为二代血魔。
-        if (victim.getType() == ModEntities.BLOOD_ANCESTOR.get()
-                && source.getEntity() instanceof ServerPlayer killer
-                && BloodDemonManager.generation(killer) == 0) {
-            BloodDemonManager.convert(killer, 2);
-        }
+        // 击杀血魔老祖不再直接转化：它只会掉「血魔老祖的牙」，
+        // 拿牙 Shift+右键 使用才会 100% 变成二代血魔（见 BloodFangItem）。
 
-        // 2) 被血魔老祖杀死 → 5% 概率被转化为二代血魔。
+        // 被血魔老祖杀死 → 5% 概率被转化为二代血魔。
         if (victim instanceof ServerPlayer dead
                 && source.getEntity() instanceof BloodAncestorEntity) {
             if (dead.getRandom().nextFloat() < 0.05F) {

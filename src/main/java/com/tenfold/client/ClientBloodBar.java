@@ -38,7 +38,19 @@ public final class ClientBloodBar {
     }
 
     private static boolean isBloodDemon(LocalPlayer player) {
-        return player != null && player.hasEffect(ModEffects.HYDROPHOBIA.get());
+        if (player == null) {
+            return false;
+        }
+        if (player.hasEffect(ModEffects.HYDROPHOBIA.get())) {
+            return true;
+        }
+        // 兜底：只要挂着任意一代的「x代血魔」就算血魔。
+        for (int generation = 1; generation <= 10; generation++) {
+            if (player.hasEffect(ModEffects.bloodGenEffect(generation))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @SubscribeEvent

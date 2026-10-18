@@ -51,6 +51,37 @@ public final class BloodDemonManager {
     }
 
     /**
+     * 跨重生 / 跨维度复制血魔数据。
+     * <p>
+     * 原版 {@code ServerPlayer#restoreFrom} 只会复制 {@code persistentData} 里
+     * 嵌套的 {@code PlayerPersisted} 子标签，直接写在 {@code getPersistentData()}
+     * 顶层的键**不会**跟着复活走——所以必须在 {@code PlayerEvent.Clone} 里手动搬。
+     */
+    public static void copyAcrossRespawn(net.minecraft.world.entity.player.Player from,
+                                         net.minecraft.world.entity.player.Player to) {
+        CompoundTag oldData = from.getPersistentData();
+        CompoundTag newData = to.getPersistentData();
+        if (oldData.contains(KEY_GEN, CompoundTag.TAG_INT)) {
+            newData.putInt(KEY_GEN, oldData.getInt(KEY_GEN));
+        }
+        if (oldData.contains(KEY_CONVERTS, CompoundTag.TAG_INT)) {
+            newData.putInt(KEY_CONVERTS, oldData.getInt(KEY_CONVERTS));
+        }
+    }
+
+    /** 四件套是否齐全（用于每秒兜底重刷）。 */
+    public static boolean hasAllPermanentEffects(ServerPlayer player) {
+        int gen = generation(player);
+        if (gen <= 0) {
+            return true;
+        }
+        return player.hasEffect(ModEffects.bloodGenEffect(gen))
+                && player.hasEffect(MobEffects.DAMAGE_BOOST)
+                && player.hasEffect(MobEffects.DAMAGE_RESISTANCE)
+                && player.hasEffect(ModEffects.HYDROPHOBIA.get());
+    }
+
+    /**
      * 任意生物的代数：玩家看持久数据，血魔老祖恒为 1，其余生物靠「x代血魔」效果兜底。
      */
     public static int generation(LivingEntity entity) {
