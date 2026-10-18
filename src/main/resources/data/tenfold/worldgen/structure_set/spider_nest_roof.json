@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 8610401,
+    "spacing": 44,
+    "separation": 16,
+    "spread_type": "linear"
+  },
+  "structures": [
+    {
+      "structure": "tenfold:spider_nest_roof",
+      "weight": 1
+    }
+  ]
+}

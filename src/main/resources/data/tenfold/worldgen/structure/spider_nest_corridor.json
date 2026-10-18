@@ -1,0 +1,7 @@
+{
+  "type": "tenfold:spider_nest_corridor",
+  "biomes": "#tenfold:has_structure/spider_nest_corridor",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "none"
+}

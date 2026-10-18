@@ -5,6 +5,7 @@
 - [双蛇杖](双蛇杖)
 - [武器图鉴](武器图鉴)
 - [Boss 战](Boss战)
+- [遗迹](遗迹)
 - [状态效果](状态效果)
 - [合成配方](合成配方)
 - [进度树](进度树)
@@ -14,5 +15,5 @@
 
 ---
 
-版本 **0.1.14**
+版本 **0.1.15**
 [更新日志](https://github.com/SouthernPoleStar/tenfold/blob/master/CHANGELOG.md)

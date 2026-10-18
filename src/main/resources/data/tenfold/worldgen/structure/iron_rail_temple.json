@@ -1,0 +1,7 @@
+{
+  "type": "tenfold:iron_rail_temple",
+  "biomes": "#tenfold:has_structure/iron_rail_temple",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "none"
+}

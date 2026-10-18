@@ -24,6 +24,8 @@ public class Tenfold {
         ModTabs.TABS.register(bus);
         ModSounds.SOUNDS.register(bus);
         ModEntities.ENTITIES.register(bus);
+        com.tenfold.worldgen.ModStructures.STRUCTURE_TYPES.register(bus);
+        com.tenfold.worldgen.ModStructures.PIECE_TYPES.register(bus);
 
         bus.addListener(this::commonSetup);
 
