@@ -1,13 +1,13 @@
 {
-  "type": "minecraft:smithing_transform",
-  "template": {
-    "item": "minecraft:netherite_scrap"
-  },
-  "base": {
-    "item": "minecraft:iron_sword"
-  },
-  "addition": {
-    "item": "minecraft:crying_obsidian"
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " I ",
+    "ISI"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "S": { "item": "minecraft:stick" }
   },
   "result": {
     "item": "tenfold:longsword"

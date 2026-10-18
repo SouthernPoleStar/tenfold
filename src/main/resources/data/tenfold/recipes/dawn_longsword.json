@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  D",
+    "  L",
+    "NBN"
+  ],
+  "key": {
+    "D": { "item": "minecraft:diamond" },
+    "L": { "item": "minecraft:lava_bucket" },
+    "N": { "item": "minecraft:netherite_ingot" },
+    "B": { "item": "minecraft:blaze_rod" }
+  },
+  "result": {
+    "item": "tenfold:dawn_longsword"
+  }
+}
