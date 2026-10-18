@@ -202,5 +202,15 @@
   "tenfold.longsword.ira": "IRA 完全解放压制了不稳定的神备。",
   "tenfold.longsword.active": "不稳定的神备已经生效。",
   "tenfold.longsword.enter": "情感爆发——不稳定的神备降临！",
+  "item.tenfold.dawn_longsword": "黎明长剑",
+  "item.tenfold.moth_coffin": "炎蝶之棺",
+  "effect.tenfold.dawn": "黎明",
+  "effect.tenfold.dawn.description": "每层攻击力 +3；满 10 层后消耗全部层数，转化为天将拂晓。",
+  "effect.tenfold.dawn_ascension": "天将拂晓",
+  "effect.tenfold.dawn_ascension.description": "造成伤害 +30%，受到伤害 -20%，近战攻击必定暴击。",
+  "tooltip.tenfold.dawn.damage": "攻击力：20",
+  "tooltip.tenfold.dawn.stack": "命中获得「黎明」：每层攻击力 +3，满 10 层转化为「天将拂晓」",
+  "tooltip.tenfold.dawn.ascension": "天将拂晓：伤害 +30%、受伤 -20%、必定暴击",
+  "tenfold.dawn.ascend": "黎明满溢——天将拂晓！",
   "tenfold.gear.totem": "不稳定的神备替你挡下了致命一击！"
 }

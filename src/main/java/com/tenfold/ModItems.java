@@ -99,6 +99,14 @@ public final class ModItems {
             () -> new com.tenfold.item.GearArmorItem(net.minecraft.world.item.ArmorItem.Type.BOOTS,
                     8.0D, "A1B2C3D4-0004-4E5F-8A90-1234567890AB"));
 
+    /** 黎明长剑：攻击力 20，命中叠「黎明」（每层 +3），满 10 层转化为「天将拂晓」。 */
+    public static final RegistryObject<Item> DAWN_LONGSWORD = ITEMS.register("dawn_longsword",
+            () -> new com.tenfold.item.DawnLongswordItem());
+
+    /** 炎蝶之棺：胸甲，10 护甲 / 12 韧性，穿上不显示模型，常驻抗性 III + 夜视 I。 */
+    public static final RegistryObject<Item> MOTH_COFFIN = ITEMS.register("moth_coffin",
+            () -> new com.tenfold.item.MothCoffinItem());
+
     private ModItems() {
     }
 }

@@ -5,8 +5,10 @@ import com.tenfold.ModItems;
 import com.tenfold.entity.MatthiasEntity;
 import com.tenfold.item.WeaponData;
 import com.tenfold.item.WeaponForm;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -58,6 +61,9 @@ public class CommonEvents {
 
         // 长剑 · 不稳定的神备：抢装套装与属性维护 / 退出恢复。
         UnstableGearManager.tickPlayer(server);
+
+        // 黎明长剑 / 炎蝶之棺：黎明层数、黎明攻击力与胸甲常驻效果。
+        DawnManager.tickPlayer(server);
     }
 
     /**
@@ -307,6 +313,23 @@ public class CommonEvents {
             amount *= 1.15F;
         }
 
+        // 天将拂晓：造成伤害 +30%、受到伤害 -20%，近战攻击必定暴击（×1.5）。
+        if (event.getSource().getEntity() instanceof LivingEntity ascendant
+                && ascendant.hasEffect(ModEffects.DAWN_ASCENSION.get())) {
+            amount *= 1.3F;
+            if (event.getSource().getDirectEntity() instanceof Player) {
+                amount *= 1.5F;
+                if (event.getEntity().level() instanceof ServerLevel server) {
+                    Vec3 pos = event.getEntity().position();
+                    server.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT,
+                            pos.x, pos.y + 1.0D, pos.z, 10, 0.3D, 0.3D, 0.3D, 0.2D);
+                }
+            }
+        }
+        if (event.getEntity().hasEffect(ModEffects.DAWN_ASCENSION.get())) {
+            amount *= 0.8F;
+        }
+
         // 过人的毅力 is resolved in LivingDamageEvent: the 3-point cap must sit
         // *after* armor and absorption to be the final number that lands.
         event.setAmount(amount);
@@ -440,6 +463,21 @@ public class CommonEvents {
         // 神备期间死亡：先把进入前保存的护甲还回去，让掉落按原装备结算。
         if (victim instanceof ServerPlayer deadPlayer) {
             UnstableGearManager.onPlayerDeath(deadPlayer);
+            // 联动：穿戴炎蝶之棺或持有天将拂晓的玩家死在持长剑者 7 格内，
+            // 后者直接进入「不稳定的神备」（跳过情感层数）。
+            boolean catalyst = deadPlayer.getItemBySlot(EquipmentSlot.CHEST)
+                    .is(ModItems.MOTH_COFFIN.get())
+                    || deadPlayer.hasEffect(ModEffects.DAWN_ASCENSION.get());
+            if (catalyst && deadPlayer.level() instanceof ServerLevel server) {
+                for (ServerPlayer nearby : server.players()) {
+                    if (nearby == deadPlayer || nearby.distanceToSqr(deadPlayer) > 49.0D) {
+                        continue;
+                    }
+                    if (nearby.getMainHandItem().is(ModItems.LONGSWORD.get())) {
+                        UnstableGearManager.forceEnter(nearby);
+                    }
+                }
+            }
         }
         // 恶魔契约: plain zombies drop it 30% of the time.
         if (victim.getType() == net.minecraft.world.entity.EntityType.ZOMBIE

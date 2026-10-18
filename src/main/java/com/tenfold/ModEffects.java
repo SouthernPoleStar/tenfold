@@ -149,6 +149,30 @@ public final class ModEffects {
                 }
             });
 
+    /**
+     * 黎明 (Dawn): 黎明长剑每次命中叠加一层，每层攻击力 +3；满 10 层后
+     * 自动消耗全部层数转化为「天将拂晓」。攻击力修正由 {@code DawnManager} 结算。
+     */
+    public static final RegistryObject<MobEffect> DAWN = EFFECTS.register("dawn",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xF0C060) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
+     * 天将拂晓 (Dawn Ascension): 黎明满层后的升华形态。攻击 +30%、
+     * 受到伤害 -20%，且近战攻击必定暴击。规则在 {@code CommonEvents} 里结算。
+     */
+    public static final RegistryObject<MobEffect> DAWN_ASCENSION = EFFECTS.register("dawn_ascension",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xFFB020) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
     private ModEffects() {
     }
 }

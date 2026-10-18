@@ -202,5 +202,15 @@
   "tenfold.longsword.ira": "IRA Full Release suppresses Unstable Gear.",
   "tenfold.longsword.active": "Unstable Gear is already active.",
   "tenfold.longsword.enter": "Emotion erupts — Unstable Gear descends!",
+  "item.tenfold.dawn_longsword": "Dawn Longsword",
+  "item.tenfold.moth_coffin": "Moth Coffin",
+  "effect.tenfold.dawn": "Dawn",
+  "effect.tenfold.dawn.description": "Each stack grants +3 attack damage; at 10 stacks all stacks are consumed and become Dawn Ascension.",
+  "effect.tenfold.dawn_ascension": "Dawn Ascension",
+  "effect.tenfold.dawn_ascension.description": "+30% damage dealt, -20% damage taken, melee attacks always crit.",
+  "tooltip.tenfold.dawn.damage": "Damage: 20",
+  "tooltip.tenfold.dawn.stack": "Hits build Dawn: +3 damage per stack, 10 stacks become Dawn Ascension",
+  "tooltip.tenfold.dawn.ascension": "Dawn Ascension: +30% damage, -20% damage taken, always crits",
+  "tenfold.dawn.ascend": "Dawn overflows — Dawn Ascension!",
   "tenfold.gear.totem": "Unstable Gear wards off a lethal blow!"
 }

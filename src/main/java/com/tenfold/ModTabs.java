@@ -37,6 +37,8 @@ public final class ModTabs {
                         output.accept(ModItems.GEAR_CHEST.get());
                         output.accept(ModItems.GEAR_LEGS.get());
                         output.accept(ModItems.GEAR_BOOTS.get());
+                        output.accept(ModItems.DAWN_LONGSWORD.get());
+                        output.accept(ModItems.MOTH_COFFIN.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));

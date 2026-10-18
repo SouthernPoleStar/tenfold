@@ -96,8 +96,24 @@ public final class UnstableGearManager {
                     level, EMOTION_MAX).withStyle(net.minecraft.ChatFormatting.GRAY), true);
             return false;
         }
-
         player.removeEffect(ModEffects.EMOTION.get());
+        return enter(player);
+    }
+
+    /**
+     * 强制进入神备（炎蝶之棺 / 天将拂晓的持有者死在持剑者 7 格内时触发）。
+     * 跳过情感层数检查，但 IRA 互斥与"已在神备中"仍然生效。
+     */
+    public static boolean forceEnter(ServerPlayer player) {
+        if (player.hasEffect(ModEffects.IRA_RELEASE.get())
+                || player.hasEffect(ModEffects.UNSTABLE_GEAR.get())) {
+            return false;
+        }
+        return enter(player);
+    }
+
+    /** 真正进入神备：保存护甲、换装、重置图腾、加效果。 */
+    private static boolean enter(ServerPlayer player) {
         saveArmor(player);
         equipSet(player);
         player.getPersistentData().putBoolean(TOTEM_KEY, false);
