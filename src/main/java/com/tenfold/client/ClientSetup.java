@@ -33,6 +33,9 @@ public final class ClientSetup {
             event.registerEntityRenderer(com.tenfold.ModEntities.MINION.get(),
                     net.minecraft.client.renderer.entity.ZombieRenderer::new);
             event.registerEntityRenderer(com.tenfold.ModEntities.POEY.get(), PoeyRenderer::new);
+            event.registerEntityRenderer(com.tenfold.ModEntities.BLOOD_ANCESTOR.get(),
+                    ctx -> new BossZombieRenderer(ctx,
+                            new net.minecraft.resources.ResourceLocation("tenfold", "textures/entity/blood_ancestor.png")));
         }
     }
 

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "H",
+    "S"
+  ],
+  "key": {
+    "H": { "item": "tenfold:hard_blood_bottle" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "tenfold:hard_blood_weapon"
+  }
+}

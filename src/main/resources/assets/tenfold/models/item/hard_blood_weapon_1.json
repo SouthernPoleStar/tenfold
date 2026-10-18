@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "tenfold:item/hard_blood_weapon_1"
+  }
+}

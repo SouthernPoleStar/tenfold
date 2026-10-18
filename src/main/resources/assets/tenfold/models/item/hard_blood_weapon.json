@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "tenfold:item/hard_blood_weapon_0"
+  },
+  "overrides": [
+    {
+      "predicate": { "custom_model_data": 1 },
+      "model": "tenfold:item/hard_blood_weapon_1"
+    },
+    {
+      "predicate": { "custom_model_data": 2 },
+      "model": "tenfold:item/hard_blood_weapon_2"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import com.tenfold.entity.MinionEntity;
 import com.tenfold.entity.LeiHengEntity;
 import com.tenfold.entity.LienEntity;
 import com.tenfold.entity.PoeyEntity;
+import com.tenfold.entity.BloodAncestorEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -54,6 +55,13 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .build("poey"));
 
+    /** 血魔老祖: 一代血魔，自然生成于主世界各处，免疫阳光。 */
+    public static final RegistryObject<EntityType<BloodAncestorEntity>> BLOOD_ANCESTOR =
+            ENTITIES.register("blood_ancestor", () -> EntityType.Builder.of(BloodAncestorEntity::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.95F)
+                    .clientTrackingRange(12)
+                    .build("blood_ancestor"));
+
     @Mod.EventBusSubscriber(modid = Tenfold.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     private static class AttributeHandler {
         @SubscribeEvent
@@ -63,6 +71,7 @@ public final class ModEntities {
             event.put(MINION.get(), MinionEntity.createAttributes().build());
             event.put(LIEN.get(), LienEntity.createAttributes().build());
             event.put(POEY.get(), PoeyEntity.createAttributes().build());
+            event.put(BLOOD_ANCESTOR.get(), BloodAncestorEntity.createAttributes().build());
         }
     }
 

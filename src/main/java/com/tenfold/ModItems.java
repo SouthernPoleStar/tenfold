@@ -107,6 +107,31 @@ public final class ModItems {
     public static final RegistryObject<Item> MOTH_COFFIN = ITEMS.register("moth_coffin",
             () -> new com.tenfold.item.MothCoffinItem());
 
+    /** 血魔老祖的牙：右键使用，100% 转化为二代血魔。 */
+    public static final RegistryObject<Item> BLOOD_FANG = ITEMS.register("blood_fang",
+            () -> new com.tenfold.item.BloodFangItem());
+
+    /** 血瓶：血魔的食物，喝完返还玻璃瓶。 */
+    public static final RegistryObject<Item> BLOOD_BOTTLE = ITEMS.register("blood_bottle",
+            () -> new com.tenfold.item.BloodBottleItem());
+
+    /** 硬血瓶：祭祀仪式产物，合成硬血武器的材料。 */
+    public static final RegistryObject<Item> HARD_BLOOD_BOTTLE = ITEMS.register("hard_blood_bottle",
+            () -> new com.tenfold.item.HardBloodBottleItem());
+
+    /** 祭祀匕首：下界合金碎片 + 木棍，取血仪式要用。 */
+    public static final RegistryObject<Item> SACRIFICIAL_DAGGER = ITEMS.register("sacrificial_dagger",
+            () -> new com.tenfold.item.SacrificialDaggerItem());
+
+    /** 硬血武器：硬血瓶 + 木棍，长枪/长刀/匕首三形态，只有血魔能用。 */
+    public static final RegistryObject<Item> HARD_BLOOD_WEAPON = ITEMS.register("hard_blood_weapon",
+            () -> new com.tenfold.item.HardBloodWeaponItem());
+
+    /** 血魔老祖刷怪蛋。 */
+    public static final RegistryObject<Item> BLOOD_ANCESTOR_SPAWN_EGG = ITEMS.register("blood_ancestor_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.BLOOD_ANCESTOR,
+                    0x8B1A1A, 0x1F5F8A, new Item.Properties()));
+
     private ModItems() {
     }
 }

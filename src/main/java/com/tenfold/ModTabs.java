@@ -39,6 +39,12 @@ public final class ModTabs {
                         output.accept(ModItems.GEAR_BOOTS.get());
                         output.accept(ModItems.DAWN_LONGSWORD.get());
                         output.accept(ModItems.MOTH_COFFIN.get());
+                        output.accept(ModItems.BLOOD_FANG.get());
+                        output.accept(ModItems.BLOOD_BOTTLE.get());
+                        output.accept(ModItems.HARD_BLOOD_BOTTLE.get());
+                        output.accept(ModItems.SACRIFICIAL_DAGGER.get());
+                        output.accept(ModItems.HARD_BLOOD_WEAPON.get());
+                        output.accept(ModItems.BLOOD_ANCESTOR_SPAWN_EGG.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));

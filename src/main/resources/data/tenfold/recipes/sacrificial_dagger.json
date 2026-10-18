@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "I"
+  ],
+  "key": {
+    "S": { "item": "minecraft:netherite_scrap" },
+    "I": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "tenfold:sacrificial_dagger"
+  }
+}

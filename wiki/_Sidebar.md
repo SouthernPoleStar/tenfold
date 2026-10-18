@@ -6,6 +6,7 @@
 - [武器图鉴](武器图鉴)
 - [Boss 战](Boss战)
 - [遗迹](遗迹)
+- [血魔](血魔)
 - [状态效果](状态效果)
 - [合成配方](合成配方)
 - [进度树](进度树)
@@ -15,5 +16,5 @@
 
 ---
 
-版本 **0.1.15**
+版本 **0.1.16**
 [更新日志](https://github.com/SouthernPoleStar/tenfold/blob/master/CHANGELOG.md)

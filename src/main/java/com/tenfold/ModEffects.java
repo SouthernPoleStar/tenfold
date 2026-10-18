@@ -173,6 +173,59 @@ public final class ModEffects {
                 }
             });
 
+    /**
+     * 恐水症：血魔的常驻负面状态。沾水持续扣血（中毒式），潜水直接窒息，
+     * 具体伤害结算在 {@code BloodDemonEvents#onPlayerTick}。
+     */
+    public static final RegistryObject<MobEffect> HYDROPHOBIA = EFFECTS.register("hydrophobia",
+            () -> new MobEffect(MobEffectCategory.NEUTRAL, 0x1F5F8A) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
+     * 一代~十代血魔：十个独立效果，让「x代血魔」能作为效果名直接显示。
+     * 玩家由二代起跳（被血魔老祖转化的都是二代），往上依次传染。
+     */
+    public static final RegistryObject<MobEffect> BLOOD_GEN_1 = registerBloodGen("blood_gen_1");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_2 = registerBloodGen("blood_gen_2");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_3 = registerBloodGen("blood_gen_3");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_4 = registerBloodGen("blood_gen_4");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_5 = registerBloodGen("blood_gen_5");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_6 = registerBloodGen("blood_gen_6");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_7 = registerBloodGen("blood_gen_7");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_8 = registerBloodGen("blood_gen_8");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_9 = registerBloodGen("blood_gen_9");
+    public static final RegistryObject<MobEffect> BLOOD_GEN_10 = registerBloodGen("blood_gen_10");
+
+    private static RegistryObject<MobEffect> registerBloodGen(String id) {
+        return EFFECTS.register(id, () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0x8B1A1A) {
+            @Override
+            public boolean isDurationEffectTick(int duration, int amplifier) {
+                return false;
+            }
+        });
+    }
+
+    /** 按代数取对应的「x代血魔」效果（越界截断到 1~10）。 */
+    public static MobEffect bloodGenEffect(int generation) {
+        int clamped = Math.max(1, Math.min(10, generation));
+        return switch (clamped) {
+            case 1 -> BLOOD_GEN_1.get();
+            case 2 -> BLOOD_GEN_2.get();
+            case 3 -> BLOOD_GEN_3.get();
+            case 4 -> BLOOD_GEN_4.get();
+            case 5 -> BLOOD_GEN_5.get();
+            case 6 -> BLOOD_GEN_6.get();
+            case 7 -> BLOOD_GEN_7.get();
+            case 8 -> BLOOD_GEN_8.get();
+            case 9 -> BLOOD_GEN_9.get();
+            default -> BLOOD_GEN_10.get();
+        };
+    }
+
     private ModEffects() {
     }
 }
