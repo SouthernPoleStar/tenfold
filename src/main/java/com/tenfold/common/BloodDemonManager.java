@@ -50,13 +50,21 @@ public final class BloodDemonManager {
         return gen < 2 ? 0 : gen;
     }
 
-    /** 任意生物的代数：玩家看持久数据，血魔老祖恒为 1，其余 0。 */
+    /**
+     * 任意生物的代数：玩家看持久数据，血魔老祖恒为 1，其余生物靠「x代血魔」效果兜底。
+     */
     public static int generation(LivingEntity entity) {
         if (entity instanceof ServerPlayer player) {
             return generation(player);
         }
         if (entity.getType() == ModEntities.BLOOD_ANCESTOR.get()) {
             return 1;
+        }
+        // 兜底：任何挂着「x代血魔」效果的生物按效果推算代数。
+        for (int gen = 1; gen <= MAX_GENERATION; gen++) {
+            if (entity.hasEffect(ModEffects.bloodGenEffect(gen))) {
+                return gen;
+            }
         }
         return 0;
     }
@@ -147,12 +155,14 @@ public final class BloodDemonManager {
     /* ------------------------------------------------------------------ */
 
     /**
-     * 血魔之间的伤害倍率：
+     * 血魔之间的伤害倍率。**代数越小阶级越高**（一代=老祖最高，二代次之，三代再次之…），
+     * 因为二代能转化出三代、三代转化出四代，辈分越往下代数越大。
      * <ul>
      *   <li>同代 / 非血魔之间：×1。</li>
-     *   <li>高阶打低阶：×1.9 × 1.5^(差-1)。</li>
-     *   <li>低阶打高阶：×0.1 × 0.5^(差-1)。</li>
+     *   <li>高阶（代数小）打低阶（代数大）：×1.9 × 1.5^(差-1)。</li>
+     *   <li>低阶（代数大）打高阶（代数小）：×0.1 × 0.5^(差-1)。</li>
      * </ul>
+     * 例：二代打老祖（差 1）＝ ×0.1；老祖打二代 ＝ ×1.9。
      */
     public static float interGenerationMultiplier(LivingEntity attacker, LivingEntity victim) {
         int a = generation(attacker);
@@ -161,9 +171,11 @@ public final class BloodDemonManager {
             return 1.0F;
         }
         int gap = Math.abs(a - v);
-        if (a > v) {
+        if (a < v) {
+            // 攻击者代数更小 = 阶级更高
             return HIGH_VS_LOW_BASE * (float) Math.pow(1.0D + PER_GAP_STEP, gap - 1);
         }
+        // 攻击者代数更大 = 阶级更低
         return LOW_VS_HIGH_BASE * (float) Math.pow(PER_GAP_STEP, gap - 1);
     }
 }
