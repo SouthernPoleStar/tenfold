@@ -5,8 +5,12 @@ Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态
 - **模组版本**：0.1.14
 - **模组 ID**：`tenfold`
 - **作者**：南极星
-- **反馈渠道**：QQ 3618576581
-- **国内下载链接** :123云盘:https://1844070509.share.123pan.cn/123pan/SVsZTd-LdzjH
+- **反馈渠道**：[GitHub Issues](https://github.com/SouthernPoleStar/tenfold/issues)
+- **下载**：本地构建 `build/libs/tenfold-0.1.14.jar`，或见 Releases 页面
+
+> **免责声明**
+> 本模组是爱好者制作的**非官方** Minecraft 模组，与 Mojang Studios、Microsoft 均无隶属或合作关系，未获得其认可或授权。
+> 模组以 Project Moon 的作品为原型创作，相关的角色、术语与设定版权归 Project Moon 所有；模组内的代码与自制美术资源归作者所有。
 
 ---
 

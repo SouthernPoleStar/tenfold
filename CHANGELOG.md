@@ -2,6 +2,10 @@
 
 ## v0.1.14
 
+### 文档
+- README 增加免责声明：本模组为非官方 Minecraft 模组，与 Mojang Studios、Microsoft 无隶属或合作关系；并以 Project Moon 作品为原型，相关版权归其所有。
+- 移除 README 与游戏内欢迎语中的 QQ 号及第三方网盘下载链接，反馈渠道改为 GitHub Issues。
+
 ### 修复
 - IRA 酿造注册不再读取 `PotionBrewing` 的私有字段 `POTION_MIXES`：正式包里的字段名是 SRG（`f_43494_`），按名字取会抛 `NoSuchFieldException`，把已经成功的注册误报成 `Failed to register the IRA brewing recipe`（玩家日志里那条 ERROR）。
 - 补齐四个刷怪蛋的模型（`matthias_spawn_egg` / `leiheng_spawn_egg` / `lien_spawn_egg` / `poey_spawn_egg`）：之前缺少 `models/item/*.json`，客户端报 `FileNotFoundException`，刷怪蛋会显示成紫黑方块。
@@ -107,7 +111,7 @@
 
 ## v0.1.5
 - 修复了版本号错误的问题
-- 进入世界时公屏显示欢迎语（作者：南极星，反馈QQ：3618576581）
+- 进入世界时公屏显示欢迎语（作者：南极星）
 - 三个 Boss 换上专属皮肤并使用自定义渲染器
 - 修复魔弹枪击杀敌人时误显示自灭消息的问题
 - 修复魔弹枪死亡消息显示英文的问题
