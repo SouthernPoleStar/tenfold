@@ -67,10 +67,10 @@ public final class UnstableGearManager {
         return effect == null ? 0 : effect.getAmplifier() + 1;
     }
 
-    /** 长剑命中：情感 +1，最高 15 层；已满时只刷新持续时间。 */
+    /** 长剑命中：情感 +1，最高 15 层；已满时只刷新持续时间（2 分钟）。 */
     public static void addEmotion(ServerPlayer player) {
         int level = Math.min(EMOTION_MAX, emotionLevel(player) + 1);
-        player.addEffect(new MobEffectInstance(ModEffects.EMOTION.get(), 20 * 20,
+        player.addEffect(new MobEffectInstance(ModEffects.EMOTION.get(), 20 * 60 * 2,
                 level - 1, false, true, true));
     }
 

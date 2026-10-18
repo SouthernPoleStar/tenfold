@@ -28,7 +28,8 @@ import java.util.UUID;
 public final class DawnManager {
 
     public static final int DAWN_MAX = 10;
-    private static final int DAWN_DURATION = 20 * 30;
+    /** 黎明持续 2 分钟，每次命中刷新。 */
+    private static final int DAWN_DURATION = 20 * 60 * 2;
     private static final int ASCENSION_DURATION = 20 * 60;
     private static final int BUFF_REFRESH = 40;
 
