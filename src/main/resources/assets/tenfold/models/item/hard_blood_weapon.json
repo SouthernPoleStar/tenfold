@@ -11,6 +11,10 @@
     {
       "predicate": { "custom_model_data": 2 },
       "model": "tenfold:item/hard_blood_weapon_2"
+    },
+    {
+      "predicate": { "custom_model_data": 3 },
+      "model": "tenfold:item/hard_blood_weapon_3"
     }
   ]
 }

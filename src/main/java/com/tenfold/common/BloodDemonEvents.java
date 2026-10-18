@@ -4,21 +4,33 @@ import com.tenfold.ModEffects;
 import com.tenfold.ModEntities;
 import com.tenfold.ModItems;
 import com.tenfold.entity.BloodAncestorEntity;
+import com.tenfold.item.HardBloodForm;
+import com.tenfold.item.HardBloodWeaponItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * 血魔体系的事件端：
@@ -54,8 +66,11 @@ public class BloodDemonEvents {
     }
 
     /* ------------------------------------------------------------------ */
-    /* 恐水症                                                              */
+    /* 恐水症 + 吸血条（渴血）                                              */
     /* ------------------------------------------------------------------ */
+
+    /** 长枪突刺正在结算中（防递归触发）。 */
+    private static final Set<UUID> PIERCING = new HashSet<>();
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -63,23 +78,49 @@ public class BloodDemonEvents {
             return;
         }
         Player player = event.player;
-        if (!player.hasEffect(ModEffects.HYDROPHOBIA.get()) || player.isCreative() || player.isSpectator()) {
+        if (!(player instanceof ServerPlayer serverPlayer) || player.isCreative() || player.isSpectator()) {
             return;
         }
-        if (player.tickCount % 20 != 0) {
-            return;
+
+        // 恐水症。
+        if (player.hasEffect(ModEffects.HYDROPHOBIA.get()) && player.tickCount % 20 == 0) {
+            if (player.isEyeInFluid(FluidTags.WATER)) {
+                // 潜水：直接窒息，每秒 2 点溺水伤害。
+                player.hurt(player.damageSources().drown(), 2.0F);
+            } else if (player.isInWater()) {
+                // 沾水（半个身子在水里）：像中毒一样持续扣血，无视护甲。
+                player.hurt(player.damageSources().magic(), 1.0F);
+            }
         }
-        if (player.isEyeInFluid(FluidTags.WATER)) {
-            // 潜水：直接窒息，每秒 2 点溺水伤害。
-            player.hurt(player.damageSources().drown(), 2.0F);
-        } else if (player.isInWater()) {
-            // 沾水（半个身子在水里）：像中毒一样持续扣血，无视护甲。
-            player.hurt(player.damageSources().magic(), 1.0F);
+
+        // 吸血条与渴血。
+        if (BloodDemonManager.isBloodDemon(serverPlayer)) {
+            tickBloodBar(serverPlayer);
+        }
+    }
+
+    /**
+     * 血魔的饱食度就是「吸血条」，下降完全走原版饱食度机制（疾跑、跳跃、
+     * 挖掘、自然恢复等消耗疲劳值 → 掉饥饿），不再额外扣减；喝血瓶回复。
+     * 清零时获得「渴血」（攻击 ×2、受伤 ×3、缓慢 I），喝血后自动解除。
+     */
+    private void tickBloodBar(ServerPlayer player) {
+        FoodData food = player.getFoodData();
+        if (food.getFoodLevel() <= 0) {
+            if (player.tickCount % 20 == 0) {
+                player.addEffect(new MobEffectInstance(ModEffects.BLOODTHIRST.get(),
+                        40, 0, false, false, true));
+                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+                        30, 0, false, false, true));
+            }
+        } else if (player.hasEffect(ModEffects.BLOODTHIRST.get())) {
+            player.removeEffect(ModEffects.BLOODTHIRST.get());
+            player.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
         }
     }
 
     /* ------------------------------------------------------------------ */
-    /* 伤害规则：代际倍率 + 硬血武器限制                                    */
+    /* 伤害规则：代际倍率 + 渴血 + 双持长刀 + 长枪突刺 + 硬血武器限制       */
     /* ------------------------------------------------------------------ */
 
     @SubscribeEvent
@@ -87,6 +128,14 @@ public class BloodDemonEvents {
         if (event.getEntity().level().isClientSide()) {
             return;
         }
+        // 血魔不吃饥饿伤害：饿的是血，不是肚子。
+        if (event.getEntity() instanceof Player starving
+                && BloodDemonManager.isBloodDemon(starving)
+                && "starve".equals(event.getSource().getMsgId())) {
+            event.setAmount(0.0F);
+            return;
+        }
+
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             // 硬血武器只有血魔能用：非血魔挥不动，伤害直接压成 0。
             if (attacker.getMainHandItem().is(ModItems.HARD_BLOOD_WEAPON.get())
@@ -103,6 +152,80 @@ public class BloodDemonEvents {
             if (multiplier != 1.0F) {
                 event.setAmount(event.getAmount() * multiplier);
             }
+        }
+
+        // 渴血：自身攻击 ×2，受到的伤害 ×3。
+        if (event.getSource().getEntity() instanceof LivingEntity thirsty
+                && thirsty.hasEffect(ModEffects.BLOODTHIRST.get())) {
+            event.setAmount(event.getAmount() * 2.0F);
+        }
+        if (event.getEntity().hasEffect(ModEffects.BLOODTHIRST.get())) {
+            event.setAmount(event.getAmount() * 3.0F);
+        }
+
+        // 双持长刀：13 → 17。
+        if (event.getSource().getDirectEntity() instanceof Player dualWielder
+                && dualWielder.getMainHandItem().is(ModItems.HARD_BLOOD_WEAPON.get())
+                && HardBloodWeaponItem.form(dualWielder.getMainHandItem()) == HardBloodForm.LONG_BLADE
+                && HardBloodWeaponItem.isDualWieldingLongBlades(dualWielder)) {
+            event.setAmount(event.getAmount()
+                    * (HardBloodWeaponItem.DUAL_LONG_BLADE_DAMAGE / HardBloodForm.LONG_BLADE.damage));
+        }
+
+        // 长枪突刺：这一击同时刺中直线上的其他敌人。
+        if (event.getSource().getDirectEntity() instanceof Player spearUser
+                && !PIERCING.contains(spearUser.getUUID())
+                && spearUser.getMainHandItem().is(ModItems.HARD_BLOOD_WEAPON.get())
+                && HardBloodWeaponItem.form(spearUser.getMainHandItem()) == HardBloodForm.SPEAR) {
+            pierceLine(spearUser, event.getEntity());
+        }
+    }
+
+    /** 长枪：把正前方直线 5 格内、视线 ±30° 的敌人一并刺到。 */
+    private void pierceLine(Player player, LivingEntity primary) {
+        PIERCING.add(player.getUUID());
+        try {
+            Vec3 look = player.getLookAngle();
+            Vec3 eye = player.getEyePosition();
+            List<LivingEntity> targets = player.level().getEntitiesOfClass(LivingEntity.class,
+                    player.getBoundingBox().inflate(6.0D),
+                    entity -> entity != player && entity != primary && entity.isAlive());
+            for (LivingEntity target : targets) {
+                Vec3 to = target.position().add(0.0D, target.getBbHeight() * 0.5D, 0.0D).subtract(eye);
+                double distance = to.length();
+                if (distance > 5.0D) {
+                    continue;
+                }
+                if (to.normalize().dot(look) < 0.85D) {
+                    continue;
+                }
+                target.hurt(player.damageSources().playerAttack(player), HardBloodForm.SPEAR.damage);
+            }
+        } finally {
+            PIERCING.remove(player.getUUID());
+        }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 长刀双持格挡：伤害减半，30% 反弹                                    */
+    /* ------------------------------------------------------------------ */
+
+    @SubscribeEvent
+    public void onShieldBlock(ShieldBlockEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        ItemStack used = player.getUseItem();
+        if (!used.is(ModItems.HARD_BLOOD_WEAPON.get())
+                || HardBloodWeaponItem.form(used) != HardBloodForm.LONG_BLADE) {
+            return;
+        }
+        float original = event.getBlockedDamage();
+        event.setBlockedDamage(original * 0.5F);
+        event.setShieldTakesDamage(false);
+        if (event.getDamageSource().getEntity() instanceof LivingEntity attacker
+                && attacker != player) {
+            attacker.hurt(player.damageSources().thorns(player), original * 0.3F);
         }
     }
 

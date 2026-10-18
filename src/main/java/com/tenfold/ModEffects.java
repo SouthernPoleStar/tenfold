@@ -186,6 +186,19 @@ public final class ModEffects {
             });
 
     /**
+     * 渴血：血魔的吸血条（饱食度）清零时获得的负面状态。
+     * 自身攻击翻倍、受到的伤害翻 3 倍，并附赠一层缓慢。
+     * 伤害修正在 {@code BloodDemonEvents#onLivingHurt} 结算，喝血后自动解除。
+     */
+    public static final RegistryObject<MobEffect> BLOODTHIRST = EFFECTS.register("bloodthirst",
+            () -> new MobEffect(MobEffectCategory.HARMFUL, 0x6B0F14) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
      * 一代~十代血魔：十个独立效果，让「x代血魔」能作为效果名直接显示。
      * 玩家由二代起跳（被血魔老祖转化的都是二代），往上依次传染。
      */
