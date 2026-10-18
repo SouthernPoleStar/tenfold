@@ -70,6 +70,14 @@ public class MaskItem extends ArmorItem {
         super(MATERIAL, Type.HELMET, new Item.Properties().stacksTo(1));
     }
 
+    /** 直接给出完整贴图路径：假面材质是全透明的，避免解析失败后显示成紫黑棋盘。 */
+    @Override
+    @Nullable
+    public String getArmorTexture(ItemStack stack, net.minecraft.world.entity.Entity entity,
+                                  net.minecraft.world.entity.EquipmentSlot slot, @Nullable String type) {
+        return "tenfold:textures/models/armor/tenfold_mask_layer_1.png";
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level,
                                 List<Component> tooltip, TooltipFlag flag) {

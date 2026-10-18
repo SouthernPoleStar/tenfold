@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -13,14 +14,15 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
- * 「不稳定的神备」期间强制穿上的套装：血雷 / 蜡翼 / 融化的蜡 / 皮鞋。
+ * 「不稳定的神备」期间强制穿上的套装：血泪 / 蜡翼 / 融化的蜡 / 皮鞋。
  * <p>
  * 每件护甲值与韧性不同（韧性无法在 {@link ArmorMaterial} 里按部位区分，所以由
- * 物品自己的属性修正补上）。材质名是 {@code tenfold:gear}，对应的盔甲层
- * {@code textures/models/armor/gear_layer_1.png} 是全透明的，所以穿上不显示模型。
+ * 物品自己的属性修正补上）。盔甲层 {@code textures/models/armor/gear_layer_1.png}
+ * 是全透明的，所以穿上不显示模型。
  */
 public class GearArmorItem extends ArmorItem {
 
@@ -100,6 +102,16 @@ public class GearArmorItem extends ArmorItem {
     @Override
     public boolean onDroppedByPlayer(ItemStack item, net.minecraft.world.entity.player.Player player) {
         return false;
+    }
+
+    /**
+     * 直接给出完整贴图路径。只靠材质名解析时，某些路径会把 {@code tenfold:gear}
+     * 当成 minecraft 命名空间下的名字，贴图找不到就渲染成紫黑棋盘（玩家看到的"紫色"）。
+     */
+    @Override
+    @Nullable
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, @Nullable String type) {
+        return "tenfold:textures/models/armor/gear_layer_1.png";
     }
 
     @Override

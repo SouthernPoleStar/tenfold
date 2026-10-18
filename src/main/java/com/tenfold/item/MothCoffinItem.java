@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
@@ -86,5 +88,12 @@ public class MothCoffinItem extends ArmorItem {
         builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(
                 TOUGHNESS_ID, "tenfold_moth_coffin", 12.0D, AttributeModifier.Operation.ADDITION));
         return builder.build();
+    }
+
+    /** 直接给出完整贴图路径，避免材质名解析到错误命名空间后变成紫黑棋盘。 */
+    @Override
+    @Nullable
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, @Nullable String type) {
+        return "tenfold:textures/models/armor/moth_coffin_layer_1.png";
     }
 }

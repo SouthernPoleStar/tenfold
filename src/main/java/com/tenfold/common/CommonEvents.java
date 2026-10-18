@@ -313,17 +313,14 @@ public class CommonEvents {
             amount *= 1.15F;
         }
 
-        // 天将拂晓：造成伤害 +30%、受到伤害 -20%，近战攻击必定暴击（×1.5）。
+        // 天将拂晓：造成伤害 +30%、受到伤害 -20%，近战攻击必定暴击。
         if (event.getSource().getEntity() instanceof LivingEntity ascendant
                 && ascendant.hasEffect(ModEffects.DAWN_ASCENSION.get())) {
             amount *= 1.3F;
-            if (event.getSource().getDirectEntity() instanceof Player) {
+            if (event.getSource().getDirectEntity() instanceof Player critPlayer) {
                 amount *= 1.5F;
-                if (event.getEntity().level() instanceof ServerLevel server) {
-                    Vec3 pos = event.getEntity().position();
-                    server.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT,
-                            pos.x, pos.y + 1.0D, pos.z, 10, 0.3D, 0.3D, 0.3D, 0.2D);
-                }
+                // 复刻原版跳劈暴击：星星粒子 + 暴击音效（Player#crit 就是原版那套表现）。
+                critPlayer.crit(event.getEntity());
             }
         }
         if (event.getEntity().hasEffect(ModEffects.DAWN_ASCENSION.get())) {
