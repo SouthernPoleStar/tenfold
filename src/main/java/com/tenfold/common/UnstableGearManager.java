@@ -168,7 +168,8 @@ public final class UnstableGearManager {
             return false;
         }
         data.putBoolean(TOTEM_KEY, true);
-        player.setHealth(1.0F);
+        // 血量由调用方通过伤害结算压到 1 点（不要在这里直接 setHealth，
+        // 否则会和 LivingEntity.actuallyHurt 的扣血叠加出 0 血未死的怪状态）。
         player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 20 * 5, 1, false, true, true));
         player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 45, 1, false, true, true));
         // 和原版图腾一样清掉负面效果（神备是增益，不受影响）。

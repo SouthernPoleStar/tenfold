@@ -393,11 +393,19 @@ public class CommonEvents {
             return;
         }
         // 不稳定的神备：每次进入后的第一次致命伤害由一次「不死图腾」抵消。
+        // 阈值留半颗心的容差：浮点误差（0.9999 < 1.0）会让"致命"判定失败，
+        // 玩家卡在几乎为 0 的血量上不死、持续红闪抽搐。
         if (event.getEntity() instanceof ServerPlayer gearPlayer
                 && gearPlayer.hasEffect(ModEffects.UNSTABLE_GEAR.get())
-                && event.getAmount() >= gearPlayer.getHealth()
+                && event.getAmount() >= gearPlayer.getHealth() - 0.5F
                 && UnstableGearManager.handleLethalHit(gearPlayer)) {
-            event.setAmount(0.0F);
+            float before = gearPlayer.getHealth();
+            // 把这一击压到"只剩 1 点血"，而不是直接在事件里 setHealth 再清零伤害，
+            // 避免和 actuallyHurt 的扣血逻辑叠加出 0 血未死的状态。
+            event.setAmount(Math.max(0.0F, before - 1.0F));
+            if (before < 1.0F) {
+                gearPlayer.setHealth(1.0F);
+            }
             return;
         }
         if (!(event.getEntity() instanceof MatthiasEntity matthias)
