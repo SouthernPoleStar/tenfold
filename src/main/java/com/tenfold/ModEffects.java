@@ -66,8 +66,23 @@ public final class ModEffects {
     public static final RegistryObject<MobEffect> PERSEVERANCE_ALLY = EFFECTS.register("perseverance_ally",
             () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xC03018) {
                 @Override
+                public void applyEffectTick(net.minecraft.world.entity.LivingEntity entity, int amplifier) {
+                    // 与原版 AbsorptionEffect 相同：每级 4 点吸收（2 颗黄心），只增不减
+                    entity.setAbsorptionAmount(
+                            Math.max(entity.getAbsorptionAmount(), 4.0F * (amplifier + 1)));
+                }
+
+                @Override
                 public boolean isDurationEffectTick(int duration, int amplifier) {
-                    return false;
+                    return true; // 每 tick 执行 applyEffectTick，保证黄心被顶掉后立刻补回
+                }
+
+                @Override
+                public void removeAttributeModifiers(net.minecraft.world.entity.LivingEntity entity,
+                        net.minecraft.world.entity.ai.attributes.AttributeMap map, int amplifier) {
+                    super.removeAttributeModifiers(entity, map, amplifier);
+                    // 效果结束时按原版规则回收溢出的黄心
+                    entity.setAbsorptionAmount(Math.min(entity.getAbsorptionAmount(), entity.getHealth()));
                 }
             });
 
