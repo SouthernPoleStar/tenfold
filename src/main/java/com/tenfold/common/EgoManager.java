@@ -220,16 +220,17 @@ public final class EgoManager {
         return player.getPersistentData().contains(SAVE_KEYS[0], Tag.TAG_COMPOUND);
     }
 
-    /** 清空四件护甲：能塞回背包就塞回去，塞不下就丢在原地（不凭空消失）。 */
+    /**
+     * 清空四件护甲。
+     * <p>
+     * 原护甲在 {@link #saveArmor} 里已经完整保存了一份，结束时由
+     * {@link #restoreArmor} 原样放回，所以这里**直接清空、不塞进背包**，
+     * 否则背包里会多出一份复制品（曾经的刷装备漏洞）。
+     */
     private static void clearArmor(ServerPlayer player) {
         for (EquipmentSlot slot : ARMOR_SLOTS) {
-            ItemStack current = player.getItemBySlot(slot);
-            if (current.isEmpty()) {
-                continue;
-            }
-            player.setItemSlot(slot, ItemStack.EMPTY);
-            if (!player.getInventory().add(current.copy())) {
-                player.drop(current.copy(), false);
+            if (!player.getItemBySlot(slot).isEmpty()) {
+                player.setItemSlot(slot, ItemStack.EMPTY);
             }
         }
     }
@@ -269,6 +270,7 @@ public final class EgoManager {
         for (int i = 0; i < ARMOR_SLOTS.length; i++) {
             CompoundTag saved = data.getCompound(SAVE_KEYS[i]);
             ItemStack stack = saved.isEmpty() ? ItemStack.EMPTY : ItemStack.of(saved);
+            TempGear.removeDuplicate(player, stack);
             player.setItemSlot(ARMOR_SLOTS[i], stack);
             data.remove(SAVE_KEYS[i]);
         }

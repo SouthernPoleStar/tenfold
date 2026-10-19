@@ -325,5 +325,22 @@
   "pipe.tenfold.tooltip.white": "按住右键 3 秒：周围友方获得 10 秒生命恢复 IV 与 30 秒抗性 III",
   "pipe.tenfold.tooltip.purple": "按住右键 5 秒：半径 7 格内敌人获得 30 秒虚弱 X",
   "pipe.tenfold.tooltip.red_dot": "按住右键 20 秒：扣掉自身一半生命，发射穿透 30 格的红点（伤害 = 扣血 ×30），之后获得 30 秒虚弱 II",
-  "pipe.tenfold.tooltip.switch": "潜行 + 右键切换模式"
+  "pipe.tenfold.tooltip.switch": "潜行 + 右键切换模式",
+  "item.tenfold.mysterious_dagger": "神秘的匕首",
+  "entity.tenfold.poee": "Poee",
+  "entity.tenfold.poee.phase2": "Poee · 我是 Poey",
+  "effect.tenfold.abandoned": "抛弃",
+  "effect.tenfold.abandoned.description": "被神秘的匕首刺中。带着它死去的 Poey 会变成 Poee。",
+  "effect.tenfold.im_poey": "我是Poey",
+  "effect.tenfold.im_poey.description": "受到伤害 +100%，造成伤害 -100%，且无法回血。",
+  "tooltip.tenfold.dagger.damage": "基础伤害：%s",
+  "tooltip.tenfold.dagger.poey": "攻击 Poey 时伤害 +%s%%",
+  "tooltip.tenfold.dagger.abandoned": "命中 Poey 会使其获得「抛弃」",
+  "tenfold.dagger.abandoned": "Poey 被烙上了「抛弃」。",
+  "tenfold.poee.quote": "p... ...Poey，请用那个名字，呼唤我",
+  "tenfold.poee.transformed": "Poey 的身影扭曲了……Poee 出现了。",
+  "tenfold.poee.death1": "你，是异乡人，但我，并不陌生，你在我的记忆里，留下了许多",
+  "tenfold.poee.death2": "所以，我还能，继续与你同行吗？",
+  "tenfold.advancement.poee_killed.title": "你都做了什么？！",
+  "tenfold.advancement.poee_killed.desc": "杀死一个对那个人来说你是最重要的人的人。"
 }

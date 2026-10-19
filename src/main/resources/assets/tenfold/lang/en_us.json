@@ -325,5 +325,22 @@
   "pipe.tenfold.tooltip.white": "Hold right-click 3s: nearby allies get Regeneration IV for 10s and Resistance III for 30s",
   "pipe.tenfold.tooltip.purple": "Hold right-click 5s: enemies within 7 blocks get Weakness X for 30s",
   "pipe.tenfold.tooltip.red_dot": "Hold right-click 20s: sacrifice half your health to fire a red dot that pierces 30 blocks (damage = health spent x30), then gain Weakness II for 30s",
-  "pipe.tenfold.tooltip.switch": "Sneak + right-click to switch modes"
+  "pipe.tenfold.tooltip.switch": "Sneak + right-click to switch modes",
+  "item.tenfold.mysterious_dagger": "Mysterious Dagger",
+  "entity.tenfold.poee": "Poee",
+  "entity.tenfold.poee.phase2": "Poee · I Am Poey",
+  "effect.tenfold.abandoned": "Abandoned",
+  "effect.tenfold.abandoned.description": "Stabbed by the mysterious dagger. A Poey that dies with this becomes Poee.",
+  "effect.tenfold.im_poey": "I Am Poey",
+  "effect.tenfold.im_poey.description": "Takes +100% damage, deals -100% damage, and cannot heal.",
+  "tooltip.tenfold.dagger.damage": "Base damage: %s",
+  "tooltip.tenfold.dagger.poey": "Deals +%s%% damage to Poey",
+  "tooltip.tenfold.dagger.abandoned": "Hitting Poey inflicts Abandoned",
+  "tenfold.dagger.abandoned": "Poey has been branded with Abandoned.",
+  "tenfold.poee.quote": "p... ...Poey, call me by that name",
+  "tenfold.poee.transformed": "Poey's form twists... Poee has appeared.",
+  "tenfold.poee.death1": "You are a stranger, yet not unfamiliar. You left much in my memory.",
+  "tenfold.poee.death2": "So... may I still walk with you?",
+  "tenfold.advancement.poee_killed.title": "What Have You Done?!",
+  "tenfold.advancement.poee_killed.desc": "Kill the one person for whom you were the most important."
 }

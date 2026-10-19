@@ -257,6 +257,11 @@ public class PoeyEntity extends PathfinderMob {
     /** 友方单位：玩家打不到它，但 /kill 之类的世界伤害仍然有效。 */
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
+        // 只有手持「神秘的匕首」的玩家能伤到 Poey（其余玩家伤害一律免疫）。
+        if (source.getEntity() instanceof Player player
+                && player.getMainHandItem().is(com.tenfold.ModItems.MYSTERIOUS_DAGGER.get())) {
+            return super.isInvulnerableTo(source);
+        }
         return source.getEntity() instanceof Player || super.isInvulnerableTo(source);
     }
 

@@ -15,6 +15,8 @@ public final class ModAdvancements {
     public static final String MARRIAGE_FRAGMENT = "marriage_fragment";
     /** 我们的心意终与不再相悖：穿狂猎棺材 + 手持狂猎大剑。 */
     public static final String SOUL_UNITED = "soul_united";
+    /** 你都做了什么？！：击杀 Poee。 */
+    public static final String POEE_KILLED = "poee_killed";
 
     private ModAdvancements() {
     }

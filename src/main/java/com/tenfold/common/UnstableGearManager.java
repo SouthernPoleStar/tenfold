@@ -213,6 +213,8 @@ public final class UnstableGearManager {
         for (int i = 0; i < ARMOR_SLOTS.length; i++) {
             CompoundTag saved = data.getCompound(SAVE_KEYS[i]);
             ItemStack stack = saved.isEmpty() ? ItemStack.EMPTY : ItemStack.of(saved);
+            // 兜底：若背包里还留着一份同样的装备（旧逻辑复制出来的），先清掉再放回，避免刷装备。
+            TempGear.removeDuplicate(player, stack);
             player.setItemSlot(ARMOR_SLOTS[i], stack);
             data.remove(SAVE_KEYS[i]);
         }

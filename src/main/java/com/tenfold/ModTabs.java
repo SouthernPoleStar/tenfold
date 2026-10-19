@@ -52,6 +52,7 @@ public final class ModTabs {
                         output.accept(ModItems.GUAN_DAO.get());
                         output.accept(ModItems.BURNING_FEATHER.get());
                         output.accept(ModItems.PIPE.get());
+                        output.accept(ModItems.MYSTERIOUS_DAGGER.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));

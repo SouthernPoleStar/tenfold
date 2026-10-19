@@ -4,6 +4,7 @@ import com.tenfold.entity.MatthiasEntity;
 import com.tenfold.entity.MinionEntity;
 import com.tenfold.entity.LeiHengEntity;
 import com.tenfold.entity.LienEntity;
+import com.tenfold.entity.PoeeEntity;
 import com.tenfold.entity.PoeyEntity;
 import com.tenfold.entity.BloodAncestorEntity;
 import com.tenfold.entity.DullahanEntity;
@@ -70,6 +71,13 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .build("dullahan"));
 
+    /** Poee: 带着「抛弃」死去的 Poey 变成的敌对 BOSS（5000 血）。 */
+    public static final RegistryObject<EntityType<PoeeEntity>> POEE =
+            ENTITIES.register("poee", () -> EntityType.Builder.of(PoeeEntity::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.9F)
+                    .clientTrackingRange(12)
+                    .build("poee"));
+
     @Mod.EventBusSubscriber(modid = Tenfold.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     private static class AttributeHandler {
         @SubscribeEvent
@@ -81,6 +89,7 @@ public final class ModEntities {
             event.put(POEY.get(), PoeyEntity.createAttributes().build());
             event.put(BLOOD_ANCESTOR.get(), BloodAncestorEntity.createAttributes().build());
             event.put(DULLAHAN.get(), DullahanEntity.createAttributes().build());
+            event.put(POEE.get(), PoeeEntity.createAttributes().build());
         }
     }
 

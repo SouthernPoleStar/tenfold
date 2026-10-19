@@ -1,0 +1,23 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": {
+      "item": "tenfold:mysterious_dagger"
+    },
+    "title": {
+      "translate": "tenfold.advancement.poee_killed.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.poee_killed.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -163,6 +163,10 @@ public final class ModItems {
     public static final RegistryObject<Item> PIPE = ITEMS.register("pipe",
             () -> new com.tenfold.item.PipeItem());
 
+    /** 神秘的匕首：4 伤，对 Poey ×11 并挂「抛弃」；带「抛弃」的 Poey 死后变成 Poee。 */
+    public static final RegistryObject<Item> MYSTERIOUS_DAGGER = ITEMS.register("mysterious_dagger",
+            () -> new com.tenfold.item.MysteriousDaggerItem());
+
     private ModItems() {
     }
 }

@@ -10,6 +10,7 @@
 - [狂猎套装](狂猎)
 - [关刀 · EGO](关刀)
 - [烟斗](烟斗)
+- [Poee](Poee)
 - [状态效果](状态效果)
 - [合成配方](合成配方)
 - [进度树](进度树)
@@ -19,5 +20,5 @@
 
 ---
 
-版本 **0.2.3**
+版本 **0.2.4**
 [更新日志](https://github.com/SouthernPoleStar/tenfold/blob/master/CHANGELOG.md)

@@ -236,6 +236,30 @@ public final class ModEffects {
             });
 
     /**
+     * 抛弃：被「神秘的匕首」刺中的 Poey 会挂上这个标记。
+     * 带着它死去的 Poey 会变成 Poee。本身没有任何数值效果。
+     */
+    public static final RegistryObject<MobEffect> ABANDONED = EFFECTS.register("abandoned",
+            () -> new MobEffect(MobEffectCategory.HARMFUL, 0x6E4B8E) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
+     * 我是 Poey：Poee 血量低于一半后获得的永久状态。
+     * 受到伤害 +100%、造成伤害 -100%，并且无法回血。
+     */
+    public static final RegistryObject<MobEffect> I_AM_POEY = EFFECTS.register("im_poey",
+            () -> new MobEffect(MobEffectCategory.NEUTRAL, 0xC86A9A) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
      * 一代~十代血魔：十个独立效果，让「x代血魔」能作为效果名直接显示。
      * 玩家由二代起跳（被血魔老祖转化的都是二代），往上依次传染。
      */

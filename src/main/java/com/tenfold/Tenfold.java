@@ -35,6 +35,7 @@ public class Tenfold {
         MinecraftForge.EVENT_BUS.register(new com.tenfold.common.BloodDemonEvents());
         MinecraftForge.EVENT_BUS.register(new com.tenfold.common.WildHuntEvents());
         MinecraftForge.EVENT_BUS.register(new com.tenfold.common.EgoEvents());
+        MinecraftForge.EVENT_BUS.register(new com.tenfold.common.PoeeEvents());
         MinecraftForge.EVENT_BUS.addListener(com.tenfold.common.BloodDemonCommands::onRegisterCommands);
 
         // Client-only handlers are registered by their @EventBusSubscriber annotations.
