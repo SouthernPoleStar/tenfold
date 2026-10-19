@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "tenfold:item/pipe_0"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 1 }, "model": "tenfold:item/pipe_1" },
+    { "predicate": { "custom_model_data": 2 }, "model": "tenfold:item/pipe_2" },
+    { "predicate": { "custom_model_data": 3 }, "model": "tenfold:item/pipe_3" }
+  ]
+}

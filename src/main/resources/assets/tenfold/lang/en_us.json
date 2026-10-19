@@ -309,5 +309,21 @@
   "tenfold.ego.line2": "Though I stand alone, I cannot escape the long night.",
   "tenfold.ego.line3": "Yet the night will end, and dawn shall break.",
   "tenfold.ego.line4": "What is a lone star at daybreak against the whitening east?",
-  "tenfold.ego.line5": "Awaken. This day, a star of the City shall surely fall."
+  "tenfold.ego.line5": "Awaken. This day, a star of the City shall surely fall.",
+  "item.tenfold.pipe": "Pipe",
+  "pipe.tenfold.mode.red": "Red",
+  "pipe.tenfold.mode.white": "White",
+  "pipe.tenfold.mode.purple": "Purple",
+  "pipe.tenfold.mode.red_dot": "Red Dot",
+  "pipe.tenfold.switch": "Pipe mode:",
+  "pipe.tenfold.charging": "Charging...",
+  "pipe.tenfold.cancelled": "Charge interrupted.",
+  "pipe.tenfold.white.used": "%s allies gained Regeneration IV and Resistance III.",
+  "pipe.tenfold.purple.used": "%s enemies were struck with Weakness X.",
+  "pipe.tenfold.red_dot.used": "Spent %s health, red dot damage %s.",
+  "pipe.tenfold.tooltip.red": "Damage 20, hits inflict 10s of Wither",
+  "pipe.tenfold.tooltip.white": "Hold right-click 3s: nearby allies get Regeneration IV for 10s and Resistance III for 30s",
+  "pipe.tenfold.tooltip.purple": "Hold right-click 5s: enemies within 7 blocks get Weakness X for 30s",
+  "pipe.tenfold.tooltip.red_dot": "Hold right-click 20s: sacrifice half your health to fire a red dot that pierces 30 blocks (damage = health spent x30), then gain Weakness II for 30s",
+  "pipe.tenfold.tooltip.switch": "Sneak + right-click to switch modes"
 }

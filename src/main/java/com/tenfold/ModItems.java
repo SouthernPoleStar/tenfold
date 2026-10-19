@@ -159,6 +159,10 @@ public final class ModItems {
     public static final RegistryObject<Item> BURNING_FEATHER = ITEMS.register("burning_feather",
             () -> new com.tenfold.item.BurningFeatherItem());
 
+    /** 烟斗：Shift+右键切换红/白/紫/红点四种模式。 */
+    public static final RegistryObject<Item> PIPE = ITEMS.register("pipe",
+            () -> new com.tenfold.item.PipeItem());
+
     private ModItems() {
     }
 }

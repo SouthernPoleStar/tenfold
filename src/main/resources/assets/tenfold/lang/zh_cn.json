@@ -309,5 +309,21 @@
   "tenfold.ego.line2": "我纵茕茕子立，难避漫漫长夜。",
   "tenfold.ego.line3": "然长夜终尽，天将启明。",
   "tenfold.ego.line4": "惟以平旦之孤星，何胜东方之既白。",
-  "tenfold.ego.line5": "还请觉悟。今朝此日，都市一星，势必陨灭。"
+  "tenfold.ego.line5": "还请觉悟。今朝此日，都市一星，势必陨灭。",
+  "item.tenfold.pipe": "烟斗",
+  "pipe.tenfold.mode.red": "红色",
+  "pipe.tenfold.mode.white": "白色",
+  "pipe.tenfold.mode.purple": "紫色",
+  "pipe.tenfold.mode.red_dot": "红点",
+  "pipe.tenfold.switch": "烟斗模式：",
+  "pipe.tenfold.charging": "蓄力中…",
+  "pipe.tenfold.cancelled": "蓄力被打断。",
+  "pipe.tenfold.white.used": "%s 个友方获得了生命恢复 IV 与抗性 III。",
+  "pipe.tenfold.purple.used": "%s 个敌人陷入虚弱 X。",
+  "pipe.tenfold.red_dot.used": "消耗 %s 点生命，红点伤害 %s。",
+  "pipe.tenfold.tooltip.red": "攻击力 20，命中附加 10 秒凋零",
+  "pipe.tenfold.tooltip.white": "按住右键 3 秒：周围友方获得 10 秒生命恢复 IV 与 30 秒抗性 III",
+  "pipe.tenfold.tooltip.purple": "按住右键 5 秒：半径 7 格内敌人获得 30 秒虚弱 X",
+  "pipe.tenfold.tooltip.red_dot": "按住右键 20 秒：扣掉自身一半生命，发射穿透 30 格的红点（伤害 = 扣血 ×30），之后获得 30 秒虚弱 II",
+  "pipe.tenfold.tooltip.switch": "潜行 + 右键切换模式"
 }

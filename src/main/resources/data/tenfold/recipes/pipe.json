@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  G",
+    "SSI"
+  ],
+  "key": {
+    "G": { "item": "minecraft:gunpowder" },
+    "S": { "item": "minecraft:stick" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "result": {
+    "item": "tenfold:pipe"
+  }
+}
