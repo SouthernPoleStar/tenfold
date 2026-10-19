@@ -77,7 +77,7 @@ public final class EgoManager {
     }
 
     public static int emotionLevel(Player player) {
-        MobEffectInstance effect = player.getEffect(ModEffects.EMOTION.get());
+        MobEffectInstance effect = player.getEffect(ModEffects.GLAIVE_EMOTION.get());
         return effect == null ? 0 : effect.getAmplifier() + 1;
     }
 
@@ -87,7 +87,7 @@ public final class EgoManager {
             return;
         }
         int level = Math.min(GLAIVE_EMOTION_MAX, emotionLevel(player) + 1);
-        player.addEffect(new MobEffectInstance(ModEffects.EMOTION.get(), 20 * 60 * 2,
+        player.addEffect(new MobEffectInstance(ModEffects.GLAIVE_EMOTION.get(), 20 * 60 * 2,
                 level - 1, false, true, true));
     }
 
@@ -124,7 +124,7 @@ public final class EgoManager {
         saveArmor(player);
         clearArmor(player);
         equipFeather(player);
-        player.removeEffect(ModEffects.EMOTION.get());
+        player.removeEffect(ModEffects.GLAIVE_EMOTION.get());
 
         long until = player.level().getGameTime() + EGO_DURATION;
         player.getPersistentData().putLong(UNTIL_KEY, until);

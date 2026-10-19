@@ -293,6 +293,8 @@
   "tenfold.advancement.soul_united.desc": "Wear the Wild Hunt Coffin and grip the Wild Hunt Greatsword — this time the hearts will not drift apart.",
   "item.tenfold.guan_dao": "Guan Dao",
   "item.tenfold.burning_feather": "Burning Feather",
+  "effect.tenfold.glaive_emotion": "Emotion (Guan Dao)",
+  "effect.tenfold.glaive_emotion.description": "Stacks on Guan Dao hits; at 10 stacks and below half health, sneak + right-click to bloom.",
   "effect.tenfold.ego_bloom": "EGO Bloom: The Proud Dragon Regrets",
   "effect.tenfold.ego_bloom.description": "Max health doubled, Strength V, Resistance II, lasts 1 minute.",
   "tooltip.tenfold.guan_dao.damage": "Base damage: %s",

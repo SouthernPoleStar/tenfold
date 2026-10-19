@@ -2,11 +2,11 @@
 
 Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态**的武器「双蛇杖」，围绕它衍生出三场 Boss 战、多把专属武器、一套状态体系与一棵独立进度树。
 
-- **模组版本**：0.2.0
+- **模组版本**：0.2.1
 - **模组 ID**：`tenfold`
 - **作者**：南极星
 - **反馈渠道**：[GitHub Issues](https://github.com/SouthernPoleStar/tenfold/issues)
-- **下载**：本地构建 `build/libs/tenfold-0.2.0.jar`，或见 Releases 页面
+- **下载**：本地构建 `build/libs/tenfold-0.2.1.jar`，或见 Releases 页面
 
 > **免责声明**
 > 本模组是爱好者制作的**非官方** Minecraft 模组，与 Mojang Studios、Microsoft 均无隶属或合作关系，未获得其认可或授权。
@@ -437,7 +437,7 @@ Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态
 | 获取 | 工作台**竖排**：**铁剑**（上）+ **木棍**（中）+ **木棍**（下），左中右三列都可以 |
 | 基础伤害 | **15** |
 | 命中效果 | 目标**灼烧 4 秒** |
-| 情感 | 每次命中 **+1 层**，最高 **10 层**（2 分钟刷新） |
+| 情感（关刀） | 每次命中 **+1 层**，最高 **10 层**（2 分钟刷新，**与长剑的情感完全独立**） |
 
 ### 进入 EGO 绽放
 
@@ -588,4 +588,4 @@ src/main/resources/
 
 ## 版本历史
 
-见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.2.0**。
+见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.2.1**。

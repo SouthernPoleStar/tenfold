@@ -224,6 +224,18 @@ public final class ModEffects {
             });
 
     /**
+     * 情感（关刀）：关刀专属的情感层数，与长剑的「情感」完全独立，
+     * 避免两把武器的层数互相串着触发 EGO。上限 10 层。
+     */
+    public static final RegistryObject<MobEffect> GLAIVE_EMOTION = EFFECTS.register("glaive_emotion",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xD98A2B) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
      * 一代~十代血魔：十个独立效果，让「x代血魔」能作为效果名直接显示。
      * 玩家由二代起跳（被血魔老祖转化的都是二代），往上依次传染。
      */

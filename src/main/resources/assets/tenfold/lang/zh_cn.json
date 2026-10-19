@@ -293,6 +293,8 @@
   "tenfold.advancement.soul_united.desc": "穿上狂猎棺材、握紧狂猎大剑——这一次，心不会再错开了。",
   "item.tenfold.guan_dao": "关刀",
   "item.tenfold.burning_feather": "燃烧的羽毛",
+  "effect.tenfold.glaive_emotion": "情感（关刀）",
+  "effect.tenfold.glaive_emotion.description": "关刀命中叠加，满 10 层且血量低于一半时 Shift+右键进入 EGO 绽放。",
   "effect.tenfold.ego_bloom": "EGO 绽放：亢龙有悔",
   "effect.tenfold.ego_bloom.description": "生命上限翻倍，力量 V、抗性 II，持续 1 分钟。",
   "tooltip.tenfold.guan_dao.damage": "基础伤害：%s",
