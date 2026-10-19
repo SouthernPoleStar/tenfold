@@ -115,6 +115,21 @@ public class WildHuntGreatswordItem extends SwordItem {
         level.addFreshEntity(mount);
         player.startRiding(mount, true);
         level.playSound(null, x, player.getY(), z, SoundEvents.HORSE_ANGRY, SoundSource.PLAYERS, 1.0F, 0.6F);
+        shout(player);
+    }
+
+    /** 以使用者身份在聊天框喊一句台词。 */
+    private static void shout(Player player) {
+        if (!(player.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+        var server = serverLevel.getServer();
+        if (server == null) {
+            return;
+        }
+        Component line = Component.literal("<" + player.getGameProfile().getName() + "> ")
+                .append(Component.translatable("tenfold.wild_hunt.shout"));
+        server.getPlayerList().broadcastSystemMessage(line, false);
     }
 
     /* ------------------------------------------------------------------ */
@@ -186,6 +201,7 @@ public class WildHuntGreatswordItem extends SwordItem {
                     destination.x, destination.y + 1.0D, destination.z,
                     30, 0.6D, 0.8D, 0.6D, 0.02D);
         }
+        shout(player);
     }
 
     /* ------------------------------------------------------------------ */

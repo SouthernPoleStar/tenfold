@@ -284,5 +284,6 @@
   "tooltip.tenfold.wild_hunt.bonus": "+%s damage while wearing the Wild Hunt Coffin",
   "tooltip.tenfold.wild_hunt.summon": "Right-click: summon and mount the headless Dullahan",
   "tooltip.tenfold.wild_hunt.charge": "Sneak + right-click: Death Charge (%s damage along the path)",
-  "tenfold.wild_hunt.need_coffin": "You must wear the Wild Hunt Coffin to use this."
+  "tenfold.wild_hunt.need_coffin": "You must wear the Wild Hunt Coffin to use this.",
+  "tenfold.wild_hunt.shout": "Ride to death, Dullahan!"
 }

@@ -284,5 +284,6 @@
   "tooltip.tenfold.wild_hunt.bonus": "穿着狂猎棺材时伤害 +%s",
   "tooltip.tenfold.wild_hunt.summon": "右键：召唤并骑上无头坐骑「杜拉奇」",
   "tooltip.tenfold.wild_hunt.charge": "Shift+右键：死亡冲撞（沿途 %s 点伤害）",
-  "tenfold.wild_hunt.need_coffin": "需要穿着狂猎棺材才能使用。"
+  "tenfold.wild_hunt.need_coffin": "需要穿着狂猎棺材才能使用。",
+  "tenfold.wild_hunt.shout": "奔向死亡吧，杜拉奇！"
 }
