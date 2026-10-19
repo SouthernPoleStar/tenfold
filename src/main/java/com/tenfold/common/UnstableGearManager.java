@@ -226,9 +226,12 @@ public final class UnstableGearManager {
     }
 
     private static void equipIfMissing(ServerPlayer player, EquipmentSlot slot, Item item) {
-        if (!player.getItemBySlot(slot).is(item)) {
-            player.setItemSlot(slot, new ItemStack(item));
+        ItemStack current = player.getItemBySlot(slot);
+        if (current.is(item) && !current.isEmpty()) {
+            return;
         }
+        // 临时套装打上绑定诅咒 + 消失诅咒，防止被拿下来刷装备。
+        player.setItemSlot(slot, TempGear.cursed(new ItemStack(item)));
     }
 
     /* ------------------------------------------------------------------ */

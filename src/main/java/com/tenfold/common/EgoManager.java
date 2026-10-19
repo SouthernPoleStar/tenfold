@@ -235,10 +235,12 @@ public final class EgoManager {
     }
 
     private static void equipFeather(ServerPlayer player) {
-        if (!player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.BURNING_FEATHER.get())) {
-            player.setItemSlot(EquipmentSlot.CHEST,
-                    new ItemStack(ModItems.BURNING_FEATHER.get()));
+        if (player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.BURNING_FEATHER.get())) {
+            return;
         }
+        // 临时胸甲打上绑定诅咒 + 消失诅咒，防止被拿下来刷装备。
+        player.setItemSlot(EquipmentSlot.CHEST,
+                TempGear.cursed(new ItemStack(ModItems.BURNING_FEATHER.get())));
     }
 
     /** 期间维持「只穿燃烧的羽毛」：其他槽位有东西就挪走。 */
