@@ -61,6 +61,10 @@ public final class ClientEvents {
         if (WeaponData.isLocked(stack, now)) {
             return;
         }
+        // 未成形的双蛇杖不参与形态循环：等服务器那边潜行+右键成形即可。
+        if (!WeaponData.isFormed(stack)) {
+            return;
+        }
         WeaponForm next = WeaponData.form(stack).next();
         WeaponData.setForm(stack, next);
     }
