@@ -113,6 +113,37 @@ public final class WeaponData {
     }
 
     /* ------------------------------------------------------------------ */
+    /* Special contract requirement                                        */
+    /* ------------------------------------------------------------------ */
+
+    /**
+     * 特殊指令要求使用的形态；{@code null} 表示普通指令（任何武器都行）。
+     */
+    @Nullable
+    public static WeaponForm contractWeapon(ItemStack stack) {
+        CompoundTag tag = root(stack);
+        if (!tag.contains("contractWeapon", CompoundTag.TAG_STRING)) {
+            return null;
+        }
+        String key = tag.getString("contractWeapon");
+        for (WeaponForm form : WeaponForm.VALUES) {
+            if (form.key.equals(key)) {
+                return form;
+            }
+        }
+        return null;
+    }
+
+    public static void setContractWeapon(ItemStack stack, @Nullable WeaponForm form) {
+        CompoundTag tag = root(stack);
+        if (form == null) {
+            tag.remove("contractWeapon");
+        } else {
+            tag.putString("contractWeapon", form.key);
+        }
+    }
+
+    /* ------------------------------------------------------------------ */
     /* Cross-blade, per-player counters (stored on the player, not the blade) */
     /* ------------------------------------------------------------------ */
 

@@ -342,5 +342,16 @@
   "tenfold.poee.death1": "You are a stranger, yet not unfamiliar. You left much in my memory.",
   "tenfold.poee.death2": "So... may I still walk with you?",
   "tenfold.advancement.poee_killed.title": "What Have You Done?!",
-  "tenfold.advancement.poee_killed.desc": "Kill the one person for whom you were the most important."
+  "tenfold.advancement.poee_killed.desc": "Kill the one person for whom you were the most important.",
+  "tenfold.lien.swap.greatsword": "To: when the torso is split with a greatsword..",
+  "tenfold.lien.swap.scythe": "To: when it is cut along space by a scythe, like someone did...",
+  "tenfold.lien.swap.rapier": "To: when ten holes are opened with a rapier...",
+  "tenfold.lien.swap.axe": "To: when the ribs are hewn off with a hatchet.",
+  "tenfold.lien.swap.hammer": "To: when the back of the skull is smashed with a hammer...",
+  "tenfold.lien.swap.whip": "To: when ten thousand pieces are flayed off with a whip...",
+  "tenfold.lien.swap.halfsword": "To: when the shoulder is shattered with a half-sword..",
+  "tenfold.lien.swap.spear": "To: when a twenty-inch hole is pierced with a spear.",
+  "tenfold.lien.swap.cone": "To: when the lungs are pierced with an awl...",
+  "tenfold.contract.special": "[Special Contract] %s\n—— You must finish %s with %s, or it counts as a breach.",
+  "tenfold.contract.special_wrong": "You did not land the final blow with the required weapon."
 }

@@ -342,5 +342,16 @@
   "tenfold.poee.death1": "你，是异乡人，但我，并不陌生，你在我的记忆里，留下了许多",
   "tenfold.poee.death2": "所以，我还能，继续与你同行吗？",
   "tenfold.advancement.poee_killed.title": "你都做了什么？！",
-  "tenfold.advancement.poee_killed.desc": "杀死一个对那个人来说你是最重要的人的人。"
+  "tenfold.advancement.poee_killed.desc": "杀死一个对那个人来说你是最重要的人的人。",
+  "tenfold.lien.swap.greatsword": "至：应该用大剑将躯干劈开时..",
+  "tenfold.lien.swap.scythe": "至：应该用镰刀...像某人一般沿着空间斩裂时...",
+  "tenfold.lien.swap.rapier": "至：应该用刺剑在身体上开超过十个洞时...",
+  "tenfold.lien.swap.axe": "至：用手斧将肋骨砍下时.",
+  "tenfold.lien.swap.hammer": "至：应该用锤子将后脑敲碎时...",
+  "tenfold.lien.swap.whip": "至：应该用鞭子抽落上万块肉时...",
+  "tenfold.lien.swap.halfsword": "至：用手半剑将肩膀击碎时..",
+  "tenfold.lien.swap.spear": "至：应该用长枪刺穿一个20英寸的洞时.",
+  "tenfold.lien.swap.cone": "至：用锥将肺贯穿时...",
+  "tenfold.contract.special": "【特殊指令】%s\n—— 必须用 %s 击杀 %s，否则视为违约。",
+  "tenfold.contract.special_wrong": "你没有用指令要求的武器补上最后一击。"
 }

@@ -153,11 +153,13 @@ public class LienEntity extends Zombie {
         WeaponForm next = WeaponForm.of((WeaponData.form(held).index + 1) % WeaponForm.values().length);
         WeaponData.setForm(held, next);
         if (this.level() instanceof ServerLevel server) {
+            // 九种形态各自有一句台词；铲子（降级形态）沿用旧播报。
+            Component message = next == WeaponForm.SHOVEL
+                    ? Component.translatable("tenfold.lien.swap",
+                            this.getDisplayName(), Component.translatable("form.tenfold." + next.key))
+                    : Component.translatable("tenfold.lien.swap." + next.key);
             server.players().forEach(p -> p.sendSystemMessage(
-                    Component.translatable("tenfold.lien.swap",
-                            this.getDisplayName(),
-                            Component.translatable("form.tenfold." + next.key))
-                            .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE)));
+                    message.copy().withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE)));
         }
     }
 

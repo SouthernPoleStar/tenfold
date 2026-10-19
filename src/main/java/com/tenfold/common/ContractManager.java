@@ -98,8 +98,22 @@ public final class ContractManager {
         issue(server, stack, found, now);
     }
 
+    /** 特殊指令的出现概率。 */
+    public static final float SPECIAL_CHANCE = 0.35F;
+    /** 可以作为特殊指令要求的九种形态（铲子不算）。 */
+    private static final WeaponForm[] SPECIAL_FORMS = {
+            WeaponForm.AXE, WeaponForm.CONE, WeaponForm.HALFSWORD, WeaponForm.RAPIER,
+            WeaponForm.HAMMER, WeaponForm.GREATSWORD, WeaponForm.SPEAR, WeaponForm.WHIP,
+            WeaponForm.SCYTHE
+    };
+
     private static void issue(ServerPlayer player, ItemStack stack, LivingEntity target, long now) {
         WeaponData.setTarget(stack, target.getUUID(), now + WeaponData.CONTRACT_TIMEOUT_TICKS);
+        // 特殊指令：有概率要求用某一种形态完成击杀
+        WeaponForm special = player.getRandom().nextFloat() < SPECIAL_CHANCE
+                ? SPECIAL_FORMS[player.getRandom().nextInt(SPECIAL_FORMS.length)]
+                : null;
+        WeaponData.setContractWeapon(stack, special);
         // The contract-target buff: marked + Slowness IV (-50% speed) for the whole window.
         target.addEffect(new MobEffectInstance(ModEffects.MARKED.get(), WeaponData.CONTRACT_TIMEOUT_TICKS,
                 0, false, false, true));
@@ -111,6 +125,12 @@ public final class ContractManager {
 
         player.level().playSound(null, player.blockPosition(), ModSounds.CONTRACT_MADE.get(),
                 SoundSource.PLAYERS, 0.8F, 1.0F);
+        if (special != null) {
+            player.displayClientMessage(Component.translatable("tenfold.contract.special",
+                            Component.translatable("tenfold.lien.swap." + special.key),
+                            special.display(), target.getDisplayName())
+                    .withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        }
         player.displayClientMessage(Component.translatable("tenfold.contract.issued",
                 target.getDisplayName(), WeaponData.streak(stack), WeaponData.STREAK_GOAL)
                 .withStyle(ChatFormatting.AQUA), true);
@@ -180,6 +200,12 @@ public final class ContractManager {
         long now = server.level().getGameTime();
 
         if (current != null && current.equals(victim.getUUID())) {
+            // 特殊指令：必须用指定的形态补最后一刀
+            WeaponForm required = WeaponData.contractWeapon(stack);
+            if (required != null && WeaponData.form(stack) != required) {
+                fail(server, stack, "tenfold.contract.special_wrong");
+                return;
+            }
             int streak = WeaponData.streak(stack) + 1;
             server.level().playSound(null, player.blockPosition(), ModSounds.CONTRACT_DONE.get(),
                     SoundSource.PLAYERS, 0.9F, 1.1F);
@@ -237,6 +263,7 @@ public final class ContractManager {
         WeaponData.setBreachRun(player, breach);
         WeaponData.setStreak(stack, 0);
         WeaponData.setTarget(stack, null, 0);
+        WeaponData.setContractWeapon(stack, null);
 
         int currentAmp = player.hasEffect(MobEffects.WEAKNESS)
                 ? player.getEffect(MobEffects.WEAKNESS).getAmplifier() : -1;
@@ -267,6 +294,7 @@ public final class ContractManager {
      */
     private static void cancel(ServerPlayer player, ItemStack stack, String reasonKey) {
         WeaponData.setTarget(stack, null, 0);
+        WeaponData.setContractWeapon(stack, null);
         WeaponData.setStreak(stack, 0);
         player.displayClientMessage(Component.translatable(reasonKey).withStyle(ChatFormatting.GRAY), true);
     }
@@ -278,6 +306,7 @@ public final class ContractManager {
         WeaponData.setBreachRun(player, 0);
         WeaponData.setStreak(stack, 0);
         WeaponData.setTarget(stack, null, 0);
+        WeaponData.setContractWeapon(stack, null);
         WeaponData.setDegradeUntil(stack, now + WeaponData.DEGRADE_TICKS);
 
         player.level().playSound(null, player.blockPosition(), ModSounds.DEGRADE.get(),
