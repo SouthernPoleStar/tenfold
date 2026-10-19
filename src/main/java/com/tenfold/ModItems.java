@@ -24,6 +24,9 @@ public final class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ADV_ADDICT = ITEMS.register("adv_addict",
             () -> new Item(new Item.Properties()));
+    /** 「心意相悖」进度图标：直接用「撕裂的心」效果贴图。 */
+    public static final RegistryObject<Item> ADV_TORN_HEART = ITEMS.register("adv_torn_heart",
+            () -> new Item(new Item.Properties()));
 
     /** 守护他人的决意: dropped when a tamed creature is killed by a hostile mob. */
     public static final RegistryObject<Item> OATH_SHARD = ITEMS.register("oath_shard",

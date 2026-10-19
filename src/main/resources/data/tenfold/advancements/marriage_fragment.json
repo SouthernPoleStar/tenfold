@@ -2,7 +2,7 @@
   "parent": "tenfold:root",
   "display": {
     "icon": {
-      "item": "tenfold:fragment"
+      "item": "tenfold:adv_torn_heart"
     },
     "title": {
       "translate": "tenfold.advancement.marriage_fragment.title"
