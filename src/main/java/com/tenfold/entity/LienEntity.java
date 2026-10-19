@@ -137,6 +137,7 @@ public class LienEntity extends Zombie {
         ItemStack held = this.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!(held.getItem() instanceof com.tenfold.item.TenfoldBladeItem)) {
             held = new ItemStack(ModItems.TENFOLD_BLADE.get());
+            WeaponData.setFormed(held, true);
             WeaponData.setForm(held, WeaponForm.GREATSWORD);
             this.setItemSlot(EquipmentSlot.MAINHAND, held);
         }

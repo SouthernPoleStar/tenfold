@@ -353,5 +353,9 @@
   "tenfold.lien.swap.spear": "To: when a twenty-inch hole is pierced with a spear.",
   "tenfold.lien.swap.cone": "To: when the lungs are pierced with an awl...",
   "tenfold.contract.special": "[Special Contract] %s\n—— You must finish %s with %s, or it counts as a breach.",
-  "tenfold.contract.special_wrong": "You did not land the final blow with the required weapon."
+  "tenfold.contract.special_wrong": "You did not land the final blow with the required weapon.",
+  "tenfold.blade.unformed": "The Tenfold Blade has not taken shape yet.",
+  "tenfold.blade.formed": "The Tenfold Blade takes shape in your hands.",
+  "tooltip.tenfold.unformed": "Unformed - just an object, with no attack power",
+  "tooltip.tenfold.unformed_help": "Sneak + right-click (or sneak + left-click) to shape it"
 }

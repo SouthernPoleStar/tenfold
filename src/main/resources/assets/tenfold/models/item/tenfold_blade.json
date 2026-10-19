@@ -1,62 +1,18 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "tenfold:item/blade_0"
+    "layer0": "tenfold:item/blade_unformed"
   },
   "overrides": [
-    {
-      "predicate": {
-        "custom_model_data": 1
-      },
-      "model": "tenfold:item/tenfold_blade_1"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 2
-      },
-      "model": "tenfold:item/tenfold_blade_2"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 3
-      },
-      "model": "tenfold:item/tenfold_blade_3"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 4
-      },
-      "model": "tenfold:item/tenfold_blade_4"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 5
-      },
-      "model": "tenfold:item/tenfold_blade_5"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 6
-      },
-      "model": "tenfold:item/tenfold_blade_6"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 7
-      },
-      "model": "tenfold:item/tenfold_blade_7"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 8
-      },
-      "model": "tenfold:item/tenfold_blade_8"
-    },
-    {
-      "predicate": {
-        "custom_model_data": 9
-      },
-      "model": "tenfold:item/tenfold_blade_9"
-    }
+    { "predicate": { "custom_model_data": 0 }, "model": "tenfold:item/tenfold_blade_0" },
+    { "predicate": { "custom_model_data": 1 }, "model": "tenfold:item/tenfold_blade_1" },
+    { "predicate": { "custom_model_data": 2 }, "model": "tenfold:item/tenfold_blade_2" },
+    { "predicate": { "custom_model_data": 3 }, "model": "tenfold:item/tenfold_blade_3" },
+    { "predicate": { "custom_model_data": 4 }, "model": "tenfold:item/tenfold_blade_4" },
+    { "predicate": { "custom_model_data": 5 }, "model": "tenfold:item/tenfold_blade_5" },
+    { "predicate": { "custom_model_data": 6 }, "model": "tenfold:item/tenfold_blade_6" },
+    { "predicate": { "custom_model_data": 7 }, "model": "tenfold:item/tenfold_blade_7" },
+    { "predicate": { "custom_model_data": 8 }, "model": "tenfold:item/tenfold_blade_8" },
+    { "predicate": { "custom_model_data": 9 }, "model": "tenfold:item/tenfold_blade_9" }
   ]
 }

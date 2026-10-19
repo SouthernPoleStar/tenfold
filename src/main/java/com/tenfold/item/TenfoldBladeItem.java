@@ -70,12 +70,42 @@ public class TenfoldBladeItem extends SwordItem {
 
     /** Pushes the current form into CustomModelData so the right texture is drawn. */
     private static void syncModel(ItemStack stack) {
-        int form = WeaponData.form(stack).index;
         CompoundTag tag = stack.getOrCreateTag();
+        if (!WeaponData.isFormed(stack)) {
+            // 未成形：用默认模型（毛笔 + 锁链的「双蛇杖」主体贴图），没有任何攻击力。
+            if (tag.contains("CustomModelData", CompoundTag.TAG_INT)) {
+                tag.remove("CustomModelData");
+            }
+            return;
+        }
+        int form = WeaponData.form(stack).index;
         int current = tag.contains("CustomModelData", CompoundTag.TAG_INT) ? tag.getInt("CustomModelData") : -1;
         if (current != form) {
             tag.putInt("CustomModelData", form);
         }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Forming（成形）                                                      */
+    /* ------------------------------------------------------------------ */
+
+    /** 未成形 → 成形：正式变成双蛇杖，同时发放根进度。 */
+    public static boolean formBlade(Player player, ItemStack stack) {
+        if (WeaponData.isFormed(stack)) {
+            return false;
+        }
+        WeaponData.setFormed(stack, true);
+        WeaponData.setForm(stack, WeaponForm.GREATSWORD);
+        syncModel(stack);
+        player.level().playSound(null, player.blockPosition(),
+                net.minecraft.sounds.SoundEvents.ANVIL_USE,
+                net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 0.8F);
+        player.displayClientMessage(Component.translatable("tenfold.blade.formed")
+                .withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+            com.tenfold.common.ModAdvancements.award(server, "root");
+        }
+        return true;
     }
 
     /* ------------------------------------------------------------------ */
@@ -95,6 +125,10 @@ public class TenfoldBladeItem extends SwordItem {
         Multimap<Attribute, AttributeModifier> base = super.getAttributeModifiers(slot, stack);
         if (slot != EquipmentSlot.MAINHAND) {
             return base;
+        }
+        if (!WeaponData.isFormed(stack)) {
+            // 未成形：单纯一件物品，不加攻击力、攻速、触及。
+            return ImmutableMultimap.of();
         }
 
         WeaponForm form = WeaponData.form(stack);
@@ -138,13 +172,23 @@ public class TenfoldBladeItem extends SwordItem {
         // 半手剑：右键举剑格挡，而不是下达指令。减伤与反弹在
         // CommonEvents#onShieldBlock 里结算（举剑 = vanilla 的 isBlocking 状态）。
         // 潜行+右键仍然切形态，否则玩家会被困在半手剑里出不来。
-        if (!sneaking && WeaponData.form(stack) == WeaponForm.HALFSWORD) {
+        if (!WeaponData.isFormed(stack)) {
+            // 未成形：不进入格挡，也不下达指令（下面的成形分支处理）
+        } else if (!sneaking && WeaponData.form(stack) == WeaponForm.HALFSWORD) {
             player.startUsingItem(hand);
             return InteractionResultHolder.consume(stack);
         }
 
         if (!level.isClientSide) {
-            if (sneaking) {
+            if (!WeaponData.isFormed(stack)) {
+                // 未成形：潜行+右键 = 成形；普通右键提示
+                if (sneaking) {
+                    formBlade(player, stack);
+                } else {
+                    player.displayClientMessage(Component.translatable("tenfold.blade.unformed")
+                            .withStyle(ChatFormatting.GRAY), true);
+                }
+            } else if (sneaking) {
                 ContractManager.cycleForm(player, stack, true);
             } else {
                 ContractManager.onBladeUse(player, stack);
@@ -176,12 +220,13 @@ public class TenfoldBladeItem extends SwordItem {
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
-        return WeaponData.form(stack) == WeaponForm.HALFSWORD ? UseAnim.BLOCK : UseAnim.NONE;
+        return WeaponData.isFormed(stack) && WeaponData.form(stack) == WeaponForm.HALFSWORD
+                ? UseAnim.BLOCK : UseAnim.NONE;
     }
 
     @Override
     public int getUseDuration(ItemStack stack) {
-        return WeaponData.form(stack) == WeaponForm.HALFSWORD ? 72000 : 0;
+        return WeaponData.isFormed(stack) && WeaponData.form(stack) == WeaponForm.HALFSWORD ? 72000 : 0;
     }
 
     /**
@@ -193,12 +238,19 @@ public class TenfoldBladeItem extends SwordItem {
      */
     @Override
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        return toolAction == ToolActions.SHIELD_BLOCK
+        return WeaponData.isFormed(stack)
+                && toolAction == ToolActions.SHIELD_BLOCK
                 && WeaponData.form(stack) == WeaponForm.HALFSWORD;
     }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+        if (!WeaponData.isFormed(stack)) {
+            if (player.isShiftKeyDown() && !player.level().isClientSide) {
+                formBlade(player, stack);
+            }
+            return true;
+        }
         if (player.isShiftKeyDown()) {
             if (!player.level().isClientSide) {
                 // Cycle backwards and keep the click from landing a hit.
@@ -225,7 +277,8 @@ public class TenfoldBladeItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean result = super.hurtEnemy(stack, target, attacker);
-        if (!attacker.level().isClientSide && attacker instanceof Player player) {
+        if (!attacker.level().isClientSide && attacker instanceof Player player
+                && WeaponData.isFormed(stack)) {
             FormAbilities.onHit(player, stack, target);
         }
         return result;
@@ -270,6 +323,11 @@ public class TenfoldBladeItem extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        if (!WeaponData.isFormed(stack)) {
+            tooltip.add(Component.translatable("tooltip.tenfold.unformed").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("tooltip.tenfold.unformed_help").withStyle(ChatFormatting.DARK_GRAY));
+            return;
+        }
         WeaponForm form = WeaponData.form(stack);
         tooltip.add(Component.literal("\u25C6 ").withStyle(ChatFormatting.DARK_GRAY).append(form.display()));
         tooltip.add(form.describe());

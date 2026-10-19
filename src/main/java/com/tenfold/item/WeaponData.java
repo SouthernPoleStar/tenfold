@@ -43,7 +43,25 @@ public final class WeaponData {
         root(stack).putInt("form", form.index);
         // Keep the model in sync immediately instead of waiting for inventoryTick,
         // so the texture changes the moment the form does.
-        stack.getOrCreateTag().putInt("CustomModelData", form.index);
+        if (isFormed(stack)) {
+            stack.getOrCreateTag().putInt("CustomModelData", form.index);
+        }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Formed flag（未成形 → 成形）                                         */
+    /* ------------------------------------------------------------------ */
+
+    /** 双蛇杖是否已经「成形」。刚锻造出来时是 false：只是一件物品，没有任何攻击力。 */
+    public static boolean isFormed(ItemStack stack) {
+        return root(stack).getBoolean("Formed");
+    }
+
+    public static void setFormed(ItemStack stack, boolean formed) {
+        root(stack).putBoolean("Formed", formed);
+        if (!formed) {
+            stack.getOrCreateTag().remove("CustomModelData");
+        }
     }
 
     public static int streak(ItemStack stack) {

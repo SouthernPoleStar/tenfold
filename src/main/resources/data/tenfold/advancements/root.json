@@ -15,17 +15,8 @@
     "background": "minecraft:textures/gui/advancements/backgrounds/nether.png"
   },
   "criteria": {
-    "got_blade": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "tenfold:tenfold_blade"
-            ]
-          }
-        ]
-      }
+    "unlocked": {
+      "trigger": "minecraft:impossible"
     }
   }
 }

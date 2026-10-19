@@ -353,5 +353,9 @@
   "tenfold.lien.swap.spear": "至：应该用长枪刺穿一个20英寸的洞时.",
   "tenfold.lien.swap.cone": "至：用锥将肺贯穿时...",
   "tenfold.contract.special": "【特殊指令】%s\n—— 必须用 %s 击杀 %s，否则视为违约。",
-  "tenfold.contract.special_wrong": "你没有用指令要求的武器补上最后一击。"
+  "tenfold.contract.special_wrong": "你没有用指令要求的武器补上最后一击。",
+  "tenfold.blade.unformed": "双蛇杖还没有成形。",
+  "tenfold.blade.formed": "双蛇杖在你手中成形了。",
+  "tooltip.tenfold.unformed": "尚未成形 —— 只是一件物品，没有任何攻击力",
+  "tooltip.tenfold.unformed_help": "潜行 + 右键（或潜行 + 左键）让它成形"
 }
