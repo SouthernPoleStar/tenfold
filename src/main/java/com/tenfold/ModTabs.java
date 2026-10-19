@@ -45,6 +45,10 @@ public final class ModTabs {
                         output.accept(ModItems.SACRIFICIAL_DAGGER.get());
                         output.accept(ModItems.HARD_BLOOD_WEAPON.get());
                         output.accept(ModItems.BLOOD_ANCESTOR_SPAWN_EGG.get());
+                        output.accept(ModItems.ENGAGEMENT_RING.get());
+                        output.accept(ModItems.FRAGMENT.get());
+                        output.accept(ModItems.WILD_HUNT_COFFIN.get());
+                        output.accept(ModItems.WILD_HUNT_GREATSWORD.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));

@@ -36,6 +36,7 @@ public final class ClientSetup {
             event.registerEntityRenderer(com.tenfold.ModEntities.BLOOD_ANCESTOR.get(),
                     ctx -> new BossZombieRenderer(ctx,
                             new net.minecraft.resources.ResourceLocation("tenfold", "textures/entity/blood_ancestor.png")));
+            event.registerEntityRenderer(com.tenfold.ModEntities.DULLAHAN.get(), DullahanRenderer::new);
         }
     }
 

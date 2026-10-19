@@ -6,6 +6,7 @@ import com.tenfold.entity.LeiHengEntity;
 import com.tenfold.entity.LienEntity;
 import com.tenfold.entity.PoeyEntity;
 import com.tenfold.entity.BloodAncestorEntity;
+import com.tenfold.entity.DullahanEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -62,6 +63,13 @@ public final class ModEntities {
                     .clientTrackingRange(12)
                     .build("blood_ancestor"));
 
+    /** 杜拉奇: 无头坐骑，由狂猎大剑召唤。 */
+    public static final RegistryObject<EntityType<DullahanEntity>> DULLAHAN =
+            ENTITIES.register("dullahan", () -> EntityType.Builder.of(DullahanEntity::new, MobCategory.CREATURE)
+                    .sized(1.3964844F, 1.6F)
+                    .clientTrackingRange(10)
+                    .build("dullahan"));
+
     @Mod.EventBusSubscriber(modid = Tenfold.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     private static class AttributeHandler {
         @SubscribeEvent
@@ -72,6 +80,7 @@ public final class ModEntities {
             event.put(LIEN.get(), LienEntity.createAttributes().build());
             event.put(POEY.get(), PoeyEntity.createAttributes().build());
             event.put(BLOOD_ANCESTOR.get(), BloodAncestorEntity.createAttributes().build());
+            event.put(DULLAHAN.get(), DullahanEntity.createAttributes().build());
         }
     }
 

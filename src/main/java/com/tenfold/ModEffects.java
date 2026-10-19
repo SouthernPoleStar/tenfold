@@ -199,6 +199,19 @@ public final class ModEffects {
             });
 
     /**
+     * 撕裂的心：同时穿戴狂猎棺材、手持狂猎大剑时的常驻状态。
+     * 造成伤害 +50%、受到伤害 +10%、移速 +3%、生命上限 +6。
+     * 属性与伤害修正在 {@code WildHuntManager} / {@code WildHuntEvents} 结算。
+     */
+    public static final RegistryObject<MobEffect> TORN_HEART = EFFECTS.register("torn_heart",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xB01E1E) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
      * 一代~十代血魔：十个独立效果，让「x代血魔」能作为效果名直接显示。
      * 玩家由二代起跳（被血魔老祖转化的都是二代），往上依次传染。
      */

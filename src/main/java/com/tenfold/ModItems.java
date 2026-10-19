@@ -132,6 +132,22 @@ public final class ModItems {
             () -> new net.minecraftforge.common.ForgeSpawnEggItem(ModEntities.BLOOD_ANCESTOR,
                     0x8B1A1A, 0x1F5F8A, new Item.Properties()));
 
+    /** 订婚戒指：两人各持一枚，右键对方结为夫妻；一方死亡 40% 掉落两个残片。 */
+    public static final RegistryObject<Item> ENGAGEMENT_RING = ITEMS.register("engagement_ring",
+            () -> new com.tenfold.item.EngagementRingItem());
+
+    /** 残片：夫妻一方死亡时掉落，狂猎棺材与狂猎大剑的材料。 */
+    public static final RegistryObject<Item> FRAGMENT = ITEMS.register("fragment",
+            () -> new Item(new Item.Properties()));
+
+    /** 狂猎棺材：胸甲，20 护甲 / 18 韧性，穿戴不显示模型。 */
+    public static final RegistryObject<Item> WILD_HUNT_COFFIN = ITEMS.register("wild_hunt_coffin",
+            () -> new com.tenfold.item.WildHuntCoffinItem());
+
+    /** 狂猎大剑：基础 10 伤，穿棺材 +40；右键召唤杜拉奇、Shift+右键死亡冲撞。 */
+    public static final RegistryObject<Item> WILD_HUNT_GREATSWORD = ITEMS.register("wild_hunt_greatsword",
+            () -> new com.tenfold.item.WildHuntGreatswordItem());
+
     private ModItems() {
     }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I",
+    "F",
+    "S"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "F": { "item": "tenfold:fragment" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "tenfold:wild_hunt_greatsword"
+  }
+}
