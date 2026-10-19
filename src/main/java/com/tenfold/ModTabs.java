@@ -49,6 +49,8 @@ public final class ModTabs {
                         output.accept(ModItems.FRAGMENT.get());
                         output.accept(ModItems.WILD_HUNT_COFFIN.get());
                         output.accept(ModItems.WILD_HUNT_GREATSWORD.get());
+                        output.accept(ModItems.GUAN_DAO.get());
+                        output.accept(ModItems.BURNING_FEATHER.get());
                         output.accept(potion(Items.POTION, ModPotions.IRA_RELEASE.get()));
                         output.accept(potion(Items.POTION, ModPotions.LONG_IRA_RELEASE.get()));
                         output.accept(potion(Items.SPLASH_POTION, ModPotions.IRA_RELEASE.get()));

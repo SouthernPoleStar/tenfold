@@ -116,6 +116,10 @@ public class WildHuntEvents {
             partner.displayClientMessage(Component.translatable("tenfold.marriage.fragment_drop",
                     dead.getName().getString()), false);
             ModAdvancements.award(partner, ModAdvancements.MARRIAGE_FRAGMENT);
+            // 伴侣死亡 + 手持关刀 → 无视情感与血量，强制进入 EGO 绽放
+            if (partner.getMainHandItem().is(ModItems.GUAN_DAO.get())) {
+                EgoManager.forceEnter(partner);
+            }
         }
     }
 

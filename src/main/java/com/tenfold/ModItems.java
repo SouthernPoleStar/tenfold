@@ -151,6 +151,14 @@ public final class ModItems {
     public static final RegistryObject<Item> WILD_HUNT_GREATSWORD = ITEMS.register("wild_hunt_greatsword",
             () -> new com.tenfold.item.WildHuntGreatswordItem());
 
+    /** 关刀：常态 15 伤，命中灼烧并叠「情感」；满 10 层且残血时 Shift+右键进入 EGO 绽放。 */
+    public static final RegistryObject<Item> GUAN_DAO = ITEMS.register("guan_dao",
+            () -> new com.tenfold.item.GuanDaoItem());
+
+    /** 燃烧的羽毛：EGO 绽放期间强制穿戴的胸甲，25 护甲 / 20 韧性，不显示模型。 */
+    public static final RegistryObject<Item> BURNING_FEATHER = ITEMS.register("burning_feather",
+            () -> new com.tenfold.item.BurningFeatherItem());
+
     private ModItems() {
     }
 }

@@ -290,5 +290,22 @@
   "tenfold.advancement.marriage_fragment.title": "心意相悖",
   "tenfold.advancement.marriage_fragment.desc": "伴侣死去了，你握住了那两枚残片。",
   "tenfold.advancement.soul_united.title": "我们的心意终与不再相悖",
-  "tenfold.advancement.soul_united.desc": "穿上狂猎棺材、握紧狂猎大剑——这一次，心不会再错开了。"
+  "tenfold.advancement.soul_united.desc": "穿上狂猎棺材、握紧狂猎大剑——这一次，心不会再错开了。",
+  "item.tenfold.guan_dao": "关刀",
+  "item.tenfold.burning_feather": "燃烧的羽毛",
+  "effect.tenfold.ego_bloom": "EGO 绽放：亢龙有悔",
+  "effect.tenfold.ego_bloom.description": "生命上限翻倍，力量 V、抗性 II，持续 1 分钟。",
+  "tooltip.tenfold.guan_dao.damage": "基础伤害：%s",
+  "tooltip.tenfold.guan_dao.burn": "命中使目标灼烧 4 秒",
+  "tooltip.tenfold.guan_dao.emotion": "每次命中叠加 1 层「情感」（最高 10 层）",
+  "tooltip.tenfold.guan_dao.ego": "情感满 10 层且血量低于一半时，Shift+右键进入 EGO 绽放（攻击 +%s）",
+  "tenfold.ego.need": "情感 %s/%s，且血量必须低于一半才能进入 EGO 绽放。",
+  "tenfold.ego.already": "已经在 EGO 绽放中。",
+  "tenfold.ego.enter": "情感满溢——EGO 绽放：亢龙有悔！",
+  "tenfold.ego.end": "EGO 绽放结束了。",
+  "tenfold.ego.line1": "独木不成林....倒是趣事一桩",
+  "tenfold.ego.line2": "我纵茕茕子立，难避漫漫长夜。",
+  "tenfold.ego.line3": "然长夜终尽，天将启明。",
+  "tenfold.ego.line4": "惟以平旦之孤星，何胜东方之既白。",
+  "tenfold.ego.line5": "还请觉悟。今朝此日，都市一星，势必陨灭。"
 }

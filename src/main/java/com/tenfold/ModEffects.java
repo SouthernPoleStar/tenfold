@@ -212,6 +212,18 @@ public final class ModEffects {
             });
 
     /**
+     * EGO 绽放 · 亢龙有悔：关刀的情感满 10 层且血量低于一半时 Shift+右键进入，持续 1 分钟。
+     * 生命上限翻倍、力量 V、抗性 II、开始 30 秒生命恢复 III，期间强制穿着「燃烧的羽毛」。
+     */
+    public static final RegistryObject<MobEffect> EGO_BLOOM = EFFECTS.register("ego_bloom",
+            () -> new MobEffect(MobEffectCategory.BENEFICIAL, 0xE8B93A) {
+                @Override
+                public boolean isDurationEffectTick(int duration, int amplifier) {
+                    return false;
+                }
+            });
+
+    /**
      * 一代~十代血魔：十个独立效果，让「x代血魔」能作为效果名直接显示。
      * 玩家由二代起跳（被血魔老祖转化的都是二代），往上依次传染。
      */

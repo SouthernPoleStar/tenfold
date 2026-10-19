@@ -290,5 +290,22 @@
   "tenfold.advancement.marriage_fragment.title": "Hearts at Odds",
   "tenfold.advancement.marriage_fragment.desc": "Your partner died, and you held the two fragments.",
   "tenfold.advancement.soul_united.title": "Our Hearts No Longer at Odds",
-  "tenfold.advancement.soul_united.desc": "Wear the Wild Hunt Coffin and grip the Wild Hunt Greatsword — this time the hearts will not drift apart."
+  "tenfold.advancement.soul_united.desc": "Wear the Wild Hunt Coffin and grip the Wild Hunt Greatsword — this time the hearts will not drift apart.",
+  "item.tenfold.guan_dao": "Guan Dao",
+  "item.tenfold.burning_feather": "Burning Feather",
+  "effect.tenfold.ego_bloom": "EGO Bloom: The Proud Dragon Regrets",
+  "effect.tenfold.ego_bloom.description": "Max health doubled, Strength V, Resistance II, lasts 1 minute.",
+  "tooltip.tenfold.guan_dao.damage": "Base damage: %s",
+  "tooltip.tenfold.guan_dao.burn": "Sets the target on fire for 4 seconds",
+  "tooltip.tenfold.guan_dao.emotion": "Each hit adds 1 Emotion (max 10)",
+  "tooltip.tenfold.guan_dao.ego": "At 10 Emotion and below half health, sneak + right-click to bloom (damage +%s)",
+  "tenfold.ego.need": "Emotion %s/%s and health below half are required to bloom.",
+  "tenfold.ego.already": "You are already blooming.",
+  "tenfold.ego.enter": "Emotion overflows — EGO Bloom: The Proud Dragon Regrets!",
+  "tenfold.ego.end": "The EGO Bloom has ended.",
+  "tenfold.ego.line1": "One tree does not make a forest... a curious thing.",
+  "tenfold.ego.line2": "Though I stand alone, I cannot escape the long night.",
+  "tenfold.ego.line3": "Yet the night will end, and dawn shall break.",
+  "tenfold.ego.line4": "What is a lone star at daybreak against the whitening east?",
+  "tenfold.ego.line5": "Awaken. This day, a star of the City shall surely fall."
 }
