@@ -2,11 +2,11 @@
 
 Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态**的武器「双蛇杖」，围绕它衍生出三场 Boss 战、多把专属武器、一套状态体系与一棵独立进度树。
 
-- **模组版本**：0.1.25
+- **模组版本**：0.1.26
 - **模组 ID**：`tenfold`
 - **作者**：南极星
 - **反馈渠道**：[GitHub Issues](https://github.com/SouthernPoleStar/tenfold/issues)
-- **下载**：本地构建 `build/libs/tenfold-0.1.25.jar`，或见 Releases 页面
+- **下载**：本地构建 `build/libs/tenfold-0.1.26.jar`，或见 Releases 页面
 
 > **免责声明**
 > 本模组是爱好者制作的**非官方** Minecraft 模组，与 Mojang Studios、Microsoft 均无隶属或合作关系，未获得其认可或授权。
@@ -470,6 +470,8 @@ Minecraft **1.20.1 · Forge 47.x** 模组。核心是一柄拥有 **10 种形态
 | 连第二层包装纸都要打开吗？ | 莱万丁第 3 阶段 |
 | 莱万丁，完全解放 | 莱万丁第 4 阶段 |
 | 恶魔的契约 | 拿到魔弹枪 |
+| 心意相悖 | 伴侣死亡，并且自己收到了掉落的两枚残片 |
+| 我们的心意终与不再相悖 | 穿着狂猎棺材 + 手持狂猎大剑 |
 | 守护他人的决意 | 第一次喝下 IRA 药水 |
 
 ---
@@ -550,4 +552,4 @@ src/main/resources/
 
 ## 版本历史
 
-见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.1.25**。
+见 [CHANGELOG.md](CHANGELOG.md)。当前版本 **0.1.26**。

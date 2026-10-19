@@ -70,6 +70,8 @@ public final class WildHuntManager {
                     "tenfold_torn_heart_speed", TORN_HEART_SPEED, AttributeModifier.Operation.MULTIPLY_TOTAL);
             ensureModifier(player, Attributes.MAX_HEALTH, HEALTH_ID,
                     "tenfold_torn_heart_health", TORN_HEART_HEALTH, AttributeModifier.Operation.ADDITION);
+            // 我们的心意终与不再相悖：穿棺材 + 持大剑
+            ModAdvancements.award(player, ModAdvancements.SOUL_UNITED);
             return;
         }
 

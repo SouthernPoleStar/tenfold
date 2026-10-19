@@ -1,0 +1,23 @@
+{
+  "parent": "tenfold:root",
+  "display": {
+    "icon": {
+      "item": "tenfold:fragment"
+    },
+    "title": {
+      "translate": "tenfold.advancement.marriage_fragment.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.marriage_fragment.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

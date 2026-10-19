@@ -115,6 +115,7 @@ public class WildHuntEvents {
         if (partner != null) {
             partner.displayClientMessage(Component.translatable("tenfold.marriage.fragment_drop",
                     dead.getName().getString()), false);
+            ModAdvancements.award(partner, ModAdvancements.MARRIAGE_FRAGMENT);
         }
     }
 

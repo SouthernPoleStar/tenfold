@@ -1,0 +1,23 @@
+{
+  "parent": "tenfold:marriage_fragment",
+  "display": {
+    "icon": {
+      "item": "tenfold:wild_hunt_coffin"
+    },
+    "title": {
+      "translate": "tenfold.advancement.soul_united.title"
+    },
+    "description": {
+      "translate": "tenfold.advancement.soul_united.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
